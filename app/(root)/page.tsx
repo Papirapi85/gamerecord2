@@ -1,13 +1,12 @@
+import {Container} from '@/components/container';
 
-export default function Home() {
+export default async function Home() {
+
     return (
-        <div>
-            <main className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-               START + PRISMA
-            </main>
-            <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-               GO
-            </footer>
-        </div>
+        <>
+            <Container className="mt-10 pb-14">
+                111111111111111
+            </Container>
+        </>
     );
 }
