@@ -18,6 +18,7 @@ interface Props {
 export const AdminProductItem: React.FC<Props> = ({data, category, product, productItem}) => {
 
     const [categoryNameState, setCategoryNameState] = React.useState('');
+    const [productNameState, setProductNameState] = React.useState('');
 
     const [productState, setProductState] = React.useState<Product[]>(product);
     const [productFindState, setProductFindState] = React.useState<Product[]>([]);
@@ -31,18 +32,33 @@ export const AdminProductItem: React.FC<Props> = ({data, category, product, prod
     const categoryIdRef = React.useRef(null);
     const productIdRef = React.useRef(null);
 
+    // useEffect(() => {
+    //     setProductState(product)
+    //     let array: Product[] = []
+    //     if(categoryIdRef.current !== null) {
+    //         for (let i = 0; i < product.length; i++) {
+    //             if (product[i].categoryId === categoryIdRef.current) {
+    //                 array.push(product[i]);
+    //             }
+    //         }
+    //         setProductFindState(array);
+    //         setCreateState('')
+    //     }
+    // }, [product]);
+
     useEffect(() => {
-        setProductItemState(productItem)
-        //let array: Product[] = []
-        // if(categoryIdRef.current !== null) {
-        //     for (let i = 0; i < product.length; i++) {
-        //         if (product[i].categoryId === categoryIdRef.current) {
-        //             array.push(product[i]);
-        //         }
-        //     }
-        //     setProductFindState(array);
-        //     setCreateState('')
-        // }
+        //setProductItemState(productItem)
+        let array: ProductItem[] = []
+        if(categoryIdRef.current !== null) {
+            for (let i = 0; i < productItem.length; i++) {
+                if (productItem[i].productId === productIdRef.current ) {
+                    array.push(productItem[i]);
+                }
+            }
+            setProductItemFindState(array);
+            setProductItemFindState2(array);
+            setCreateState('')
+        }
     }, [productItem]);
 
 
@@ -69,6 +85,7 @@ export const AdminProductItem: React.FC<Props> = ({data, category, product, prod
         }
         setProductItemFindState(array);
         setProductItemFindState2(array);
+        setProductNameState(item.name);
     }
 
 
@@ -169,7 +186,7 @@ export const AdminProductItem: React.FC<Props> = ({data, category, product, prod
 
                 {/*PRODUCT_ITEM_EDIT*/}
                 <div className="flex-1 w-[30%]">
-                    <Title text={`${categoryNameState}`} size="md" className="font-bold"/>
+                    <Title text={`${productNameState}`} size="md" className="font-bold"/>
                     <Title text={`Product Item Edit`} size="xs"/>
                     {productIdRef.current !== null && productItemFindState.map((item, index) => (
                         <div key={item.id} className="flex w-full max-w-sm items-center space-x-2 mb-1">

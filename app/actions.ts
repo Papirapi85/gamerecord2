@@ -3,8 +3,6 @@ import {prisma} from '@/prisma/prisma-client';
 import {getUserSession} from '@/components/lib/get-user-session';
 import {Prisma} from '@prisma/client';
 import {hashSync} from 'bcrypt';
-import {cookies} from 'next/headers';
-import toast from "react-hot-toast";
 import {revalidatePath} from 'next/cache'
 import {redirect} from 'next/navigation'
 import {PutBlobResult} from "@vercel/blob";
@@ -225,11 +223,8 @@ export async function productUpdate(data: any) {
 export async function productCreate(data: any) {
   let product;
   let productNameFind;
-  let count;
 
   try {
-    console.log("111111111111111 " + data.categoryId);
-
     productNameFind = await prisma.product.findFirst({
       where: {
         categoryId: data.categoryId,
@@ -241,16 +236,12 @@ export async function productCreate(data: any) {
       throw new Error('product already exists');
     }
 
-    console.log("3333333333333333 " + count);
-
     product = await prisma.product.create({
       data: {
         name: data.name,
         categoryId: Number(data.categoryId),
       }
     });
-
-    console.log("4444444444444444")
 
     if (!product) {
       throw new Error('Product Error');
