@@ -312,8 +312,6 @@ export async function productItemUpdate(data: any) {
 export async function productItemCreate(data: any) {
   let product;
   let productNameFind;
-  let countFind;
-  let count;
   try {
     productNameFind = await prisma.productItem.findFirst({
       where: {
@@ -322,24 +320,9 @@ export async function productItemCreate(data: any) {
       }
     });
 
-    // count = await prisma.productItem.count({});
-    // console.log("count = " + count);
-    // while(!countFind) {
-    //     count++
-    //     console.log("count WHILE " + count);
-    //     countFind = await prisma.productItem.findFirst({
-    //         where: {
-    //             id: count
-    //         }
-    //     });
-    // }
-    // console.log("1111111111111 = " + Number(data.productId))
-
     if (productNameFind) {
       throw new Error('product already exists');
     }else {
-      console.log("2222222222222  productId " + data.productId + "   name " + data.name);
-
       product = await prisma.productItem.create({
         data: {
           // id: count,
@@ -347,7 +330,6 @@ export async function productItemCreate(data: any) {
           productId: Number(data.productId),
         }
       });
-      console.log("333333333333")
       if (!product) {
         throw new Error('Product Error');
       }

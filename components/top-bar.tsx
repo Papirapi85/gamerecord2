@@ -6,6 +6,8 @@ import {DropmenuTopLeft} from "@/components/dropmenu-top-left";
 import {DropmenuTopRight} from "@/components/dropmenu-top-right";
 import {SheetDriverRight} from "@/components/sheet-driver-right";
 import Link from "next/link";
+import {Button} from "@/components/ui";
+import {FileCog, FilePlus2} from "lucide-react";
 
 
 interface Props {
@@ -27,14 +29,21 @@ export const TopBar: React.FC<Props> = ({className}) => {
                 <div className={cn('cursor-pointer absolute mt-2 left-1/4 ', className)}>
                     <DropmenuTopLeft/>
                 </div>
-                <div className={cn('cursor-pointer absolute mt-2 right-1/4 ', className)}>
+                <div className={cn('cursor-pointer absolute  right-1/4 ', className)}>
+
                     <Link href="/add-record">
-                        ADD
+                        <Button variant="secondary" className="flex items-center gap-2">
+                            <FilePlus2 size={18} />
+                            ADD
+                        </Button>
                     </Link>
                 </div>
-                <div className={cn('cursor-pointer absolute mt-2 right-2/4 ', className)}>
+                <div className={cn('cursor-pointer absolute  right-2/4 ', className)}>
                     <Link href="/edit-record">
-                        EDIT
+                        <Button variant="secondary" className="flex items-center gap-2">
+                            <FileCog size={18} />
+                            EDIT
+                        </Button>
                     </Link>
                 </div>
                 {/*<div className={cn('cursor-pointer absolute mt-2 right-1/4 ', className)}>*/}

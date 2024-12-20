@@ -18,7 +18,7 @@ export default async function AdminPage() {
   const productItem = await prisma.productItem.findMany();
 
   if (user && user.role === 'ADMIN') {
-    return <AdminProductItem data={user} category={category} product={product} productItem={productItem} />;
+    return <AdminProductItem user={user} category={category} product={product} productItem={productItem} />;
   }else{
     return redirect('/not-auth');
   }

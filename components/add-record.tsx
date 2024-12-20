@@ -13,52 +13,54 @@ interface Props {
     category: Category[];
     product: Product[];
     productItem: ProductItem[];
+    gameRecords: any[];
 }
 
-export const AdminProductItem: React.FC<Props> = ({user, category, product, productItem}) => {
+export const AddRecord: React.FC<Props> = ({user, category, product, productItem, gameRecords}) => {
 
     const [categoryNameState, setCategoryNameState] = React.useState('');
+    const [productNameState, setProductNameState] = React.useState('');
     const [productItemNameState, setProductItemNameState] = React.useState('');
 
-    const [productState, setProductState] = React.useState<Product[]>(product);
+    //const [productState, setProductState] = React.useState<Product[]>(product);
     const [productFindState, setProductFindState] = React.useState<Product[]>([]);
 
-    //const [productItemState, setProductItemState] = React.useState<ProductItem[]>(productItem);
-    const [productItemFindState, setProductItemFindState] = React.useState<ProductItem[]>([]);
-    const [productItemFindState2, setProductItemFindState2] = React.useState<ProductItem[]>([]);
+    const [productItemState, setProductItemState] = React.useState<ProductItem[]>([]);
+    // const [productItemFindState, setProductItemFindState] = React.useState<ProductItem[]>([]);
+    // const [productItemFindState2, setProductItemFindState2] = React.useState<ProductItem[]>([]);
 
     const [createState, setCreateState] = React.useState("");
 
     const categoryIdRef = React.useRef(null);
     const productIdRef = React.useRef(null);
 
-    useEffect(() => {
-        //setProductItemState(productItem)
-        let array: ProductItem[] = []
-        if(productIdRef.current !== null) {
-            for (let i = 0; i < productItem.length; i++) {
-                if (productItem[i].productId === productIdRef.current) {
-                    array.push(productItem[i]);
-                }
-            }
-            setProductItemFindState(array);
-            setProductItemFindState2(array);
-            setCreateState('')
-        }
-    }, [productItem]);
+    // useEffect(() => {
+    //     //setProductItemState(productItem)
+    //     let array: ProductItem[] = []
+    //     if(productIdRef.current !== null) {
+    //         for (let i = 0; i < productItem.length; i++) {
+    //             if (productItem[i].productId === productIdRef.current) {
+    //                 array.push(productItem[i]);
+    //             }
+    //         }
+    //         setProductItemFindState(array);
+    //         setProductItemFindState2(array);
+    //         setCreateState('')
+    //     }
+    // }, [productItem]);
 
-    useEffect(() => {
-        setProductItemFindState([]);
-        setProductItemFindState2([]);
-    }, [categoryIdRef.current]);
+    // useEffect(() => {
+    //     setProductItemFindState([]);
+    //     setProductItemFindState2([]);
+    // }, [categoryIdRef.current]);
 
 
     const productFind = (item : any) => {
         categoryIdRef.current = item.id;
         let array = []
-        for (let i = 0; i < productState.length; i++) {
-            if (productState[i].categoryId === item.id) {
-                array.push(productState[i]);
+        for (let i = 0; i < product.length; i++) {
+            if (product[i].categoryId === item.id) {
+                array.push(product[i]);
             }
         }
         setProductFindState(array);
@@ -74,19 +76,9 @@ export const AdminProductItem: React.FC<Props> = ({user, category, product, prod
                 array.push(productItem[i]);
             }
         }
-        setProductItemFindState(array);
-        setProductItemFindState2(array);
-        setProductItemNameState(item.name);
+        setProductItemState(array);
+        setProductNameState(item.name);
     }
-
-
-    const eventHandler = (data: any, value: any) => {
-        setProductItemFindState2(
-            productItemFindState.map((item) =>
-                item.id === data.id ? {...item, name: value} : item
-            )
-        )
-    };
 
     const eventSubmitUpdate = async (data: any) => {
         try {
@@ -164,7 +156,7 @@ export const AdminProductItem: React.FC<Props> = ({user, category, product, prod
                     <Title text={`${categoryNameState}`} size="md" className="font-bold"/>
                     <Title text={`Product List`} size="xs"/>
                     {categoryIdRef.current !== null && productFindState.map((item, index) => (
-                        <div key={item.id} className="flex w-full max-w-sm items-center space-x-2 mb-1">
+                        <div key={index} className="flex w-full max-w-sm items-center space-x-2 mb-1">
                             {/*<p>{item.id}</p>*/}
                             <Button
                                 onClick={e => productItemFind(productFindState[index])}
@@ -173,31 +165,21 @@ export const AdminProductItem: React.FC<Props> = ({user, category, product, prod
                     ))}
                 </div>
 
-                {/*PRODUCT_ITEM_EDIT*/}
+                {/*PRODUCT_ITEM*/}
                 <div className="flex-1 w-[30%]">
-                    <Title text={`${productItemNameState}`} size="md" className="font-bold"/>
+                    <Title text={`${productNameState}`} size="md" className="font-bold"/>
                     <Title text={`Product Item Edit`} size="xs"/>
-                    {productIdRef.current !== null && productItemFindState.map((item, index) => (
-                        <div key={item.id} className="flex w-full max-w-sm items-center space-x-2 mb-1">
+                    {productIdRef.current !== null && productItemState.map((item, index) => (
+                        <div key={index} className="flex w-full max-w-sm items-center space-x-2 mb-1">
                                 {/*<p>{item.id}</p>*/}
-                                <Input type='text'
-                                       defaultValue={item.name}
-                                       onChange={e => eventHandler(productItemFindState[index], e.target.value)}
-                                />
                                 <Button
-                                    type="submit"
-                                    disabled={productItemFindState[index].name === productItemFindState2[index].name}
-                                    onClick={() => eventSubmitUpdate(productItemFindState2[index])}
-                                >Up</Button>
-                                <Button
-                                    type="submit"
-                                    onClick={() => eventSubmitDelete(item)}
-                                >Del</Button>
+                                    onClick={e => setProductItemNameState(productItemState[index].name)}
+                                >{item.name}</Button>
                         </div>
                     ))}
                 </div>
 
-                {/*PRODUCT_ITEM_CREATE*/}
+                {/*GAME_RECORD_CREATE*/}
                 <div className="flex-1 w-[25%] ml-5">
                     <Title text={`${productItemNameState}`} size="md" className="font-bold"/>
                     <Title text={`Product Add`} size="xs"/>

@@ -50,7 +50,6 @@ export const AdminProduct: React.FC<Props> = ({data, category, product}) => {
             }
         }
         categoryIdRef.current = item.id;
-        console.log(categoryIdRef.current);
         setProductFindState(array);
         setProductFindState2(array);
         setCategoryNameState(item.name);
