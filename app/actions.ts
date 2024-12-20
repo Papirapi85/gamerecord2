@@ -5,7 +5,46 @@ import { getUserSession } from '@/components/lib/get-user-session';
 import { Prisma } from '@prisma/client';
 import { hashSync } from 'bcrypt';
 import { cookies } from 'next/headers';
+import {revalidatePath} from "next/cache";
+import {PutBlobResult} from "@vercel/blob";
 
+export async function createBlopAction(data: { newBlob: PutBlobResult }) {
+  let post
+  try {
+    post = await prisma.post.create({
+      data: {
+        content: data.newBlob.url,
+      }
+    })
+
+    if (!post) {
+      return {error: 'Failed to create the blog.'}
+    }
+  } catch (error: any) {
+    if (error.code === 'P2002') {
+      return {error: 'That slug already exists.'}
+    }
+
+    return {error: error.message || 'Failed to create the blog.'}
+  }
+
+  revalidatePath('/blop/list-data')
+}
+export async function deleteBlopAction(data: { id: Number }) {
+  let post
+  try {
+    post = await prisma.post.delete({
+      where: {
+        id: Number(data.id),
+      },
+    });
+    if (!post) {
+      return {error: 'No Delete'}
+    }
+  } catch (e) {
+
+  }
+}
 
 export async function updateUserInfo(body: Prisma.UserUpdateInput) {
   try {

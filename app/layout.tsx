@@ -1,7 +1,7 @@
 import { Nunito } from 'next/font/google';
 import './globals.css';
 import { Providers } from '@/components/providers';
-import {ThemeProvider} from "@/components";
+import {ThemeProvider} from "@/components/theme-provider";
 
 
 const nunito = Nunito({
@@ -23,14 +23,14 @@ export default function RootLayout({
         <body className={nunito.className}>
         <Providers>
             <main>
-                {/*<ThemeProvider*/}
-                {/*    attribute="class"*/}
-                {/*    defaultTheme="system"*/}
-                {/*    enableSystem*/}
-                {/*    disableTransitionOnChange*/}
-                {/*>*/}
+                <ThemeProvider
+                    attribute="class"
+                    defaultTheme="system"
+                    enableSystem
+                    disableTransitionOnChange
+                >
                     {children}
-                {/*</ThemeProvider>*/}
+                </ThemeProvider>
             </main>
         </Providers>
         </body>
