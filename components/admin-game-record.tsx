@@ -1,31 +1,18 @@
 'use client';
-
-import React from 'react';
-import {Suspense} from 'react';
-
-import {
-    Table,
-    TableBody,
-    TableCaption,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table"
+import React, {Suspense, useEffect} from 'react';
+import {GameRecords, User} from '@prisma/client';
+import {Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
 import {Container} from "@/components/container";
-import {cn} from "@/components/lib/utils";
-import {className} from "postcss-selector-parser";
+
 
 interface Props {
+    data: User;
     gameRecords: any[];
-    className?: string;
 }
 
-export const GameRecord_CLIENT: React.FC<Props> = ({gameRecords}) => {
-
+export const AdminGameRecord: React.FC<Props> = ({data, gameRecords}) => {
 
     return (
-
         <Container className="w-[100%]">
             <Table>
                 <TableCaption>Gamerecord.online</TableCaption>
@@ -62,7 +49,5 @@ export const GameRecord_CLIENT: React.FC<Props> = ({gameRecords}) => {
                 </Suspense>
             </Table>
         </Container>
-
     );
 };
-

@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { ProfileButton } from './profile-button';
 import { AuthModal } from './modals';
 import {DropmenuAdmin} from "@/components/dropmenu-admin";
+import {ModeToggle} from "@/components/buttonTheme";
 
 
 interface Props {
@@ -34,7 +35,7 @@ export const Header: React.FC<Props> = ({  className }) => {
 
                 {/* Правая часть */}
                 <div className="flex items-center gap-3">
-
+                    <ModeToggle/>
                     <AuthModal open={openAuthModal} onClose={() => setOpenAuthModal(false)}/>
 
                     <ProfileButton onClickSignIn={() => setOpenAuthModal(true)}/>

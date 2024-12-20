@@ -2,7 +2,7 @@
 import { prisma } from '@/prisma/prisma-client';
 import { getUserSession } from '@/components/lib/get-user-session';
 import {notFound, redirect} from 'next/navigation';
-import {AdminGameRecord} from "@/components/admin-game-record";
+import {AddGameRecord} from "@/components/add-game-record";
 
 export default async function AdminPage() {
   const session = await getUserSession();
@@ -26,8 +26,8 @@ export default async function AdminPage() {
     return notFound();
   }
 
-  if (user && user.role === 'ADMIN') {
-    return <AdminGameRecord data={user} gameRecords={gameRecords} />;
+  if (user) {
+    return <AddGameRecord user={user} gameRecords={gameRecords} />;
   }else{
     return redirect('/not-auth');
   }

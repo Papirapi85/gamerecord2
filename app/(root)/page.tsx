@@ -6,8 +6,6 @@ export default async function Home() {
 
     return (
         <div>
-            <TopBar />
-
             <Container className="mt-10 pb-14">
                 <GameRecords_SERVER/>
             </Container>
