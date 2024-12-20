@@ -1,4 +1,3 @@
-import {Button} from "@/components/ui/button"
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -16,8 +15,6 @@ import {useSession} from "next-auth/react";
 export function DropmenuAdmin() {
 
     const {data: session} = useSession();
-    console.log(session)
-    console.log(session?.user.role)
     return (
         <div>
             {session && session?.user.role === 'ADMIN' &&

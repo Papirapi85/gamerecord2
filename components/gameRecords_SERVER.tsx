@@ -16,7 +16,6 @@ export default async function GameRecords_SERVER() {
             category: true,
         },
     });
-    //},{revalidate: 10},{ cache: 'no-store' });
 
     if (!gameRecords) {
         return notFound();

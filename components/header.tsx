@@ -5,10 +5,9 @@ import React from 'react';
 import { Container } from './container';
 import Image from 'next/image';
 import Link from 'next/link';
-
 import { ProfileButton } from './profile-button';
 import { AuthModal } from './modals';
-
+import {DropmenuAdmin} from "@/components/dropmenu-admin";
 
 
 interface Props {
@@ -39,6 +38,7 @@ export const Header: React.FC<Props> = ({  className }) => {
                     <AuthModal open={openAuthModal} onClose={() => setOpenAuthModal(false)}/>
 
                     <ProfileButton onClickSignIn={() => setOpenAuthModal(true)}/>
+                    <DropmenuAdmin/>
                 </div>
             </Container>
         </header>
