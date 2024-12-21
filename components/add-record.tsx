@@ -5,7 +5,9 @@ import toast from 'react-hot-toast';
 import {Container} from './container';
 import {Title} from './title';
 import {Button, Input} from '@/components/ui';
-import {productItemDelete, productItemUpdate, productItemCreate} from '@/app/actions';
+import {addRecordActions, productItemCreate} from '@/app/actions';
+
+
 
 
 interface Props {
@@ -22,6 +24,10 @@ export const AddRecord: React.FC<Props> = ({user, category, product, productItem
     const [productNameState, setProductNameState] = React.useState('');
     const [productItemNameState, setProductItemNameState] = React.useState('');
 
+    const [timestatState, setTimestatState] = React.useState('');
+    const [imgState, setImgState] = React.useState('');
+    const [videoState, setVideoState] = React.useState('');
+
     //const [productState, setProductState] = React.useState<Product[]>(product);
     const [productFindState, setProductFindState] = React.useState<Product[]>([]);
 
@@ -31,8 +37,10 @@ export const AddRecord: React.FC<Props> = ({user, category, product, productItem
 
     const [createState, setCreateState] = React.useState("");
 
-    const categoryIdRef = React.useRef(null);
-    const productIdRef = React.useRef(null);
+    const categoryIdRef = React.useRef(0);
+    const productIdRef = React.useRef(0);
+    const productItemIdRef = React.useRef(0);
+    const addRecordViewRef = React.useRef(false);
 
     // useEffect(() => {
     //     //setProductItemState(productItem)
@@ -65,6 +73,7 @@ export const AddRecord: React.FC<Props> = ({user, category, product, productItem
         }
         setProductFindState(array);
         setCategoryNameState(item.name);
+        addRecordViewRef.current = false;
     }
 
     const productItemFind = (item : any) => {
@@ -78,56 +87,25 @@ export const AddRecord: React.FC<Props> = ({user, category, product, productItem
         }
         setProductItemState(array);
         setProductNameState(item.name);
+        addRecordViewRef.current = false;
     }
 
-    const eventSubmitUpdate = async (data: any) => {
+    const addRecordFB = async () => {
         try {
-            if(data.name === '') {
-                return toast.error('Ошибка при создании данных, пустое поле', {
-                    icon: '❌',
-                });
-            }
-            await productItemUpdate({
-                id: data.id,
-                name: data.name,
-            });
-            toast.error('Данные обновлены 📝', {
-                icon: '✅',
-            });
-        } catch (error) {
-            return toast.error('Ошибка при обновлении данных', {
-                icon: '❌',
-            });
-        }
-    }
-    const eventSubmitDelete = async (item: any) => {
-        try {
-            await productItemDelete({
-                id: item.id,
-            });
-            toast.error('Данные удалены📝', {
-                icon: '✅',
-            });
-        } catch (error) {
-            return toast.error('Ошибка при удалении данных', {
-                icon: '❌',
-            });
-        }
-    }
-    const eventSubmitCreate = async () => {
-        try {
-            if(createState === '') {
-                return toast.error('Error create data, filed empty', {
-                    icon: '❌',
-                });
-            }
-            await productItemCreate({
-                name: createState,
+            await addRecordActions({
+                userId: user.id,
+                categoryId: categoryIdRef.current,
                 productId: productIdRef.current,
+                productItemId: productItemIdRef.current,
+                timestate: timestatState,
+                video: videoState,
+                img: imgState,
             });
+
             toast.error('Data create 📝', {
                 icon: '✅',
             });
+
         } catch (error) {
             return toast.error('Error create data', {
                 icon: '❌',
@@ -140,7 +118,7 @@ export const AddRecord: React.FC<Props> = ({user, category, product, productItem
 
             {/*<Title text={`#${data.role}`} size="md" className="font-bold"/>*/}
 
-            {/*CATEGORY*/}
+            {/*CATEGORY_LIST*/}
             <div className="flex">
                 <div className="flex-1 w-[20%]">
                     <Title text={`Category List`} size="md" className="font-bold"/>
@@ -155,7 +133,7 @@ export const AddRecord: React.FC<Props> = ({user, category, product, productItem
                 <div className="flex-1 w-[20%]">
                     <Title text={`${categoryNameState}`} size="md" className="font-bold"/>
                     <Title text={`Product List`} size="xs"/>
-                    {categoryIdRef.current !== null && productFindState.map((item, index) => (
+                    {categoryIdRef.current !== 0 && productFindState.map((item, index) => (
                         <div key={index} className="flex w-full max-w-sm items-center space-x-2 mb-1">
                             {/*<p>{item.id}</p>*/}
                             <Button
@@ -169,11 +147,15 @@ export const AddRecord: React.FC<Props> = ({user, category, product, productItem
                 <div className="flex-1 w-[30%]">
                     <Title text={`${productNameState}`} size="md" className="font-bold"/>
                     <Title text={`Product Item Edit`} size="xs"/>
-                    {productIdRef.current !== null && productItemState.map((item, index) => (
+                    {productIdRef.current !== 0 && productItemState.map((item, index) => (
                         <div key={index} className="flex w-full max-w-sm items-center space-x-2 mb-1">
                                 {/*<p>{item.id}</p>*/}
                                 <Button
-                                    onClick={e => setProductItemNameState(productItemState[index].name)}
+                                    onClick={() => {
+                                        productItemIdRef.current = productItemState[index].id;
+                                        addRecordViewRef.current = true;
+                                        setProductItemNameState(productItemState[index].name);
+                                    }}
                                 >{item.name}</Button>
                         </div>
                     ))}
@@ -181,21 +163,45 @@ export const AddRecord: React.FC<Props> = ({user, category, product, productItem
 
                 {/*GAME_RECORD_CREATE*/}
                 <div className="flex-1 w-[25%] ml-5">
+                    <Title text={`${categoryNameState}`} size="md" className="font-bold"/>
+                    <Title text={`${productNameState}`} size="md" className="font-bold"/>
                     <Title text={`${productItemNameState}`} size="md" className="font-bold"/>
-                    <Title text={`Product Add`} size="xs"/>
-                    {productIdRef.current !== null &&
-                        <div className="flex w-full max-w-sm items-center space-x-2 mb-1">
-                            <Input type='text'
-                                   value={createState}
-                                   onChange={e => {
-                                       setCreateState(e.target.value)
-                                   }}
-                            />
-                            <Button
-                                type="submit"
-                                disabled={createState === ''}
-                                onClick={eventSubmitCreate}
-                            >Add</Button>
+                    {(productItemIdRef.current !== 0 && addRecordViewRef.current === true) &&
+                        <div>
+                            <div className="m-2">
+                                <Input
+                                    name="timestate"
+                                    type="time"
+                                    step="0.001"
+                                    pattern="[0-2]{1}[0-9]{1}:[0-5]{1}[0-9]{1}"
+                                    defaultValue="00:00"
+                                    onChange={e => {
+                                        setTimestatState(e.target.value)
+                                    }}
+                                />
+                            </div>
+                            <div className="m-2">
+                                <Input type='text'
+                                       placeholder="IMAGE"
+                                       onChange={e => {
+                                           setImgState(e.target.value)
+                                       }}
+                                />
+                            </div>
+                            <div className="m-2">
+                                <Input type='text'
+                                       placeholder="VIDEO"
+                                       onChange={e => {
+                                           setVideoState(e.target.value)
+                                       }}
+                                />
+                            </div>
+                            <div className="m-2">
+                                <Button
+                                    disabled={timestatState === "" || imgState === "" || videoState === ""}
+                                    onClick={addRecordFB}
+                                >Add Record</Button>
+                            </div>
                         </div>
                     }
                 </div>

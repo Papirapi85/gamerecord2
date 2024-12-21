@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Suspense} from 'react';
 
 import {
@@ -23,6 +23,14 @@ interface Props {
 
 export const GameRecord_CLIENT: React.FC<Props> = ({gameRecords}) => {
 
+    const [isMounted, setIsMounted] = useState(false);
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
+
+    if (!isMounted) {
+        return null;
+    }
 
     return (
 
@@ -36,8 +44,12 @@ export const GameRecord_CLIENT: React.FC<Props> = ({gameRecords}) => {
                         <TableHead className="w-[12%]">Game</TableHead>
                         <TableHead className="w-[12%]">Road</TableHead>
                         <TableHead className="w-[12%] text-right">Time</TableHead>
-                        <TableHead className="w-[7%]">Image</TableHead>
-                        <TableHead className="w-[7%] text-right">Link</TableHead>
+                        <TableHead className="w-[7%]">
+                            <div>Image</div>
+                            <div>Link</div>
+
+                        </TableHead>
+                        <TableHead className="w-[7%] text-right">Date</TableHead>
                     </TableRow>
                 </TableHeader>
 
@@ -53,8 +65,12 @@ export const GameRecord_CLIENT: React.FC<Props> = ({gameRecords}) => {
                                     <TableCell>{records.product.name}</TableCell>
                                     <TableCell>{records.productItem.name}</TableCell>
                                     <TableCell className="text-right">{records.timestate.substring(3)}</TableCell>
-                                    <TableCell>Image</TableCell>
-                                    <TableCell className="text-right">Video</TableCell>
+                                    <TableCell>
+                                        <div>Image</div>
+                                        <div>Video</div>
+
+                                    </TableCell>
+                                    <TableCell className="text-right">{new Date().toLocaleString(records.updatedAt)}</TableCell>
                                 </TableRow>
                             </TableBody>
 

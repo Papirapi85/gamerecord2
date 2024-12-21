@@ -220,6 +220,28 @@ export async function productUpdate(data: any) {
     throw err;
   }
 }
+export async function productDelete(data: any) {
+  let product;
+  try {
+    product = await prisma.product.findFirst({
+      where: {
+        id: Number(data.id),
+      },
+    });
+    if (!product) {
+      throw new Error('Product delete Error');
+    }
+    await prisma.product.delete({
+      where: {
+        id: Number(data.id),
+      }
+    })
+    revalidatePath('/admin/product')
+  } catch (err) {
+    //console.log('Error [CREATE_PRODUCT]', err);
+    throw err;
+  }
+}
 export async function productCreate(data: any) {
   let product;
   let productNameFind;
@@ -256,28 +278,6 @@ export async function productCreate(data: any) {
     throw new Error('Failed to record your interaction. Please try again.');
   }
 }
-export async function productDelete(data: any) {
-  let product;
-  try {
-    product = await prisma.product.findFirst({
-      where: {
-        id: Number(data.id),
-      },
-    });
-    if (!product) {
-      throw new Error('Product delete Error');
-    }
-    await prisma.product.delete({
-      where: {
-        id: Number(data.id),
-      }
-    })
-    revalidatePath('/admin/product')
-  } catch (err) {
-    //console.log('Error [CREATE_PRODUCT]', err);
-    throw err;
-  }
-}
 
 export async function productItemUpdate(data: any) {
   try {
@@ -309,40 +309,6 @@ export async function productItemUpdate(data: any) {
     throw err;
   }
 }
-export async function productItemCreate(data: any) {
-  let product;
-  let productNameFind;
-  try {
-    productNameFind = await prisma.productItem.findFirst({
-      where: {
-        name: data.name,
-        productId: Number(data.productId),
-      }
-    });
-
-    if (productNameFind) {
-      throw new Error('product already exists');
-    }else {
-      product = await prisma.productItem.create({
-        data: {
-          // id: count,
-          name: data.name,
-          productId: Number(data.productId),
-        }
-      });
-      if (!product) {
-        throw new Error('Product Error');
-      }
-    }
-
-    revalidatePath('/admin/product')
-  } catch (error) {
-    if (error instanceof Error) {
-      console.log(error.stack);
-    }
-    throw new Error('Failed to record your interaction. Please try again.');
-  }
-}
 export async function productItemDelete(data: any) {
   let product;
   try {
@@ -363,6 +329,64 @@ export async function productItemDelete(data: any) {
   } catch (err) {
     //console.log('Error [CREATE_PRODUCT]', err);
     throw err;
+  }
+}
+export async function productItemCreate(data: any) {
+  let product;
+  let productNameFind;
+  try {
+    productNameFind = await prisma.productItem.findFirst({
+      where: {
+        name: data.name,
+        productId: Number(data.productId),
+      }
+    });
+
+    if (productNameFind) {
+      throw new Error('product already exists');
+    }else {
+      product = await prisma.productItem.create({
+        data: {
+          name: data.name,
+          productId: Number(data.productId),
+        }
+      });
+      if (!product) {
+        throw new Error('Product Error');
+      }
+    }
+
+    revalidatePath('/admin/product')
+  } catch (error) {
+    if (error instanceof Error) {
+      console.log(error.stack);
+    }
+    throw new Error('Failed to record your interaction. Please try again.');
+  }
+}
+
+export async function addRecordActions(data :any) {
+
+  try {
+    await prisma.gameRecords.create({
+        data: {
+          userId: data.userId,
+          categoryId: data.categoryId,
+          productId: data.productId,
+          productItemId: data.productItemId,
+          timestate: data.timestate,
+          video: data.video,
+          img: data.img,
+        }
+      });
+
+    revalidatePath('/')
+
+  } catch (error) {
+    if (error instanceof Error) {
+      console.log(error.stack);
+    }
+    throw new Error('Failed to record your interaction. Please try again.');
   }
 }
 
