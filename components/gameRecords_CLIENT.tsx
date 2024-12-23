@@ -15,6 +15,7 @@ import {
 import {Container} from "@/components/container";
 import {cn} from "@/components/lib/utils";
 import {className} from "postcss-selector-parser";
+import {BlopImage} from "@/components/blop-image";
 
 interface Props {
     gameRecords: any[];
@@ -57,7 +58,6 @@ export const GameRecord_CLIENT: React.FC<Props> = ({gameRecords}) => {
                 <Suspense>
                     {
                         gameRecords.map((records, index) => (
-
                             <TableBody key={index}>
                                 <TableRow>
                                     <TableCell className="font-medium">{records.user.fullName}</TableCell>
@@ -67,6 +67,9 @@ export const GameRecord_CLIENT: React.FC<Props> = ({gameRecords}) => {
                                     <TableCell className="text-right">{records.timestate.substring(3)}</TableCell>
                                     <TableCell>
                                         <div><a href={records.img} target="_blank">Image</a></div>
+                                        <div>
+                                                <BlopImage img={records.img}/>
+                                        </div>
                                         <div>Video</div>
 
                                     </TableCell>
