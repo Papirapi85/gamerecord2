@@ -5,7 +5,11 @@ import toast from 'react-hot-toast';
 import {Container} from './container';
 import {Title} from './title';
 import {Button, Input} from '@/components/ui';
-import {addRecordActions, productItemCreate} from '@/app/actions';
+import {addRecordActions, uploadImage} from '@/app/actions';
+import {put, PutBlobResult} from '@vercel/blob';
+import { revalidatePath } from 'next/cache';
+import {any} from "zod";
+import {redirect} from "next/navigation";
 
 
 
@@ -25,7 +29,7 @@ export const AddRecord: React.FC<Props> = ({user, category, product, productItem
     const [productItemNameState, setProductItemNameState] = React.useState('');
 
     const [timestatState, setTimestatState] = React.useState('');
-    const [imgState, setImgState] = React.useState('');
+
     const [videoState, setVideoState] = React.useState('');
 
     //const [productState, setProductState] = React.useState<Product[]>(product);
@@ -41,26 +45,8 @@ export const AddRecord: React.FC<Props> = ({user, category, product, productItem
     const productIdRef = React.useRef(0);
     const productItemIdRef = React.useRef(0);
     const addRecordViewRef = React.useRef(false);
-
-    // useEffect(() => {
-    //     //setProductItemState(productItem)
-    //     let array: ProductItem[] = []
-    //     if(productIdRef.current !== null) {
-    //         for (let i = 0; i < productItem.length; i++) {
-    //             if (productItem[i].productId === productIdRef.current) {
-    //                 array.push(productItem[i]);
-    //             }
-    //         }
-    //         setProductItemFindState(array);
-    //         setProductItemFindState2(array);
-    //         setCreateState('')
-    //     }
-    // }, [productItem]);
-
-    // useEffect(() => {
-    //     setProductItemFindState([]);
-    //     setProductItemFindState2([]);
-    // }, [categoryIdRef.current]);
+    const imgRef = React.useRef(true);
+    const [file, setFile] = React.useState(null)
 
 
     const productFind = (item : any) => {
@@ -90,7 +76,35 @@ export const AddRecord: React.FC<Props> = ({user, category, product, productItem
         addRecordViewRef.current = false;
     }
 
-    const addRecordFB = async () => {
+    const selectFile = (e : any) => {
+        if (e.target.files[0]) {
+            if (e.target.files[0].size > 1 * 1000 * 1024) {
+                setFile(null)
+                imgRef.current = true;
+                return toast.error('Error create, Image > 1MB', {
+                    icon: '❌',
+                });
+            }else {
+                setFile(e.target.files[0])
+                imgRef.current = false;
+            }
+        }
+    }
+
+    const addRecordIMAGE = async () => {
+        const formData = new FormData();
+        //@ts-ignore
+        formData.append('image', file)
+        await uploadImage(formData as FormData).then(blop => {
+            if ('error' in blop) {
+                return toast.error(`Failed to upload image: ${blop.error}`, {icon: '❌',});
+            }
+            toast.error('Image create 📝', {icon: '✅',});
+            addRecordFB(blop);
+        });
+    }
+
+    const addRecordFB = async (blop: PutBlobResult ) => {
         try {
             await addRecordActions({
                 userId: user.id,
@@ -99,10 +113,10 @@ export const AddRecord: React.FC<Props> = ({user, category, product, productItem
                 productItemId: productItemIdRef.current,
                 timestate: timestatState,
                 video: videoState,
-                img: imgState,
+                img: blop.url,
             });
-
-            toast.error('Data create 📝', {
+            imgRef.current = true;
+            toast.error('Record create 📝', {
                 icon: '✅',
             });
 
@@ -112,6 +126,7 @@ export const AddRecord: React.FC<Props> = ({user, category, product, productItem
             });
         }
     }
+
 
     return (
         <Container className="mt-4">
@@ -168,6 +183,16 @@ export const AddRecord: React.FC<Props> = ({user, category, product, productItem
                     <Title text={`${productItemNameState}`} size="md" className="font-bold"/>
                     {(productItemIdRef.current !== 0 && addRecordViewRef.current === true) &&
                         <div>
+                            <label htmlFor="image">{"Image < 2Mb"}</label>
+                            <Input
+                                type="file"
+                                id="image"
+                                name="image"
+                                accept=".jpg, .jpeg, .png, image/*"
+                                required
+                                onChange={selectFile}
+                            />
+
                             <div className="m-2">
                                 <Input
                                     name="timestate"
@@ -180,14 +205,7 @@ export const AddRecord: React.FC<Props> = ({user, category, product, productItem
                                     }}
                                 />
                             </div>
-                            <div className="m-2">
-                                <Input type='text'
-                                       placeholder="IMAGE"
-                                       onChange={e => {
-                                           setImgState(e.target.value)
-                                       }}
-                                />
-                            </div>
+
                             <div className="m-2">
                                 <Input type='text'
                                        placeholder="VIDEO"
@@ -196,12 +214,20 @@ export const AddRecord: React.FC<Props> = ({user, category, product, productItem
                                        }}
                                 />
                             </div>
-                            <div className="m-2">
-                                <Button
-                                    disabled={timestatState === "" || imgState === "" || videoState === ""}
-                                    onClick={addRecordFB}
-                                >Add Record</Button>
-                            </div>
+
+
+                            <Button type="submit"
+                                    disabled={timestatState === "" || videoState === "" || imgRef.current === true}
+                                    onClick={addRecordIMAGE}
+                            >Upload</Button>
+
+
+                            {/*<div className="m-2">*/}
+                            {/*    <Button*/}
+                            {/*        disabled={timestatState === "" || videoState === ""}*/}
+                            {/*        onClick={addRecordFB}*/}
+                            {/*    >Add Record</Button>*/}
+                            {/*</div>*/}
                         </div>
                     }
                 </div>

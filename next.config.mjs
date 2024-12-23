@@ -13,6 +13,13 @@ const nextConfig = {
             },
         ]
     },
+    experimental: {
+        serverActions: {
+            bodySizeLimit: '1mb',
+            serverActions: true,
+            allowedOrigins: ['localhost:3000/', 'gamerecord.online'],
+        },
+    },
 };
 
 export default nextConfig;

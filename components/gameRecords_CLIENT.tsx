@@ -23,14 +23,14 @@ interface Props {
 
 export const GameRecord_CLIENT: React.FC<Props> = ({gameRecords}) => {
 
-    const [isMounted, setIsMounted] = useState(false);
-    useEffect(() => {
-        setIsMounted(true);
-    }, []);
-
-    if (!isMounted) {
-        return null;
-    }
+    // const [isMounted, setIsMounted] = useState(false);
+    // useEffect(() => {
+    //     setIsMounted(true);
+    // }, []);
+    //
+    // if (!isMounted) {
+    //     return null;
+    // }
 
     return (
 
@@ -70,7 +70,10 @@ export const GameRecord_CLIENT: React.FC<Props> = ({gameRecords}) => {
                                         <div>Video</div>
 
                                     </TableCell>
-                                    <TableCell className="text-right">{new Date().toLocaleString(records.updatedAt)}</TableCell>
+                                    <TableCell className="text-right">
+                                        <div>{new Date(records.updatedAt).toLocaleDateString('ru-RU')}</div>
+                                        <div>{new Date(records.updatedAt).toLocaleTimeString('ru-RU')}</div>
+                                        </TableCell>
                                 </TableRow>
                             </TableBody>
 

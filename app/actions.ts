@@ -5,7 +5,7 @@ import {Prisma} from '@prisma/client';
 import {hashSync} from 'bcrypt';
 import {revalidatePath} from 'next/cache'
 import {redirect} from 'next/navigation'
-import {PutBlobResult} from "@vercel/blob";
+import {put, PutBlobResult} from "@vercel/blob";
 
 
 export async function updateUserInfo(body: Prisma.UserUpdateInput) {
@@ -61,6 +61,30 @@ export async function registerUser(body: Prisma.UserCreateInput) {
   } catch (err) {
     console.log('Error [CREATE_USER]', err);
     throw err;
+  }
+}
+
+export async function uploadImage(formData: FormData) {
+  try {
+    const imageFile = formData.get('image') as File;
+    const blob = await put(imageFile.name, imageFile, {
+      access: 'public',
+    });
+    revalidatePath('/add-record');
+    return blob;
+
+  // } catch (error) {
+  //   if (error instanceof Error) {
+  //     console.log(error.stack);
+  //   }
+  //   throw new Error('Failed to record your interaction. Please try again.');
+  // }
+  } catch (error: any) {
+    if (error.code === 'P2002') {
+      return {error: 'That slug already exists.'}
+    }
+
+    return {error: error.message || 'Failed to create the blog.'}
   }
 }
 
@@ -389,7 +413,6 @@ export async function addRecordActions(data :any) {
     throw new Error('Failed to record your interaction. Please try again.');
   }
 }
-
 
 
 
