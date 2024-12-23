@@ -3,6 +3,7 @@ import React, {useEffect, useState} from "react";
 import {DeleteButton} from "@/components/deleteButton";
 import Image from "next/image";
 import {ListBlobResult} from "@vercel/blob";
+import { Images } from 'lucide-react';
 
 import {
     Dialog,
@@ -24,7 +25,7 @@ export const BlopImage: React.FC<Props> = ({ img }) => {
 
     return (
             <Dialog>
-                <DialogTrigger>Open</DialogTrigger>
+                <DialogTrigger><Images/></DialogTrigger>
                 <DialogContent className="max-w-fit">
                     <DialogHeader>
                         <DialogTitle></DialogTitle>
@@ -37,8 +38,8 @@ export const BlopImage: React.FC<Props> = ({ img }) => {
                                     }
                                     src={imageSrc}
                                     alt={''}
-                                    width={700}
-                                    height={500}
+                                    width={1000}
+                                    height={800}
                                 />
                         </DialogDescription>
                     </DialogHeader>

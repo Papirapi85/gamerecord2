@@ -66,7 +66,6 @@ export const GameRecord_CLIENT: React.FC<Props> = ({gameRecords}) => {
                                     <TableCell>{records.productItem.name}</TableCell>
                                     <TableCell className="text-right">{records.timestate.substring(3)}</TableCell>
                                     <TableCell>
-                                        <div><a href={records.img} target="_blank">Image</a></div>
                                         <div>
                                                 <BlopImage img={records.img}/>
                                         </div>
