@@ -18,7 +18,7 @@ export const VideoYouTube: React.FC<Props> = ({video}) => {
                 <DialogHeader>
                     <DialogTitle></DialogTitle>
                     <DialogDescription>
-                        <iframe src={text} width='1000' height='700' allowFullScreen/>
+                        <iframe src={text+"?autoplay=1"} width='1000' height='700' allow='autoplay'   allowFullScreen/>
                     </DialogDescription>
                 </DialogHeader>
             </DialogContent>
