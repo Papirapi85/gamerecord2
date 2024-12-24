@@ -18,7 +18,7 @@ interface Props {
     img: string | (() => string)
 }
 
-export const BlopImage: React.FC<Props> = ({ img }) => {
+export const ImageBlop: React.FC<Props> = ({ img }) => {
     const [imageSrc, setImageSrc] = useState<string>(img);
 
 
@@ -39,7 +39,7 @@ export const BlopImage: React.FC<Props> = ({ img }) => {
                                     src={imageSrc}
                                     alt={''}
                                     width={1000}
-                                    height={800}
+                                    height={700}
                                 />
                         </DialogDescription>
                     </DialogHeader>

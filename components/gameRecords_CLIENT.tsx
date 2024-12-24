@@ -15,7 +15,8 @@ import {
 import {Container} from "@/components/container";
 import {cn} from "@/components/lib/utils";
 import {className} from "postcss-selector-parser";
-import {BlopImage} from "@/components/blop-image";
+import {ImageBlop} from "@/components/image-blop";
+import {VideoYouTube} from "@/components/video-you-tube";
 
 interface Props {
     gameRecords: any[];
@@ -67,10 +68,9 @@ export const GameRecord_CLIENT: React.FC<Props> = ({gameRecords}) => {
                                     <TableCell className="text-right">{records.timestate.substring(3)}</TableCell>
                                     <TableCell>
                                         <div>
-                                                <BlopImage img={records.img}/>
+                                            <ImageBlop img={records.img}/>
+                                            { records.video !== "" && <VideoYouTube video={records.video}/>}
                                         </div>
-                                        <div>Video</div>
-
                                     </TableCell>
                                     <TableCell className="text-right">
                                         <div>{new Date(records.updatedAt).toLocaleDateString('ru-RU')}</div>

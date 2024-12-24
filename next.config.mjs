@@ -15,7 +15,7 @@ const nextConfig = {
     },
     experimental: {
         serverActions: {
-            bodySizeLimit: '1mb',
+            bodySizeLimit: '2mb',
             serverActions: true,
             allowedOrigins: ['localhost:3000/', 'gamerecord.online'],
         },

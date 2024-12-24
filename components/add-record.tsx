@@ -78,10 +78,10 @@ export const AddRecord: React.FC<Props> = ({user, category, product, productItem
 
     const selectFile = (e : any) => {
         if (e.target.files[0]) {
-            if (e.target.files[0].size > 1 * 1000 * 1024) {
+            if (e.target.files[0].size > 2 * 1000 * 1024) {
                 setFile(null)
                 imgRef.current = true;
-                return toast.error('Error create, Image > 1MB', {
+                return toast.error('Error create, Image > 2MB', {
                     icon: '❌',
                 });
             }else {
