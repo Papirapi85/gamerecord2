@@ -47,6 +47,7 @@ export const AddRecord: React.FC<Props> = ({user, category, product, productItem
 
     const productFind = (item : any) => {
         categoryIdRef.current = item.id;
+        productIdRef.current = 0;
         let array = []
         for (let i = 0; i < product.length; i++) {
             if (product[i].categoryId === item.id) {
@@ -143,7 +144,7 @@ export const AddRecord: React.FC<Props> = ({user, category, product, productItem
                 {/*PRODUCT_LIST*/}
                 <div className="flex-1 w-[20%]">
                     <Title text={`${categoryNameState}`} size="md" className="font-bold"/>
-                    <Title text={`Product List`} size="xs"/>
+                    <Title text={`Game List`} size="xs"/>
                     {categoryIdRef.current !== 0 && productFindState.map((item, index) => (
                         <div key={index} className="flex w-full max-w-sm items-center space-x-2 mb-1">
                             {/*<p>{item.id}</p>*/}
@@ -157,7 +158,7 @@ export const AddRecord: React.FC<Props> = ({user, category, product, productItem
                 {/*PRODUCT_ITEM*/}
                 <div className="flex-1 w-[30%]">
                     <Title text={`${productNameState}`} size="md" className="font-bold"/>
-                    <Title text={`Product Item Edit`} size="xs"/>
+                    <Title text={`Road List`} size="xs"/>
                     {productIdRef.current !== 0 && productItemState.map((item, index) => (
                         <div key={index} className="flex w-full max-w-sm items-center space-x-2 mb-1">
                                 {/*<p>{item.id}</p>*/}

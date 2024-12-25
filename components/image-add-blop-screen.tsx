@@ -38,15 +38,15 @@ const ImageAddBlobScreen: React.FC<ImageAddBlobScreenProps> = ({ onFormDataReady
         <div
             onPaste={handlePaste}
             style={{
-                border: "2px dashed #ccc",
-                padding: "20px",
+                border: "1px dashed #ccc",
+                padding: "2px",
                 textAlign: "center",
             }}
         >
-            <h2>Вставьте изображение с помощью Ctrl+V</h2>
+            <h2>Buffer input Ctrl+V</h2>
             {preview && (
                 <div>
-                    <h3>Предпросмотр:</h3>
+                    {/*<h3>Предпросмотр:</h3>*/}
                     <img src={preview} alt="Preview" style={{ maxWidth: "100%" }} />
                 </div>
             )}

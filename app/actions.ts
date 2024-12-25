@@ -6,7 +6,7 @@ import {hashSync} from 'bcrypt';
 import {revalidatePath} from 'next/cache'
 import {redirect} from 'next/navigation'
 import {put, PutBlobResult} from "@vercel/blob";
-
+import {list} from "@vercel/blob"
 
 export async function updateUserInfo(body: Prisma.UserUpdateInput) {
   try {
@@ -70,20 +70,30 @@ export async function uploadImage(formData: FormData) {
     const blob = await put(imageFile.name, imageFile, {
       access: 'public',
     });
-    revalidatePath('/add-record');
+    revalidatePath('/edit-record');
     return blob;
 
-  // } catch (error) {
-  //   if (error instanceof Error) {
-  //     console.log(error.stack);
-  //   }
-  //   throw new Error('Failed to record your interaction. Please try again.');
-  // }
   } catch (error: any) {
     if (error.code === 'P2002') {
       return {error: 'That slug already exists.'}
     }
+    return {error: error.message || 'Failed to create the blog.'}
+  }
+}
 
+export async function updateImage(formData: FormData) {
+  try {
+    const imageFile = formData.get('image') as File;
+    const blob = await put(imageFile.name, imageFile, {
+      access: 'public',
+    });
+    revalidatePath('/edit-record');
+    return blob;
+
+  } catch (error: any) {
+    if (error.code === 'P2002') {
+      return {error: 'That slug already exists.'}
+    }
     return {error: error.message || 'Failed to create the blog.'}
   }
 }
@@ -184,7 +194,7 @@ export async function categoryCreate(data: any) {
     revalidatePath('/admin/category')
 
   } catch (err) {
-    //console.log('Error [CREATE_CATEGORY]', err);
+    console.log('Error [CREATE_CATEGORY]', err);
     throw err;
   }
 }
@@ -414,5 +424,60 @@ export async function addRecordActions(data :any) {
   }
 }
 
+export async function editRecordActions(data :any) {
 
+  let result;
+  try {
+    result = await prisma.gameRecords.findFirst({
+      where: {
+        id: data.id,
+        userId: data.userId,
+        categoryId: data.categoryId,
+        productId: data.productId,
+        productItemId: data.productItemId,
+      }
+    })
+
+    if (!result) {
+      throw new Error('editRecordActions result not found');
+    }
+
+    console.log("data");
+    console.log(data);
+
+    await prisma.gameRecords.update({
+      where: {
+        id: data.id,
+        userId: data.userId,
+        categoryId: data.categoryId,
+        productId: data.productId,
+        productItemId: data.productItemId,
+      },
+      data: {
+        timestate: String(data.timestate),
+        video: data.video,
+        img: data.img,
+      },
+    });
+
+    console.log(data.deleteImg);
+    const fileKey = new URL(data.deleteImg).pathname.slice(1);
+    console.log(fileKey);
+
+
+
+
+
+    // await fetch('/api/blop/del/' + encodeURIComponent(data.deleteImg.replace("https://", "")), {
+    //   method: 'DELETE',
+    //   headers: { 'Content-Type': 'application/json' },
+    // });
+    revalidatePath('/admin/edit-record')
+  }catch (error) {
+    if (error instanceof Error) {
+      console.log(error.stack);
+    }
+    throw new Error('Failed to record your interaction. Please try again.');
+  }
+}
 

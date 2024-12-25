@@ -14,6 +14,10 @@ export default async function AdminPage() {
 
   const user = await prisma.user.findFirst({ where: { id: Number(session?.id) } });
   const gameRecords = await prisma.gameRecords.findMany({
+
+   where: {
+     userId: Number(session?.id)
+   },
     include: {
       user: true,
       product: true,

@@ -34,7 +34,7 @@ export const TopBar: React.FC<Props> = ({className}) => {
                     <Link href="/add-record">
                         <Button variant="secondary" className="flex items-center gap-2">
                             <FilePlus2 size={18} />
-                            ADD
+                            ADD RECORD
                         </Button>
                     </Link>
                 </div>
@@ -42,7 +42,7 @@ export const TopBar: React.FC<Props> = ({className}) => {
                     <Link href="/edit-record">
                         <Button variant="secondary" className="flex items-center gap-2">
                             <FileCog size={18} />
-                            EDIT
+                            EDIT RECORD
                         </Button>
                     </Link>
                 </div>
