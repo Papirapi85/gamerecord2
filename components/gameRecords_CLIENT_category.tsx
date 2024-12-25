@@ -17,23 +17,14 @@ import {cn} from "@/components/lib/utils";
 import {className} from "postcss-selector-parser";
 import {ImageBlopDialog} from "@/components/image-blop-dialog";
 import {VideoYouTube} from "@/components/video-you-tube";
-import {Button} from "@/components/ui";
 
-export default function GameRecord_CLIENT({
-                                              data,
-                                              currentPage,
-                                              totalPages,
-                                          }: {
-    data: Array<any>;
-    currentPage: number;
-    totalPages: number;
-}) {
-    const [page, setPage] = useState(currentPage);
+interface Props {
+    gameRecords: any[];
+    className?: string;
+}
 
-    const handlePageChange = (newPage: number) => {
-        setPage(newPage);
-        document.location.href = `/?page=${newPage}`;
-    };
+export const GameRecord_CLIENT_category: React.FC<Props> = ({gameRecords}) => {
+
     return (
         <div>
             <Container className="w-[100%] ">
@@ -58,7 +49,7 @@ export default function GameRecord_CLIENT({
 
                     <Suspense>
                         {
-                            data.map((records, index) => (
+                            gameRecords.map((records, index) => (
                                 <TableBody key={index}>
                                     <TableRow>
                                         <TableCell className="font-medium">{records.user.fullName}</TableCell>
@@ -83,24 +74,6 @@ export default function GameRecord_CLIENT({
                     </Suspense>
                 </Table>
             </Container>
-
-            <div className="pagination text-center">
-                <Button className="m-5 w-[100px]"
-                    onClick={() => handlePageChange(page - 1)}
-                    disabled={page === 1}
-                >
-                    Previous
-                </Button>
-                <span>
-                    Page {page} of {totalPages}
-                </span>
-                <Button className="m-5 w-[100px]"
-                    onClick={() => handlePageChange(page + 1)}
-                    disabled={page === totalPages}
-                >
-                    Next
-                </Button>
-            </div>
         </div>
     );
 };

@@ -1,10 +1,11 @@
 import { Container } from '@/components/container';
 import { prisma } from '@/prisma/prisma-client';
 import { notFound } from 'next/navigation';
-import {GameRecord_CLIENT} from "@/components/gameRecords_CLIENT";
+
 import React, {Suspense} from "react";
 import Loading from "@/app/(root)/loading";
 import { InferGetServerSidePropsType } from 'next';
+import {GameRecord_CLIENT_category} from "@/components/gameRecords_CLIENT_category";
 
 export default async function RecordPage({ params }: InferGetServerSidePropsType<any>) {
     // Явно дожидаемся params
@@ -31,7 +32,7 @@ export default async function RecordPage({ params }: InferGetServerSidePropsType
     return (
         <Container className="flex flex-col my-10">
             <Suspense fallback={<Loading />}>
-                <GameRecord_CLIENT gameRecords={gameRecords} />
+                <GameRecord_CLIENT_category gameRecords={gameRecords} />
             </Suspense>
         </Container>
     );

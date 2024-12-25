@@ -8,6 +8,29 @@ import {redirect} from 'next/navigation'
 import {put, PutBlobResult} from "@vercel/blob";
 import {list} from "@vercel/blob"
 
+export async function fetchPaginatedGameRecords(page: number, limit: number) {
+  // Смещение для текущей страницы
+  const offset = (page - 1) * limit;
+
+  // Пример: извлечение данных из базы данных
+  const records = await prisma.gameRecords.findMany({
+    include: {
+      user: true,
+      product: true,
+      productItem: true,
+      category: true,
+    },
+    skip: offset,
+    take: limit,
+    orderBy: { updatedAt: 'desc' }, // Ваши настройки сортировки
+  });
+
+  // Подсчёт общего количества записей
+  const total = await prisma.gameRecords.count();
+
+  return { records, total };
+}
+
 export async function updateUserInfo(body: Prisma.UserUpdateInput) {
   try {
     const currentUser = await getUserSession();
