@@ -15,7 +15,7 @@ import {
 import {Container} from "@/components/container";
 import {cn} from "@/components/lib/utils";
 import {className} from "postcss-selector-parser";
-import {ImageBlop} from "@/components/image-blop";
+import {ImageBlopDialog} from "@/components/image-blop-dialog";
 import {VideoYouTube} from "@/components/video-you-tube";
 
 interface Props {
@@ -68,7 +68,7 @@ export const GameRecord_CLIENT: React.FC<Props> = ({gameRecords}) => {
                                     <TableCell className="text-right">{records.timestate.substring(3)}</TableCell>
                                     <TableCell>
                                         <div>
-                                            <ImageBlop img={records.img}/>
+                                            <ImageBlopDialog img={records.img}/>
                                             { records.video !== "" && <VideoYouTube video={records.video}/>}
                                         </div>
                                     </TableCell>

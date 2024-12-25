@@ -1,8 +1,6 @@
 "use client"
-import React, {useEffect, useState} from "react";
-import {DeleteButton} from "@/components/deleteButton";
+import React, {useState} from "react";
 import Image from "next/image";
-import {ListBlobResult} from "@vercel/blob";
 import { Images } from 'lucide-react';
 
 import {
@@ -18,7 +16,7 @@ interface Props {
     img: string | (() => string)
 }
 
-export const ImageBlop: React.FC<Props> = ({ img }) => {
+export const ImageBlopDialog: React.FC<Props> = ({ img }) => {
     const [imageSrc, setImageSrc] = useState<string>(img);
 
 

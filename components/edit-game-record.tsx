@@ -8,6 +8,9 @@ import {addRecordActions, editRecordActions, updateImage, uploadImage} from "@/a
 import toast from "react-hot-toast";
 import ImageAddBlobScreen from "@/components/image-add-blop-screen";
 import {PutBlobResult} from "@vercel/blob";
+import { del } from '@vercel/blob';
+import {DeleteRecordDialog} from "@/components/delete-record-dialog";
+import {ImageBlopDialog} from "@/components/image-blop-dialog";
 
 interface Props {
     user: User;
@@ -26,6 +29,7 @@ export const EditGameRecord: React.FC<Props> = ({ user, gameRecords, className})
     const categoryIdRef = useRef("");
     const productIdRef = useRef("");
     const productItemIdRef = useRef("");
+    const checkButtonUpdateRef = useRef(0);
 
 
 
@@ -55,15 +59,16 @@ export const EditGameRecord: React.FC<Props> = ({ user, gameRecords, className})
                 timestate: timeState,
                 img: blop.url,
                 linkVideo: linkVideo,
-                deleteImg: img,
             })
 
+            await fetch('/api/blop/del/' + encodeURIComponent(img), {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+            });
 
             toast.error('Record edit 📝', {
                 icon: '✅',
             });
-
-
 
         } catch (error) {
             return toast.error('Error edit data', {
@@ -110,9 +115,10 @@ export const EditGameRecord: React.FC<Props> = ({ user, gameRecords, className})
                                             type="time"
                                             step="0.001"
                                             defaultValue="00:00"
-                                            onChange={e =>
-                                                setTimeState(e.target.value)
-                                            }
+                                            onChange={e => {
+                                                setTimeState(e.target.value);
+                                                checkButtonUpdateRef.current = records.id;
+                                            }}
                                         />
                                     </TableCell>
 
@@ -163,7 +169,7 @@ export const EditGameRecord: React.FC<Props> = ({ user, gameRecords, className})
                                     <TableCell className="text-right">
                                         <div>
                                             <Button className="w-[60px] h-[20px] mb-1"
-                                                    disabled={!formDataImage}
+                                                    disabled={!formDataImage || checkButtonUpdateRef.current !== records.id}
                                                     onClick={()=>{
                                                         idRef.current = records.id;
                                                         categoryIdRef.current = records.categoryId;
@@ -171,11 +177,10 @@ export const EditGameRecord: React.FC<Props> = ({ user, gameRecords, className})
                                                         productItemIdRef.current = records.productItemId;
                                                         addRecordIMAGE(records.img).then(()=>toast.error('Record edit 📝', {icon: '✅'}));
                                                     }}
-
                                             >Update</Button>
                                         </div>
-                                        <div >
-                                            <Button className="w-[60px] h-[20px]">Delete</Button>
+                                        <div>
+                                            <DeleteRecordDialog id={records.id} />
                                         </div>
                                     </TableCell>
                                 </TableRow>

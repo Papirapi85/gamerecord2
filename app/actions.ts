@@ -67,10 +67,10 @@ export async function registerUser(body: Prisma.UserCreateInput) {
 export async function uploadImage(formData: FormData) {
   try {
     const imageFile = formData.get('image') as File;
-    const blob = await put(imageFile.name, imageFile, {
+    const blob = await put('nfs/' + imageFile.name, imageFile, {
       access: 'public',
     });
-    revalidatePath('/edit-record');
+    revalidatePath('/add-record');
     return blob;
 
   } catch (error: any) {
@@ -84,7 +84,7 @@ export async function uploadImage(formData: FormData) {
 export async function updateImage(formData: FormData) {
   try {
     const imageFile = formData.get('image') as File;
-    const blob = await put(imageFile.name, imageFile, {
+    const blob = await put('nfs/' + imageFile.name, imageFile, {
       access: 'public',
     });
     revalidatePath('/edit-record');
@@ -95,45 +95,6 @@ export async function updateImage(formData: FormData) {
       return {error: 'That slug already exists.'}
     }
     return {error: error.message || 'Failed to create the blog.'}
-  }
-}
-
-export async function createBlopAction(data: { newBlob: PutBlobResult }) {
-  let post
-  try {
-    post = await prisma.post.create({
-      data: {
-        content: data.newBlob.url,
-      }
-    })
-
-    if (!post) {
-      return {error: 'Failed to create the blog.'}
-    }
-  } catch (error: any) {
-    if (error.code === 'P2002') {
-      return {error: 'That slug already exists.'}
-    }
-
-    return {error: error.message || 'Failed to create the blog.'}
-  }
-
-  revalidatePath('/')
-  redirect(`/blop/list-data`)
-}
-export async function deleteBlopAction(data: { id: Number }) {
-  let post
-  try {
-    post = await prisma.post.delete({
-      where: {
-        id: Number(data.id),
-      },
-    });
-    if (!post) {
-      return {error: 'No Delete'}
-    }
-  } catch (e) {
-
   }
 }
 
@@ -460,35 +421,36 @@ export async function editRecordActions(data :any) {
       },
     });
 
-    console.log(data.deleteImg);
-    const fileKey = new URL(data.deleteImg).pathname.slice(1);
-    console.log(fileKey);
-
-    // Отправить DELETE-запрос для удаления объекта
-    const response = await fetch(`https://g7ttfzigvkyrt3gn.public.blob.vercel-storage.com/${fileKey}`, {
-      method: 'DELETE',
-      headers: {
-        Authorization: `vercel_blob_rw_G7tTfzigvKYRT3Gn_86f9EcSuU3miSpqIiiG3ABkUpWISvx`, // Токен доступа к Vercel Blob API
-      },
-    });
-
-    // Проверить успешность запроса
-    if (!response.ok) {
-      console.log(`NO DELETE!!!!`);
-    }else {
-      console.log(`DELETE!!!!`);
-    }
-
-
-
-
-
-    // await fetch('/api/blop/del/' + encodeURIComponent(data.deleteImg.replace("https://", "")), {
-    //   method: 'DELETE',
-    //   headers: { 'Content-Type': 'application/json' },
-    // });
     revalidatePath('/admin/edit-record')
   }catch (error) {
+    if (error instanceof Error) {
+      console.log(error.stack);
+    }
+    throw new Error('Failed to record your interaction. Please try again.');
+  }
+}
+
+export async function deleteRecordActions(data :any) {
+  let record;
+  console.log('data data data data')
+  console.log(data.id)
+  try {
+    record = await prisma.gameRecords.findFirst({
+      where: {
+        id: data.id,
+      },
+    });
+    if (!record) {
+      throw new Error('recordGame not found');
+    }
+    console.log('1111111111111111111')
+    await prisma.gameRecords.delete({
+      where: {
+        id: data.id,
+      }
+    })
+    revalidatePath('/edit-record')
+  } catch (error) {
     if (error instanceof Error) {
       console.log(error.stack);
     }
