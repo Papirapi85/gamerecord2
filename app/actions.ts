@@ -464,6 +464,21 @@ export async function editRecordActions(data :any) {
     const fileKey = new URL(data.deleteImg).pathname.slice(1);
     console.log(fileKey);
 
+    // Отправить DELETE-запрос для удаления объекта
+    const response = await fetch(`https://g7ttfzigvkyrt3gn.public.blob.vercel-storage.com/${fileKey}`, {
+      method: 'DELETE',
+      headers: {
+        Authorization: `vercel_blob_rw_G7tTfzigvKYRT3Gn_86f9EcSuU3miSpqIiiG3ABkUpWISvx`, // Токен доступа к Vercel Blob API
+      },
+    });
+
+    // Проверить успешность запроса
+    if (!response.ok) {
+      console.log(`NO DELETE!!!!`);
+    }else {
+      console.log(`DELETE!!!!`);
+    }
+
 
 
 
