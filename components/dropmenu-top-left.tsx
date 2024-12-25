@@ -8,9 +8,17 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import {Menu} from "lucide-react";
+import React from "react";
+import Link from "next/link";
+import {Category} from "@prisma/client";
 
 
-export function DropmenuTopLeft() {
+interface Props {
+    category: Category[];
+}
+
+export const DropmenuTopLeft: React.FC<Props> = ({category}) => {
+
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -18,16 +26,17 @@ export function DropmenuTopLeft() {
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56">
                 <DropdownMenuLabel>SORT</DropdownMenuLabel>
-                <DropdownMenuSeparator />
+                <DropdownMenuSeparator/>
                 <DropdownMenuGroup>
-                    <DropdownMenuItem>
-                        NFS
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                        F1
-                    </DropdownMenuItem>
+                    {category.map((item) => (
+                        <Link key={item.id} href={`/record/${item.name}`}>
+                            <DropdownMenuItem>
+                                    {item.name}
+                            </DropdownMenuItem>
+                        </Link>
+                    ))}
                 </DropdownMenuGroup>
             </DropdownMenuContent>
         </DropdownMenu>
-    )
-}
+    );
+};

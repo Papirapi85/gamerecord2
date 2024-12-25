@@ -46,14 +46,18 @@ export const AdminProductItem: React.FC<Props> = ({user, category, product, prod
             setCreateState('')
         }
     }, [productItem]);
-
+    //@ts-ignore
     useEffect(() => {
         setProductItemFindState([]);
         setProductItemFindState2([]);
-    }, [categoryIdRef.current]);
+
+    },
+        //@ts-ignore
+        [categoryIdRef.current]);
 
 
     const productFind = (item : any) => {
+        //@ts-ignore
         categoryIdRef.current = item.id;
         let array = []
         for (let i = 0; i < productState.length; i++) {

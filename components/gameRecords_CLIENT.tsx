@@ -25,65 +25,56 @@ interface Props {
 
 export const GameRecord_CLIENT: React.FC<Props> = ({gameRecords}) => {
 
-    // const [isMounted, setIsMounted] = useState(false);
-    // useEffect(() => {
-    //     setIsMounted(true);
-    // }, []);
-    //
-    // if (!isMounted) {
-    //     return null;
-    // }
-
     return (
+        <div>
+            <Container className="w-[100%] ">
+                <Table>
+                    <TableCaption>Gamerecord.online</TableCaption>
+                    <TableHeader>
+                        <TableRow>
+                            <TableHead className="w-[12%] text-left">Player</TableHead>
+                            <TableHead className="w-[12%]">Category</TableHead>
+                            <TableHead className="w-[12%]">Game</TableHead>
+                            <TableHead className="w-[12%]">Road</TableHead>
+                            <TableHead className="w-[12%] text-right">Time</TableHead>
+                            <TableHead className="w-[7%]">
+                                <div>Image</div>
+                                <div>Link</div>
 
-        <Container className="w-[100%]">
-            <Table>
-                <TableCaption>Gamerecord.online</TableCaption>
-                <TableHeader>
-                    <TableRow>
-                        <TableHead className="w-[12%] text-left">Player</TableHead>
-                        <TableHead className="w-[12%]">Category</TableHead>
-                        <TableHead className="w-[12%]">Game</TableHead>
-                        <TableHead className="w-[12%]">Road</TableHead>
-                        <TableHead className="w-[12%] text-right">Time</TableHead>
-                        <TableHead className="w-[7%]">
-                            <div>Image</div>
-                            <div>Link</div>
-
-                        </TableHead>
-                        <TableHead className="w-[7%] text-right">Date</TableHead>
-                    </TableRow>
-                </TableHeader>
+                            </TableHead>
+                            <TableHead className="w-[7%] text-right">Date</TableHead>
+                        </TableRow>
+                    </TableHeader>
 
 
-                <Suspense>
-                    {
-                        gameRecords.map((records, index) => (
-                            <TableBody key={index}>
-                                <TableRow>
-                                    <TableCell className="font-medium">{records.user.fullName}</TableCell>
-                                    <TableCell>{records.category.name}</TableCell>
-                                    <TableCell>{records.product.name}</TableCell>
-                                    <TableCell>{records.productItem.name}</TableCell>
-                                    <TableCell className="text-right">{records.timestate.substring(3)}</TableCell>
-                                    <TableCell>
-                                        <div>
-                                            <ImageBlopDialog img={records.img}/>
-                                            { records.video !== "" && <VideoYouTube video={records.video}/>}
-                                        </div>
-                                    </TableCell>
-                                    <TableCell className="text-right">
-                                        <div>{new Date(records.updatedAt).toLocaleDateString('ru-RU')}</div>
-                                        <div>{new Date(records.updatedAt).toLocaleTimeString('ru-RU')}</div>
+                    <Suspense>
+                        {
+                            gameRecords.map((records, index) => (
+                                <TableBody key={index}>
+                                    <TableRow>
+                                        <TableCell className="font-medium">{records.user.fullName}</TableCell>
+                                        <TableCell>{records.category.name}</TableCell>
+                                        <TableCell>{records.product.name}</TableCell>
+                                        <TableCell>{records.productItem.name}</TableCell>
+                                        <TableCell className="text-right">{records.timestate.substring(3)}</TableCell>
+                                        <TableCell>
+                                            <div>
+                                                <ImageBlopDialog img={records.img}/>
+                                                {records.video !== "" && <VideoYouTube video={records.video}/>}
+                                            </div>
                                         </TableCell>
-                                </TableRow>
-                            </TableBody>
+                                        <TableCell className="text-right">
+                                            <div>{new Date(records.updatedAt).toLocaleDateString('ru-RU')}</div>
+                                            <div>{new Date(records.updatedAt).toLocaleTimeString('ru-RU')}</div>
+                                        </TableCell>
+                                    </TableRow>
+                                </TableBody>
 
-                        ))}
-                </Suspense>
-            </Table>
-        </Container>
-
+                            ))}
+                    </Suspense>
+                </Table>
+            </Container>
+        </div>
     );
 };
 

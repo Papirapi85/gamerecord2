@@ -8,13 +8,15 @@ import {SheetDriverRight} from "@/components/sheet-driver-right";
 import Link from "next/link";
 import {Button} from "@/components/ui";
 import {FileCog, FilePlus2} from "lucide-react";
+import {Category} from '@prisma/client';
 
 
 interface Props {
-  className?: string;
+    category: Category[];
+    className?: string;
 }
 
-export const TopBar: React.FC<Props> = ({className}) => {
+export const TopBar: React.FC<Props> = ({category, className}) => {
   return (
 
       <div className={cn('sticky top-0 bg-secondary py-2 shadow-lg shadow-black/5 z-10', className)}>
@@ -27,7 +29,7 @@ export const TopBar: React.FC<Props> = ({className}) => {
                     <SheetDriverLeft/>
                 </div>
                 <div className={cn('cursor-pointer absolute mt-2 left-1/4 ', className)}>
-                    <DropmenuTopLeft/>
+                    <DropmenuTopLeft category={category}/>
                 </div>
                 <div className={cn('cursor-pointer absolute  right-1/4 ', className)}>
 
