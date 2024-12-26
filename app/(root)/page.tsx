@@ -3,7 +3,7 @@ import {TopBar} from "@/components/top-bar";
 import GameRecords_SERVER from "@/components/gameRecords_SERVER";
 
 export const dynamic = 'force-dynamic'
-export default async function Home({ searchParams }: { searchParams: Promise<{ page: string }> }) {
+export default async function Home({ searchParams }: { searchParams: Promise<{ page?: string }> }) {
     const resolvedSearchParams = await searchParams; // Ждём Promise
     const page = parseInt(resolvedSearchParams.page ?? '1', 30);
     return (
