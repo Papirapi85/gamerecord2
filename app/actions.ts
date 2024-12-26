@@ -93,7 +93,7 @@ export async function uploadImage(formData: FormData) {
     const blob = await put('nfs/' + imageFile.name, imageFile, {
       access: 'public',
     });
-    revalidatePath('/add-record');
+    revalidatePath('/add-category');
     return blob;
 
   } catch (error: any) {
@@ -110,7 +110,7 @@ export async function updateImage(formData: FormData) {
     const blob = await put('nfs/' + imageFile.name, imageFile, {
       access: 'public',
     });
-    revalidatePath('/edit-record');
+    revalidatePath('/edit-category');
     return blob;
 
   } catch (error: any) {
@@ -293,7 +293,7 @@ export async function productCreate(data: any) {
     if (error instanceof Error) {
       console.log(error.stack);
     }
-    throw new Error('Failed to record your interaction. Please try again.');
+    throw new Error('Failed to category your interaction. Please try again.');
   }
 }
 
@@ -379,7 +379,7 @@ export async function productItemCreate(data: any) {
     if (error instanceof Error) {
       console.log(error.stack);
     }
-    throw new Error('Failed to record your interaction. Please try again.');
+    throw new Error('Failed to category your interaction. Please try again.');
   }
 }
 
@@ -404,7 +404,7 @@ export async function addRecordActions(data :any) {
     if (error instanceof Error) {
       console.log(error.stack);
     }
-    throw new Error('Failed to record your interaction. Please try again.');
+    throw new Error('Failed to category your interaction. Please try again.');
   }
 }
 
@@ -444,12 +444,12 @@ export async function editRecordActions(data :any) {
       },
     });
 
-    revalidatePath('/admin/edit-record')
+    revalidatePath('/admin/edit-category')
   }catch (error) {
     if (error instanceof Error) {
       console.log(error.stack);
     }
-    throw new Error('Failed to record your interaction. Please try again.');
+    throw new Error('Failed to category your interaction. Please try again.');
   }
 }
 
@@ -472,12 +472,12 @@ export async function deleteRecordActions(data :any) {
         id: data.id,
       }
     })
-    revalidatePath('/edit-record')
+    revalidatePath('/edit-category')
   } catch (error) {
     if (error instanceof Error) {
       console.log(error.stack);
     }
-    throw new Error('Failed to record your interaction. Please try again.');
+    throw new Error('Failed to category your interaction. Please try again.');
   }
 }
 

@@ -11,7 +11,7 @@ export const DeleteRecordDialog = ({ id }: { id: number }) => {
             await deleteRecordActions({ id }); // Выполнение логики удаления записи
             setOpen(false); // Закрытие диалога после успешного удаления
         } catch (error) {
-            console.error("Error deleting record:", error); // Обработка ошибок
+            console.error("Error deleting category:", error); // Обработка ошибок
         }
     };
 
