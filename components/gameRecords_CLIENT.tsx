@@ -41,17 +41,19 @@ export default function GameRecord_CLIENT({
                     <TableCaption>Gamerecord.online</TableCaption>
                     <TableHeader>
                         <TableRow>
-                            <TableHead className="w-[12%] text-left">Player</TableHead>
-                            <TableHead className="w-[12%]">Category</TableHead>
-                            <TableHead className="w-[12%]">Game</TableHead>
-                            <TableHead className="w-[12%]">Road</TableHead>
-                            <TableHead className="w-[12%] text-right">Time</TableHead>
-                            <TableHead className="w-[7%]">
-                                <div>Image</div>
-                                <div>Link</div>
-
+                            <TableHead className="w-[35%] text-left">
+                                <div>Player</div>
+                                <div>Category</div>
                             </TableHead>
-                            <TableHead className="w-[7%] text-right">Date</TableHead>
+                            <TableHead className="w-[35%]">
+                                <div>Game</div>
+                                <div>Road</div>
+                            </TableHead>
+                            <TableHead className="w-[15%] text-right">
+                                <div>Time</div>
+                                <div>Image, Link</div>
+                            </TableHead>
+                            <TableHead className="w-[10%] text-right">Date</TableHead>
                         </TableRow>
                     </TableHeader>
 
@@ -61,12 +63,16 @@ export default function GameRecord_CLIENT({
                             data.map((records, index) => (
                                 <TableBody key={index}>
                                     <TableRow>
-                                        <TableCell className="font-medium">{records.user.fullName}</TableCell>
-                                        <TableCell>{records.category.name}</TableCell>
-                                        <TableCell>{records.product.name}</TableCell>
-                                        <TableCell>{records.productItem.name}</TableCell>
-                                        <TableCell className="text-right">{records.timestate.substring(3)}</TableCell>
+                                        <TableCell className="font-medium">
+                                            <div>{records.user.fullName}</div>
+                                            <div>{records.category.name}</div>
+                                        </TableCell>
                                         <TableCell>
+                                            <div>{records.product.name}</div>
+                                            <div>{records.productItem.name}</div>
+                                        </TableCell>
+                                        <TableCell>
+                                            <div>{records.timestate.substring(3)}</div>
                                             <div>
                                                 <ImageBlopDialog img={records.img}/>
                                                 {records.video !== "" && <VideoYouTube video={records.video}/>}
@@ -74,7 +80,7 @@ export default function GameRecord_CLIENT({
                                         </TableCell>
                                         <TableCell className="text-right">
                                             <div>{new Date(records.updatedAt).toLocaleDateString('ru-RU')}</div>
-                                            <div>{new Date(records.updatedAt).toLocaleTimeString('ru-RU')}</div>
+                                            <div className="mr-2">{new Date(records.updatedAt).toLocaleTimeString('ru-RU')}</div>
                                         </TableCell>
                                     </TableRow>
                                 </TableBody>

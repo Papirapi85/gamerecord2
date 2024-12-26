@@ -12,17 +12,19 @@ export const VideoYouTube: React.FC<Props> = ({video}) => {
     let text = video.replace("watch?v=", "embed/");
 
     return (
+
         <Dialog>
             <DialogTrigger><FileVideo /></DialogTrigger>
-            <DialogContent className="max-w-fit">
+            <DialogContent>
                 <DialogHeader>
                     <DialogTitle></DialogTitle>
                     <DialogDescription>
-                        <iframe src={text+"?autoplay=1"} width='1000' height='700' allow='autoplay'   allowFullScreen/>
+                        <iframe src={text+"?autoplay=1"} width='100%' height='300px' allow='autoplay'   allowFullScreen/>
                     </DialogDescription>
                 </DialogHeader>
             </DialogContent>
         </Dialog>
+
     )
 
 }

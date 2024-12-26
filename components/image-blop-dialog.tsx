@@ -24,7 +24,7 @@ export const ImageBlopDialog: React.FC<Props> = ({ img }) => {
     return (
             <Dialog>
                 <DialogTrigger><Images/></DialogTrigger>
-                <DialogContent className="max-w-fit">
+                <DialogContent>
                     <DialogHeader>
                         <DialogTitle></DialogTitle>
                         <DialogDescription>
@@ -36,8 +36,8 @@ export const ImageBlopDialog: React.FC<Props> = ({ img }) => {
                                     }
                                     src={imageSrc}
                                     alt={''}
-                                    width={1000}
-                                    height={700}
+                                    width={500}
+                                    height={500}
                                 />
                         </DialogDescription>
                     </DialogHeader>
