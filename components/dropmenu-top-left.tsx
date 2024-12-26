@@ -29,7 +29,7 @@ export const DropmenuTopLeft: React.FC<Props> = ({category}) => {
                 <DropdownMenuSeparator/>
                 <DropdownMenuGroup>
                     {category.map((item) => (
-                        <Link key={item.id} href={`/record/${item.name}`}>
+                        <Link key={item.id} href={`/record/${(item.name).replaceAll(" ","-") }`}>
                             <DropdownMenuItem>
                                     {item.name}
                             </DropdownMenuItem>

@@ -19,16 +19,15 @@ export default async function RecordPage({
 }) {
     // Явно дожидаемся params (expected as a Promise)
     const { name } = await params;
-
     const resolvedSearchParams = await searchParams; // Ждём Promise
     const page = parseInt(resolvedSearchParams.page ?? '1', 30);
-    const pageSize = 10;
+    const pageSize = 20;
     const offset = (page - 1) * pageSize;
 
     const gameRecords = await prisma.gameRecords.findMany({
         where: {
             category: {
-                name: name,
+                name: name.replaceAll("-"," "),
             },
         },
         skip: offset,
@@ -45,7 +44,7 @@ export default async function RecordPage({
     const totalRecords = await prisma.gameRecords.count({
         where: {
             category: {
-                name: name,
+                name: name.replaceAll("-"," "),
             },
         },
     });
