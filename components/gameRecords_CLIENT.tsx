@@ -49,7 +49,7 @@ export default function GameRecord_CLIENT({
                                 <div>Game</div>
                                 <div>Road</div>
                             </TableHead>
-                            <TableHead className="w-[15%] text-right">
+                            <TableHead className="w-[15%]">
                                 <div>Time</div>
                                 <div>Image, Link</div>
                             </TableHead>

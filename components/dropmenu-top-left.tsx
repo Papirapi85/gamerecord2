@@ -22,7 +22,7 @@ export const DropmenuTopLeft: React.FC<Props> = ({category}) => {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <Menu/>
+                <div>Category</div>
             </DropdownMenuTrigger>
             <DropdownMenuContent className="w-56">
                 <DropdownMenuLabel>SORT</DropdownMenuLabel>

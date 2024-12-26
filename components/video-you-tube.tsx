@@ -12,7 +12,6 @@ export const VideoYouTube: React.FC<Props> = ({video}) => {
     let text = video.replace("watch?v=", "embed/");
 
     return (
-
         <Dialog>
             <DialogTrigger><FileVideo /></DialogTrigger>
             <DialogContent>
@@ -24,8 +23,6 @@ export const VideoYouTube: React.FC<Props> = ({video}) => {
                 </DialogHeader>
             </DialogContent>
         </Dialog>
-
     )
-
 }
 
