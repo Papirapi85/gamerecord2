@@ -31,6 +31,9 @@ export default async function ProductItemPage({
             },
             product: {
                 name: productPage.replaceAll("-"," "),
+            },
+            productItem: {
+                name: productItemPage.replaceAll("-"," "),
             }
         },
         skip: offset,
@@ -51,6 +54,9 @@ export default async function ProductItemPage({
             },
             product: {
                 name: productPage.replaceAll("-"," "),
+            },
+            productItem: {
+                name: productItemPage.replaceAll("-"," "),
             }
         },
     });
@@ -62,7 +68,7 @@ export default async function ProductItemPage({
             <Suspense fallback={<Loading />}>
                 <GameRecord_CLIENT_category gameRecords={gameRecords} />
                 <div className="pagination-buttons flex justify-center mt-6">
-                    <Link href={`/game/${categoryPage}/${productPage}?page=${page - 1}`}>
+                    <Link href={`/game/${categoryPage}/${productPage}/${productItemPage}?page=${page - 1}`}>
                         <Button
                             className="btn btn-primary mx-2 w-[100px]"
                             disabled={page === 1}
@@ -74,7 +80,7 @@ export default async function ProductItemPage({
                         Page {page} of {totalPages}
                     </span>
                     {page < totalPages && (
-                        <Link href={`/game/${categoryPage}/${productPage}?page=${page + 1}`}>
+                        <Link href={`/game/${categoryPage}/${productPage}/${productItemPage}?page=${page + 1}`}>
                             <Button className="btn btn-primary mx-2 w-[100px]">
                                 Next
                             </Button>

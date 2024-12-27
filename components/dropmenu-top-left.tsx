@@ -36,40 +36,82 @@ export const DropmenuTopLeft: React.FC<Props> = ({category, product, productItem
         setProductFindState(array);
     }
 
+    const productItemFind = (id : Number) => {
+        let array = []
+        for (let i = 0; i < productItem.length; i++) {
+            if (productItem[i].productId === id) {
+                array.push(productItem[i]);
+            }
+        }
+        setProductItemFindState(array);
+    }
+
+
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
                 <div>Category</div>
             </DropdownMenuTrigger>
+
+
             <DropdownMenuContent className="w-56">
+
+
                 {category.map((item) => (
                     <div key={item.id} >
                         <DropdownMenuGroup>
+
+
                             <DropdownMenuSub>
                                 <DropdownMenuSubTrigger onMouseEnter={() => productFind(item.id)}>
-                                    <Link href={`/game/${(item.name).replaceAll(" ", "-")}`}
-                                    >
-                                            {item.name}
-                                    </Link>
+                                    <Link href={`/game/${(item.name).replaceAll(" ", "-")}`}>{item.name}</Link>
                                 </DropdownMenuSubTrigger>
+
+
                                 <DropdownMenuPortal>
+
                                     <DropdownMenuSubContent>
                                         {productFindState.map((products) => (
                                             <div key={products.id}>
-                                                <Link href={`/game/${(item.name).replaceAll(" ", "-")}/${(products.name).replaceAll(" ", "-")}`}
-                                                >
-                                                    <DropdownMenuItem>
-                                                        {products.name}
-                                                    </DropdownMenuItem>
-                                                </Link>
+
+                                                <DropdownMenuSub>
+                                                    <DropdownMenuSubTrigger onMouseEnter={() => productItemFind(products.id)}>
+                                                        <Link href={`/game/${(item.name).replaceAll(" ", "-")}/${(products.name).replaceAll(" ", "-")}`}>{products.name}</Link>
+                                                    </DropdownMenuSubTrigger>
+
+                                                    <DropdownMenuPortal>
+                                                        <DropdownMenuSubContent>
+                                                            {productItemFindState.map((productsItem) => (
+                                                                <div key={productsItem.id}>
+                                                                    <DropdownMenuSub>
+                                                                        <DropdownMenuItem>
+                                                                            <Link href={`/game/${(item.name).replaceAll(" ", "-")}/${(products.name).replaceAll(" ", "-")}/${(productsItem.name).replaceAll(" ", "-")}`}>{productsItem.name}</Link>
+                                                                        </DropdownMenuItem>
+                                                                     </DropdownMenuSub>
+                                                                </div>
+                                                            ))}
+                                                        </DropdownMenuSubContent>
+                                                    </DropdownMenuPortal>
+
+                                                </DropdownMenuSub>
+
                                             </div>
                                         ))}
+
                                     </DropdownMenuSubContent>
                                 </DropdownMenuPortal>
+
+
+
                             </DropdownMenuSub>
+
+
                         </DropdownMenuGroup>
                     </div>
                 ))}
+
+
+
             </DropdownMenuContent>
         </DropdownMenu>
     );
