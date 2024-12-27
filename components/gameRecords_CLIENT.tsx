@@ -27,24 +27,24 @@ export const GameRecord_CLIENT: React.FC<Props> = ({gameRecords}) => {
 
     return (
         <div>
-            <Container className="w-[100%] ">
-                <Table>
+            <Container className="w-[100%]">
+                <Table className="table-fixed">
                     <TableCaption>Gamerecord.online</TableCaption>
                     <TableHeader>
                         <TableRow>
-                            <TableHead className="w-[35%] text-left">
+                            <TableHead className="w-[30%] text-left overflow-hidden text-ellipsis whitespace-nowrap">
                                 <div>Player</div>
                                 <div>Category</div>
                             </TableHead>
-                            <TableHead className="w-[35%]">
+                            <TableHead className="w-[30%] overflow-hidden text-ellipsis whitespace-nowrap">
                                 <div>Game</div>
                                 <div>Road</div>
                             </TableHead>
-                            <TableHead className="w-[15%]">
+                            <TableHead className="w-[20%] overflow-hidden text-ellipsis whitespace-nowrap">
                                 <div>Time</div>
                                 <div>Image, Link</div>
                             </TableHead>
-                            <TableHead className="w-[10%] text-right">Date</TableHead>
+                            <TableHead className="w-[20%] text-right overflow-hidden text-ellipsis whitespace-nowrap">Date</TableHead>
                         </TableRow>
                     </TableHeader>
 
@@ -55,21 +55,21 @@ export const GameRecord_CLIENT: React.FC<Props> = ({gameRecords}) => {
                                 <TableBody key={index}>
                                     <TableRow>
                                         <TableCell>
-                                            <div className="w-[35%]  whitespace-nowrap overflow-hidden text-ellipsis">{records.user.fullName}</div>
-                                            <div className="w-[35%] whitespace-nowrap overflow-hidden text-ellipsis">{records.category.name}</div>
+                                            <div className="text-ellipsis overflow-hidden whitespace-nowrap">{records.user.fullName}</div>
+                                            <div className="text-ellipsis overflow-hidden whitespace-nowrap">{records.category.name}</div>
                                         </TableCell>
                                         <TableCell>
-                                            <div className="w-[35%] whitespace-nowrap overflow-hidden text-ellipsis">{records.product.name}</div>
-                                            <div className="w-[35%] whitespace-nowrap overflow-hidden text-ellipsis">{records.productItem.name}</div>
+                                            <div className="text-ellipsis overflow-hidden whitespace-nowrap">{records.product.name}</div>
+                                            <div className="text-ellipsis overflow-hidden whitespace-nowrap">{records.productItem.name}</div>
                                         </TableCell>
-                                        <TableCell className="w-[15%]">
+                                        <TableCell>
                                             <div>{records.timestate.substring(3)}</div>
                                             <div>
                                                 <ImageBlopDialog img={records.img}/>
                                                 {records.video !== "" && <VideoYouTube video={records.video}/>}
                                             </div>
                                         </TableCell>
-                                        <TableCell className="w-[10%] text-right">
+                                        <TableCell className="text-right">
                                             <div>{new Date(records.updatedAt).toLocaleDateString('ru-RU')}</div>
                                             <div className="mr-2">{new Date(records.updatedAt).toLocaleTimeString('ru-RU')}</div>
                                         </TableCell>
