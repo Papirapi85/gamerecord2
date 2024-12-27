@@ -22,6 +22,9 @@ interface Props {
 }
 
 export const DropmenuTopLeft: React.FC<Props> = ({category, product, productItem}) => {
+    const [open, setOpen] = React.useState(false);
+    const [isHovered, setIsHovered] = React.useState(false);
+    const [delayHandler, setDelayHandler] = React.useState<number | null>(null);
 
     const [productFindState, setProductFindState] = React.useState<Product[]>(product);
     const [productItemFindState, setProductItemFindState] = React.useState<ProductItem[]>(productItem);
@@ -40,6 +43,7 @@ export const DropmenuTopLeft: React.FC<Props> = ({category, product, productItem
         let array = []
         for (let i = 0; i < productItem.length; i++) {
             if (productItem[i].productId === id) {
+
                 array.push(productItem[i]);
             }
         }
@@ -47,14 +51,32 @@ export const DropmenuTopLeft: React.FC<Props> = ({category, product, productItem
     }
 
 
+
     return (
-        <DropdownMenu>
-            <DropdownMenuTrigger asChild>
+        <DropdownMenu open={open} onOpenChange={setOpen}>
+
+            <DropdownMenuTrigger
+                asChild
+                onMouseEnter={() => {
+                    if (delayHandler) clearTimeout(delayHandler);
+                    setIsHovered(true);
+                    setDelayHandler(window.setTimeout(() => {
+                        setOpen(true);
+                    }, 100));
+                }}
+                onMouseLeave={() => {
+                    if (delayHandler) clearTimeout(delayHandler);
+                    setIsHovered(false);
+                    setDelayHandler(window.setTimeout(() => {
+                        if (!isHovered) setOpen(false);
+                    }, 100));
+                }}
+            >
                 <div>Category</div>
             </DropdownMenuTrigger>
 
 
-            <DropdownMenuContent className="w-56">
+            <DropdownMenuContent  className="w-56">
 
 
                 {category.map((item) => (
@@ -84,10 +106,10 @@ export const DropmenuTopLeft: React.FC<Props> = ({category, product, productItem
                                                             {productItemFindState.map((productsItem) => (
                                                                 <div key={productsItem.id}>
                                                                     <DropdownMenuSub>
-                                                                        <DropdownMenuItem>
-                                                                            <Link href={`/game/${(item.name).replaceAll(" ", "-")}/${(products.name).replaceAll(" ", "-")}/${(productsItem.name).replaceAll(" ", "-")}`}>{productsItem.name}</Link>
-                                                                        </DropdownMenuItem>
-                                                                     </DropdownMenuSub>
+                                                                            <Link href={`/game/${(item.name).replaceAll(" ", "-")}/${(products.name).replaceAll(" ", "-")}/${(productsItem.name).replaceAll(" ", "-")}`}>
+                                                                                <DropdownMenuItem>{productsItem.name}</DropdownMenuItem>
+                                                                            </Link>
+                                                                    </DropdownMenuSub>
                                                                 </div>
                                                             ))}
                                                         </DropdownMenuSubContent>
