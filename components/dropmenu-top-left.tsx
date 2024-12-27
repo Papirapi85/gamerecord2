@@ -62,14 +62,14 @@ export const DropmenuTopLeft: React.FC<Props> = ({category, product, productItem
                     setIsHovered(true);
                     setDelayHandler(window.setTimeout(() => {
                         setOpen(true);
-                    }, 100));
+                    }, 200));
                 }}
                 onMouseLeave={() => {
                     if (delayHandler) clearTimeout(delayHandler);
                     setIsHovered(false);
                     setDelayHandler(window.setTimeout(() => {
                         if (!isHovered) setOpen(false);
-                    }, 100));
+                    }, 200));
                 }}
             >
                 <div>Category</div>
