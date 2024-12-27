@@ -55,12 +55,12 @@ export const GameRecord_CLIENT: React.FC<Props> = ({gameRecords}) => {
                                 <TableBody key={index}>
                                     <TableRow>
                                         <TableCell className="font-medium">
-                                            <div className="w-[100%] whitespace-nowrap overflow-hidden text-ellipsis">{records.user.fullName}</div>
-                                            <div className="w-[100%] whitespace-nowrap overflow-hidden text-ellipsis">{records.category.name}</div>
+                                            <div className="w-[80%] whitespace-nowrap overflow-hidden text-ellipsis">{records.user.fullName}</div>
+                                            <div className="w-[80%] whitespace-nowrap overflow-hidden text-ellipsis">{records.category.name}</div>
                                         </TableCell>
                                         <TableCell >
-                                            <div className="w-[100%] whitespace-nowrap overflow-hidden text-ellipsis">{records.product.name}</div>
-                                            <div className="w-[100%] whitespace-nowrap overflow-hidden text-ellipsis">{records.productItem.name}</div>
+                                            <div className="w-[80%] whitespace-nowrap overflow-hidden text-ellipsis">{records.product.name}</div>
+                                            <div className="w-[80%] whitespace-nowrap overflow-hidden text-ellipsis">{records.productItem.name}</div>
                                         </TableCell>
                                         <TableCell>
                                             <div>{records.timestate.substring(3)}</div>
