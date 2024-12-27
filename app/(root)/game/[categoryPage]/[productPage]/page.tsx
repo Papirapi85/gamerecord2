@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation';
 import React, {Suspense} from "react";
 import Loading from "@/app/(root)/loading";
 import { InferGetServerSidePropsType } from 'next';
-import {GameRecord_CLIENT_category} from "@/components/gameRecords_CLIENT_category";
+import {GameRecord_CLIENT_category} from "@/components/gameRecords_CLIENT";
 import Link from "next/link";
 import {Button} from "@/components/ui";
 export const dynamic = 'force-dynamic'

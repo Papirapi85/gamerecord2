@@ -98,7 +98,8 @@ export const DropmenuTopLeft: React.FC<Props> = ({category, product, productItem
 
                                                 <DropdownMenuSub>
                                                     <DropdownMenuSubTrigger onMouseEnter={() => productItemFind(products.id)}>
-                                                        <Link href={`/game/${(item.name).replaceAll(" ", "-")}/${(products.name).replaceAll(" ", "-")}`}>{products.name}</Link>
+                                                        {/*<Link href={`/game/${(item.name).replaceAll(" ", "-")}/${(products.name).replaceAll(" ", "-")}`}>{products.name}</Link>*/}
+                                                        {products.name}
                                                     </DropdownMenuSubTrigger>
 
                                                     <DropdownMenuPortal>
