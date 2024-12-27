@@ -124,3 +124,14 @@ html {
 .p-4 {
   padding: 0.3rem;
 }
+
+.table-cell-text {
+  white-space: nowrap; /* Запрет на перенос текста */
+  overflow: hidden; /* Обрезать текст за пределами блока */
+  text-overflow: ellipsis; /* Добавлять троеточие вместо обрезанного текста */
+  width: 100%; /* Фиксированная ширина */
+}
+
+.font-medium {
+  font-weight: lighter;
+}
