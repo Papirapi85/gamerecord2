@@ -76,7 +76,7 @@ export const DropmenuTopLeft: React.FC<Props> = ({category, product, productItem
             </DropdownMenuTrigger>
 
 
-            <DropdownMenuContent  className="w-56">
+            <DropdownMenuContent  className="h-20">
 
 
                 {category.map((item) => (
