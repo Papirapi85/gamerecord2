@@ -37,7 +37,7 @@ export const TopBar: React.FC<Props> = ({category, product, productItem, classNa
                         <DropmenuTopLeft category={category} product={product} productItem={productItem}/>
                     </div>
                     {session &&
-                        <div className={cn('cursor-pointer absolute  right-1/4 ', className)}>
+                        <div className={cn('cursor-pointer absolute  right-1 mr-2', className)}>
                             <Link href="/add-record">
                                 <button className="flex items-center gap-2">
                                     <FilePlus2 size={18}/>
