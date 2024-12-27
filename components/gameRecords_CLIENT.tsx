@@ -23,7 +23,7 @@ interface Props {
     className?: string;
 }
 
-export const GameRecord_CLIENT_category: React.FC<Props> = ({gameRecords}) => {
+export const GameRecord_CLIENT: React.FC<Props> = ({gameRecords}) => {
 
     return (
         <div>

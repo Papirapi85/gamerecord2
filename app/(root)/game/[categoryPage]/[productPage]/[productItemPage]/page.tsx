@@ -5,7 +5,7 @@ import { notFound } from 'next/navigation';
 import React, {Suspense} from "react";
 import Loading from "@/app/(root)/loading";
 import { InferGetServerSidePropsType } from 'next';
-import {GameRecord_CLIENT_category} from "@/components/gameRecords_CLIENT";
+import {GameRecord_CLIENT} from "@/components/gameRecords_CLIENT";
 import Link from "next/link";
 import {Button} from "@/components/ui";
 export const dynamic = 'force-dynamic'
@@ -66,7 +66,7 @@ export default async function ProductItemPage({
     return (
         <Container className="flex flex-col my-10">
             <Suspense fallback={<Loading />}>
-                <GameRecord_CLIENT_category gameRecords={gameRecords} />
+                <GameRecord_CLIENT gameRecords={gameRecords} />
                 <div className="pagination-buttons flex justify-center mt-6">
                     <Link href={`/game/${categoryPage}/${productPage}/${productItemPage}?page=${page - 1}`}>
                         <Button
