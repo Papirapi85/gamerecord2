@@ -54,22 +54,22 @@ export const GameRecord_CLIENT: React.FC<Props> = ({gameRecords}) => {
                             gameRecords.map((records, index) => (
                                 <TableBody key={index}>
                                     <TableRow>
-                                        <TableCell className="font-medium">
-                                            <div className="w-[75%] whitespace-nowrap overflow-hidden text-ellipsis">{records.user.fullName}</div>
-                                            <div className="w-[75%] whitespace-nowrap overflow-hidden text-ellipsis">{records.category.name}</div>
-                                        </TableCell>
-                                        <TableCell >
-                                            <div className="w-[75%] whitespace-nowrap overflow-hidden text-ellipsis">{records.product.name}</div>
-                                            <div className="w-[75%] whitespace-nowrap overflow-hidden text-ellipsis">{records.productItem.name}</div>
+                                        <TableCell>
+                                            <div className="w-[35%]  whitespace-nowrap overflow-hidden text-ellipsis">{records.user.fullName}</div>
+                                            <div className="w-[35%] whitespace-nowrap overflow-hidden text-ellipsis">{records.category.name}</div>
                                         </TableCell>
                                         <TableCell>
+                                            <div className="w-[35%] whitespace-nowrap overflow-hidden text-ellipsis">{records.product.name}</div>
+                                            <div className="w-[35%] whitespace-nowrap overflow-hidden text-ellipsis">{records.productItem.name}</div>
+                                        </TableCell>
+                                        <TableCell className="w-[15%]">
                                             <div>{records.timestate.substring(3)}</div>
                                             <div>
                                                 <ImageBlopDialog img={records.img}/>
                                                 {records.video !== "" && <VideoYouTube video={records.video}/>}
                                             </div>
                                         </TableCell>
-                                        <TableCell className="text-right">
+                                        <TableCell className="w-[10%] text-right">
                                             <div>{new Date(records.updatedAt).toLocaleDateString('ru-RU')}</div>
                                             <div className="mr-2">{new Date(records.updatedAt).toLocaleTimeString('ru-RU')}</div>
                                         </TableCell>
