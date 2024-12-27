@@ -39,7 +39,11 @@ export default async function AdminPage({
         },
     });
 
-    const totalRecords = await prisma.gameRecords.count({});
+    const totalRecords = await prisma.gameRecords.count({
+        where: {
+            userId: Number(session?.id)
+        },
+    });
 
     const totalPages = Math.ceil(totalRecords / pageSize);
 
