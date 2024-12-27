@@ -76,7 +76,7 @@ export const DropmenuTopLeft: React.FC<Props> = ({category, product, productItem
             </DropdownMenuTrigger>
 
 
-            <DropdownMenuContent  className="h-20">
+            <DropdownMenuContent  >
 
 
                 {category.map((item) => (
@@ -85,7 +85,7 @@ export const DropmenuTopLeft: React.FC<Props> = ({category, product, productItem
 
 
                             <DropdownMenuSub>
-                                <DropdownMenuSubTrigger onMouseEnter={() => productFind(item.id)}>
+                                <DropdownMenuSubTrigger  style={{height:"25px"}} onMouseEnter={() => productFind(item.id)}>
                                     <Link href={`/game/${(item.name).replaceAll(" ", "-")}`}>{item.name}</Link>
                                 </DropdownMenuSubTrigger>
 
@@ -97,7 +97,7 @@ export const DropmenuTopLeft: React.FC<Props> = ({category, product, productItem
                                             <div key={products.id}>
 
                                                 <DropdownMenuSub>
-                                                    <DropdownMenuSubTrigger className="h-[16]" onMouseEnter={() => productItemFind(products.id)}>
+                                                    <DropdownMenuSubTrigger style={{height:"16px"}}  onMouseEnter={() => productItemFind(products.id)}>
                                                         {/*<Link href={`/game/${(item.name).replaceAll(" ", "-")}/${(products.name).replaceAll(" ", "-")}`}>{products.name}</Link>*/}
                                                         {products.name}
                                                     </DropdownMenuSubTrigger>
@@ -108,7 +108,7 @@ export const DropmenuTopLeft: React.FC<Props> = ({category, product, productItem
                                                                 <div key={productsItem.id}>
                                                                     <DropdownMenuSub>
                                                                             <Link href={`/game/${(item.name).replaceAll(" ", "-")}/${(products.name).replaceAll(" ", "-")}/${(productsItem.name).replaceAll(" ", "-")}`}>
-                                                                                <DropdownMenuItem className="h-[16]">{productsItem.name}</DropdownMenuItem>
+                                                                                <DropdownMenuItem style={{height:"16px"}} >{productsItem.name}</DropdownMenuItem>
                                                                             </Link>
                                                                     </DropdownMenuSub>
                                                                 </div>
