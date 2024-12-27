@@ -10,32 +10,24 @@ import Link from "next/link";
 import {Button} from "@/components/ui";
 export const dynamic = 'force-dynamic'
 
-export default async function ProductPage({
-                                             params,
-                                             searchParams,
-                                         }: {
-    params: Promise<{ categoryPage: string,  productPage : string}>;
+export default async function Medal({
+                                               params,
+                                               searchParams,
+                                           }: {
+    params: Promise<{ categoryPage: string }>;
     searchParams: Promise<{ page?: string | undefined }>;
 }) {
     // Явно дожидаемся params (expected as a Promise)
-    const { categoryPage, productPage } = await params;
+    const { categoryPage } = await params;
     const resolvedSearchParams = await searchParams; // Ждём Promise
     const page = parseInt(resolvedSearchParams.page ?? '1', 30);
-    const pageSize = 20;
+    const pageSize = 30;
     const offset = (page - 1) * pageSize;
 
     const gameRecords = await prisma.gameRecords.findMany({
-        where: {
-            category: {
-                name: categoryPage.replaceAll("-"," "),
-            },
-            product: {
-                name: productPage.replaceAll("-"," "),
-            }
-        },
         skip: offset,
         take: pageSize,
-        orderBy: { timestate: 'asc' },
+        orderBy: { updatedAt: 'desc' },
         include: {
             user: true,
             product: true,
@@ -44,16 +36,7 @@ export default async function ProductPage({
         },
     });
 
-    const totalRecords = await prisma.gameRecords.count({
-        where: {
-            category: {
-                name: categoryPage.replaceAll("-"," "),
-            },
-            product: {
-                name: productPage.replaceAll("-"," "),
-            }
-        },
-    });
+    const totalRecords = await prisma.gameRecords.count({});
 
     const totalPages = Math.ceil(totalRecords / pageSize);
 
@@ -62,7 +45,7 @@ export default async function ProductPage({
             <Suspense fallback={<Loading />}>
                 <GameRecord_CLIENT gameRecords={gameRecords} />
                 <div className="pagination-buttons flex justify-center mt-6">
-                    <Link href={`/game/${categoryPage}/${productPage}?page=${page - 1}`}>
+                    <Link href={`/?page=${page - 1}`}>
                         <Button
                             className="btn btn-primary mx-2 w-[100px]"
                             disabled={page === 1}
@@ -74,7 +57,7 @@ export default async function ProductPage({
                         Page {page} of {totalPages}
                     </span>
                     {page < totalPages && (
-                        <Link href={`/game/${categoryPage}/${productPage}?page=${page + 1}`}>
+                        <Link href={`/?page=${page + 1}`}>
                             <Button className="btn btn-primary mx-2 w-[100px]">
                                 Next
                             </Button>

@@ -1,78 +1,141 @@
-import { Button } from "@/components/ui/button"
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuGroup,
     DropdownMenuItem,
-    DropdownMenuLabel,
     DropdownMenuPortal,
-    DropdownMenuSeparator,
-    DropdownMenuShortcut,
     DropdownMenuSub,
     DropdownMenuSubContent,
     DropdownMenuSubTrigger,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import {Logs} from "lucide-react";
+
+import React from "react";
+import Link from "next/link";
+import {Category, Product, ProductItem} from "@prisma/client";
+
+interface Props {
+    category: Category[];
+    product: Product[];
+    productItem: ProductItem[];
+    className?: string;
+}
+
+export const DropmenuTopRight: React.FC<Props> = ({category, product, productItem}) => {
+    const [open, setOpen] = React.useState(false);
+    const [isHovered, setIsHovered] = React.useState(false);
+    const [delayHandler, setDelayHandler] = React.useState<number | null>(null);
+
+    const [productFindState, setProductFindState] = React.useState<Product[]>(product);
+    const [productItemFindState, setProductItemFindState] = React.useState<ProductItem[]>(productItem);
+
+    const productFind = (id : Number) => {
+        let array = []
+        for (let i = 0; i < product.length; i++) {
+            if (product[i].categoryId === id) {
+                array.push(product[i]);
+            }
+        }
+        setProductFindState(array);
+    }
+
+    const productItemFind = (id : Number) => {
+        let array = []
+        for (let i = 0; i < productItem.length; i++) {
+            if (productItem[i].productId === id) {
+
+                array.push(productItem[i]);
+            }
+        }
+        setProductItemFindState(array);
+    }
 
 
 
-export function DropmenuTopRight() {
     return (
-        <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-                <Logs />
+        <DropdownMenu open={open} onOpenChange={setOpen}>
+
+            <DropdownMenuTrigger
+                asChild
+                onMouseEnter={() => {
+                    if (delayHandler) clearTimeout(delayHandler);
+                    setIsHovered(true);
+                    setDelayHandler(window.setTimeout(() => {
+                        setOpen(true);
+                    }, 200));
+                }}
+                onMouseLeave={() => {
+                    if (delayHandler) clearTimeout(delayHandler);
+                    setIsHovered(false);
+                    setDelayHandler(window.setTimeout(() => {
+                        if (!isHovered) setOpen(false);
+                    }, 200));
+                }}
+            >
+                <div>Leader List</div>
             </DropdownMenuTrigger>
-            <DropdownMenuContent className="w-56">
-                <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                <DropdownMenuSeparator />
-                <DropdownMenuGroup>
-                    <DropdownMenuItem>
-                        Profile
-                        <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                        Billing
-                        <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                        Settings
-                        <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem>
-                        Keyboard shortcuts
-                        <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
-                    </DropdownMenuItem>
-                </DropdownMenuGroup>
-                <DropdownMenuSeparator />
-                <DropdownMenuGroup>
-                    <DropdownMenuItem>Team</DropdownMenuItem>
-                    <DropdownMenuSub>
-                        <DropdownMenuSubTrigger>Invite users</DropdownMenuSubTrigger>
-                        <DropdownMenuPortal>
-                            <DropdownMenuSubContent>
-                                <DropdownMenuItem>Email</DropdownMenuItem>
-                                <DropdownMenuItem>Message</DropdownMenuItem>
-                                <DropdownMenuSeparator />
-                                <DropdownMenuItem>More...</DropdownMenuItem>
-                            </DropdownMenuSubContent>
-                        </DropdownMenuPortal>
-                    </DropdownMenuSub>
-                    <DropdownMenuItem>
-                        New Team
-                        <DropdownMenuShortcut>⌘+T</DropdownMenuShortcut>
-                    </DropdownMenuItem>
-                </DropdownMenuGroup>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>GitHub</DropdownMenuItem>
-                <DropdownMenuItem>Support</DropdownMenuItem>
-                <DropdownMenuItem disabled>API</DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                    Log out
-                    <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
-                </DropdownMenuItem>
+
+
+            <DropdownMenuContent  >
+
+
+                {category.map((item) => (
+                    <div key={item.id} >
+                        <DropdownMenuGroup>
+
+
+                            <DropdownMenuSub>
+                                <DropdownMenuSubTrigger  style={{height:"25px"}} onMouseEnter={() => productFind(item.id)}>
+                                    <Link href={`/game/${(item.name).replaceAll(" ", "-")}`}>{item.name}</Link>
+                                </DropdownMenuSubTrigger>
+
+
+                                <DropdownMenuPortal>
+
+                                    <DropdownMenuSubContent>
+                                        {productFindState.map((products) => (
+                                            <div key={products.id}>
+
+                                                <DropdownMenuSub>
+                                                    <DropdownMenuSubTrigger style={{height:"16px"}}  onMouseEnter={() => productItemFind(products.id)}>
+                                                        {/*<Link href={`/game/${(item.name).replaceAll(" ", "-")}/${(products.name).replaceAll(" ", "-")}`}>{products.name}</Link>*/}
+                                                        {products.name}
+                                                    </DropdownMenuSubTrigger>
+
+                                                    <DropdownMenuPortal>
+                                                        <DropdownMenuSubContent>
+                                                            {productItemFindState.map((productsItem) => (
+                                                                <div key={productsItem.id}>
+                                                                    <DropdownMenuSub>
+                                                                        <Link href={`/game/${(item.name).replaceAll(" ", "-")}/${(products.name).replaceAll(" ", "-")}/${(productsItem.name).replaceAll(" ", "-")}`}>
+                                                                            <DropdownMenuItem style={{height:"16px"}} >{productsItem.name}</DropdownMenuItem>
+                                                                        </Link>
+                                                                    </DropdownMenuSub>
+                                                                </div>
+                                                            ))}
+                                                        </DropdownMenuSubContent>
+                                                    </DropdownMenuPortal>
+
+                                                </DropdownMenuSub>
+
+                                            </div>
+                                        ))}
+
+                                    </DropdownMenuSubContent>
+                                </DropdownMenuPortal>
+
+
+
+                            </DropdownMenuSub>
+
+
+                        </DropdownMenuGroup>
+                    </div>
+                ))}
+
+
+
             </DropdownMenuContent>
         </DropdownMenu>
-    )
-}
+    );
+};

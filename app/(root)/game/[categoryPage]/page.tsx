@@ -32,7 +32,7 @@ export default async function CategoryPage({
         },
         skip: offset,
         take: pageSize,
-        orderBy: { updatedAt: 'desc' },
+        orderBy: { timestate: 'asc' },
         include: {
             user: true,
             product: true,

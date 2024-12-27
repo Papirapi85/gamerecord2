@@ -21,7 +21,7 @@ export default async function Home({
     const { categoryPage } = await params;
     const resolvedSearchParams = await searchParams; // Ждём Promise
     const page = parseInt(resolvedSearchParams.page ?? '1', 30);
-    const pageSize = 20;
+    const pageSize = 30;
     const offset = (page - 1) * pageSize;
 
     const gameRecords = await prisma.gameRecords.findMany({
