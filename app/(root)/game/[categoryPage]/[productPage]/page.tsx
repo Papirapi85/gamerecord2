@@ -10,15 +10,15 @@ import Link from "next/link";
 import {Button} from "@/components/ui";
 export const dynamic = 'force-dynamic'
 
-export default async function RecordPage({
+export default async function ProductPage({
                                              params,
                                              searchParams,
                                          }: {
-    params: Promise<{ name: string }>;
+    params: Promise<{ categoryPage: string,  productPage : string}>;
     searchParams: Promise<{ page?: string | undefined }>;
 }) {
     // Явно дожидаемся params (expected as a Promise)
-    const { name } = await params;
+    const { categoryPage, productPage } = await params;
     const resolvedSearchParams = await searchParams; // Ждём Promise
     const page = parseInt(resolvedSearchParams.page ?? '1', 30);
     const pageSize = 20;
@@ -27,8 +27,11 @@ export default async function RecordPage({
     const gameRecords = await prisma.gameRecords.findMany({
         where: {
             category: {
-                name: name.replaceAll("-"," "),
+                name: categoryPage.replaceAll("-"," "),
             },
+            product: {
+                name: productPage.replaceAll("-"," "),
+            }
         },
         skip: offset,
         take: pageSize,
@@ -44,8 +47,11 @@ export default async function RecordPage({
     const totalRecords = await prisma.gameRecords.count({
         where: {
             category: {
-                name: name.replaceAll("-"," "),
+                name: categoryPage.replaceAll("-"," "),
             },
+            product: {
+                name: productPage.replaceAll("-"," "),
+            }
         },
     });
 
@@ -56,7 +62,7 @@ export default async function RecordPage({
             <Suspense fallback={<Loading />}>
                 <GameRecord_CLIENT_category gameRecords={gameRecords} />
                 <div className="pagination-buttons flex justify-center mt-6">
-                    <Link href={`/category/${name}?page=${page - 1}`}>
+                    <Link href={`/game/${categoryPage}/${productPage}?page=${page - 1}`}>
                         <Button
                             className="btn btn-primary mx-2 w-[100px]"
                             disabled={page === 1}
@@ -68,7 +74,7 @@ export default async function RecordPage({
                         Page {page} of {totalPages}
                     </span>
                     {page < totalPages && (
-                        <Link href={`/category/${name}?page=${page + 1}`}>
+                        <Link href={`/game/${categoryPage}/${productPage}?page=${page + 1}`}>
                             <Button className="btn btn-primary mx-2 w-[100px]">
                                 Next
                             </Button>

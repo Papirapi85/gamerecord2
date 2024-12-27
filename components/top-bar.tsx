@@ -9,16 +9,18 @@ import {SheetDriverRight} from "@/components/sheet-driver-right";
 import Link from "next/link";
 import {Button} from "@/components/ui";
 import {FileCog, FilePlus2} from "lucide-react";
-import {Category} from '@prisma/client';
+import {Category, Product, ProductItem} from '@prisma/client';
 import {useSession} from "next-auth/react";
 
 
 interface Props {
     category: Category[];
+    product: Product[];
+    productItem: ProductItem[];
     className?: string;
 }
 
-export const TopBar: React.FC<Props> = ({category, className}) => {
+export const TopBar: React.FC<Props> = ({category, product, productItem, className}) => {
     const {data: session} = useSession();
     return (
 
@@ -32,7 +34,7 @@ export const TopBar: React.FC<Props> = ({category, className}) => {
                         <SheetDriverLeft/>
                     </div>
                     <div className={cn('cursor-pointer absolute mt-2 left-1/4 ', className)}>
-                        <DropmenuTopLeft category={category}/>
+                        <DropmenuTopLeft category={category} product={product} productItem={productItem}/>
                     </div>
                     {session &&
                         <div className={cn('cursor-pointer absolute  right-1/4 ', className)}>

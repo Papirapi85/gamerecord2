@@ -93,7 +93,7 @@ export async function uploadImage(formData: FormData) {
     const blob = await put('nfs/' + imageFile.name, imageFile, {
       access: 'public',
     });
-    revalidatePath('/add-category');
+    revalidatePath('/add-game');
     return blob;
 
   } catch (error: any) {
@@ -110,7 +110,7 @@ export async function updateImage(formData: FormData) {
     const blob = await put('nfs/' + imageFile.name, imageFile, {
       access: 'public',
     });
-    revalidatePath('/edit-category');
+    revalidatePath('/edit-game');
     return blob;
 
   } catch (error: any) {
@@ -146,7 +146,7 @@ export async function categoryUpdate(data: any) {
       },
     });
 
-    revalidatePath('/admin/category')
+    revalidatePath('/admin/game')
   } catch (err) {
     //console.log('Error [UPDATE_CATEGORY]', err);
     throw err;
@@ -175,7 +175,7 @@ export async function categoryCreate(data: any) {
       throw new Error('Category Error');
     }
 
-    revalidatePath('/admin/category')
+    revalidatePath('/admin/game')
 
   } catch (err) {
     console.log('Error [CREATE_CATEGORY]', err);
@@ -201,7 +201,7 @@ export async function categoryDelete(data: any) {
         id: Number(data.id),
       }
     })
-    revalidatePath('/admin/category')
+    revalidatePath('/admin/game')
   } catch (err) {
     //console.log('Error [CREATE_CATEGORY]', err);
     throw err;
@@ -293,7 +293,7 @@ export async function productCreate(data: any) {
     if (error instanceof Error) {
       console.log(error.stack);
     }
-    throw new Error('Failed to category your interaction. Please try again.');
+    throw new Error('Failed to game your interaction. Please try again.');
   }
 }
 
@@ -379,7 +379,7 @@ export async function productItemCreate(data: any) {
     if (error instanceof Error) {
       console.log(error.stack);
     }
-    throw new Error('Failed to category your interaction. Please try again.');
+    throw new Error('Failed to game your interaction. Please try again.');
   }
 }
 
@@ -404,7 +404,7 @@ export async function addRecordActions(data :any) {
     if (error instanceof Error) {
       console.log(error.stack);
     }
-    throw new Error('Failed to category your interaction. Please try again.');
+    throw new Error('Failed to game your interaction. Please try again.');
   }
 }
 
@@ -444,12 +444,12 @@ export async function editRecordActions(data :any) {
       },
     });
 
-    revalidatePath('/admin/edit-category')
+    revalidatePath('/admin/edit-game')
   }catch (error) {
     if (error instanceof Error) {
       console.log(error.stack);
     }
-    throw new Error('Failed to category your interaction. Please try again.');
+    throw new Error('Failed to game your interaction. Please try again.');
   }
 }
 
@@ -472,12 +472,12 @@ export async function deleteRecordActions(data :any) {
         id: data.id,
       }
     })
-    revalidatePath('/edit-category')
+    revalidatePath('/edit-game')
   } catch (error) {
     if (error instanceof Error) {
       console.log(error.stack);
     }
-    throw new Error('Failed to category your interaction. Please try again.');
+    throw new Error('Failed to game your interaction. Please try again.');
   }
 }
 
