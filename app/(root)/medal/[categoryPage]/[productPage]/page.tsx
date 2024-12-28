@@ -57,6 +57,8 @@ export default async function ProductPage({
                         fullName: true,
                     },
                 },
+                video: true,
+                img: true,
             },
         });
 

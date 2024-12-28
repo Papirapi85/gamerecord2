@@ -13,6 +13,7 @@ export default async function Medal() {
 
     async function getMedals() {
 
+
         const medals = await prisma.gameRecords.findMany({
             where: {
                 productId: 1,
@@ -33,6 +34,8 @@ export default async function Medal() {
                         fullName: true,
                     },
                 },
+                video: true,
+                img: true,
             },
         });
 
@@ -64,6 +67,9 @@ export default async function Medal() {
         //@ts-ignore
         return Object.entries(result).map(([key, value]) => ({productName: key, ...value}));
     }
+
+
+
     async function countMedals() {
 
         const medals = await getMedals();

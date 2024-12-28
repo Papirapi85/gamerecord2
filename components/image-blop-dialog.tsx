@@ -23,7 +23,7 @@ export const ImageBlopDialog: React.FC<Props> = ({ img }) => {
 
     return (
             <Dialog>
-                <DialogTrigger><Images className="mr-4"/></DialogTrigger>
+                <DialogTrigger><Images className="mr-2 ml-2"/></DialogTrigger>
                 <DialogContent>
                     <DialogHeader>
                         <DialogTitle></DialogTitle>

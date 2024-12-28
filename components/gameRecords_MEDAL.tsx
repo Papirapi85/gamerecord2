@@ -2,6 +2,8 @@
 import React, {Suspense} from 'react';
 import {Container} from "@/components/container";
 import {Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
+import {ImageBlopDialog} from "@/components/image-blop-dialog";
+import {VideoYouTube} from "@/components/video-you-tube";
 
 interface Props {
     className?: string;
@@ -11,8 +13,8 @@ interface Props {
 
 export const GameRecord_MEDAL: React.FC<Props> = ({medals, countMedals}) => {
 
-    // console.log(medals);
-    // console.log(countMedals);
+    console.log(medals);
+    console.log(countMedals);
 
     return (
 
@@ -47,15 +49,27 @@ export const GameRecord_MEDAL: React.FC<Props> = ({medals, countMedals}) => {
                                         </TableHead>
                                         <TableCell>
                                             <div className="text-ellipsis overflow-hidden whitespace-nowrap">{medal.gold !== null && medal.gold.user.fullName}</div>
-                                            <div className="text-ellipsis overflow-hidden whitespace-nowrap">{medal.gold !== null && medal.gold.timestate.substring(3)}</div>
+                                            <div className="text-ellipsis overflow-hidden whitespace-nowrap">
+                                                {medal.gold !== null && medal.gold.timestate.substring(3)}
+                                                {medal.gold !== null && medal.gold.img !== null &&<ImageBlopDialog img={medal.gold.img}/>}
+                                                {medal.gold !== null && medal.gold.video !== "" &&<VideoYouTube video={medal.gold.video}/>}
+                                            </div>
                                         </TableCell>
                                         <TableCell>
                                             <div className="text-ellipsis overflow-hidden whitespace-nowrap">{medal.silver !== null && medal.silver.user.fullName}</div>
-                                            <div className="text-ellipsis overflow-hidden whitespace-nowrap">{medal.silver !== null && medal.silver.timestate.substring(3)}</div>
+                                            <div className="text-ellipsis overflow-hidden whitespace-nowrap">
+                                                {medal.silver !== null && medal.silver.timestate.substring(3)}
+                                                {medal.silver !== null && medal.silver.img !== null && <ImageBlopDialog img={medal.silver.img}/>}
+                                                {medal.silver !== null && medal.silver.video !== "" && <VideoYouTube video={medal.silver.video}/>}
+                                            </div>
                                         </TableCell>
                                         <TableCell>
                                             <div className="text-ellipsis overflow-hidden whitespace-nowrap">{medal.bronze !== null && medal.bronze.user.fullName}</div>
-                                            <div className="text-ellipsis overflow-hidden whitespace-nowrap">{medal.bronze !== null && medal.bronze.timestate.substring(3)}</div>
+                                            <div className="text-ellipsis overflow-hidden whitespace-nowrap">
+                                                {medal.bronze !== null && medal.bronze.timestate.substring(3)}
+                                                {medal.bronze !== null && medal.bronze.img !== null && <ImageBlopDialog img={medal.bronze.img}/>}
+                                                {medal.bronze !== null && medal.bronze.video !== "" && <VideoYouTube video={medal.bronze.video}/>}
+                                            </div>
                                         </TableCell>
                                     </TableRow>
                                 </TableBody>
