@@ -8,15 +8,39 @@ import {GameRecord_MEDAL} from "@/components/gameRecords_MEDAL";
 export const dynamic = 'force-dynamic'
 
 
-export default async function Medal() {
+export default async function ProductPage({
+                                              params,
+                                          }: {
+    params: Promise<{ categoryPage: string,  productPage : string}>;
+}) {
 
+    const { categoryPage, productPage } = await params;
+
+    const category = await prisma.category.findFirst({
+        where: {
+            name: categoryPage.replaceAll("-"," "),
+        },
+        select: {
+            id: true,
+        },
+    });
+
+    const product = await prisma.product.findFirst({
+        where: {
+            name: productPage.replaceAll("-"," "),
+        },
+        select: {
+            id: true,
+        },
+    });
+    // console.log(category, product)
 
     async function getMedals() {
 
         const medals = await prisma.gameRecords.findMany({
             where: {
-                productId: 1,
-                categoryId: 1,
+                categoryId: Number(category?.id), // Убедитесь, что используете id
+                productId: Number(product?.id), // Убедитесь, что используете id
             },
             orderBy: {
                 timestate: 'asc',
@@ -64,6 +88,8 @@ export default async function Medal() {
         //@ts-ignore
         return Object.entries(result).map(([key, value]) => ({productName: key, ...value}));
     }
+
+
     async function countMedals() {
 
         const medals = await getMedals();

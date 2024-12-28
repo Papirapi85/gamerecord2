@@ -86,7 +86,8 @@ export const DropmenuTopRight: React.FC<Props> = ({category, product, productIte
 
                             <DropdownMenuSub>
                                 <DropdownMenuSubTrigger  style={{height:"25px"}} onMouseEnter={() => productFind(item.id)}>
-                                    <Link href={`/game/${(item.name).replaceAll(" ", "-")}`}>{item.name}</Link>
+                                    {item.name}
+                                    {/*<Link href={`/game/${(item.name).replaceAll(" ", "-")}`}>{item.name}</Link>*/}
                                 </DropdownMenuSubTrigger>
 
 
@@ -97,25 +98,10 @@ export const DropmenuTopRight: React.FC<Props> = ({category, product, productIte
                                             <div key={products.id}>
 
                                                 <DropdownMenuSub>
-                                                    <DropdownMenuSubTrigger style={{height:"16px"}}  onMouseEnter={() => productItemFind(products.id)}>
-                                                        {/*<Link href={`/game/${(item.name).replaceAll(" ", "-")}/${(products.name).replaceAll(" ", "-")}`}>{products.name}</Link>*/}
-                                                        {products.name}
-                                                    </DropdownMenuSubTrigger>
-
-                                                    <DropdownMenuPortal>
-                                                        <DropdownMenuSubContent>
-                                                            {productItemFindState.map((productsItem) => (
-                                                                <div key={productsItem.id}>
-                                                                    <DropdownMenuSub>
-                                                                        <Link href={`/game/${(item.name).replaceAll(" ", "-")}/${(products.name).replaceAll(" ", "-")}/${(productsItem.name).replaceAll(" ", "-")}`}>
-                                                                            <DropdownMenuItem style={{height:"16px"}} >{productsItem.name}</DropdownMenuItem>
-                                                                        </Link>
-                                                                    </DropdownMenuSub>
-                                                                </div>
-                                                            ))}
-                                                        </DropdownMenuSubContent>
-                                                    </DropdownMenuPortal>
-
+                                                    <DropdownMenuItem style={{height:"16px"}}  onMouseEnter={() => productItemFind(products.id)}>
+                                                        <Link href={`/medal/${(item.name).replaceAll(" ", "-")}/${(products.name).replaceAll(" ", "-")}`}>{products.name}</Link>
+                                                        {/*{products.name}*/}
+                                                    </DropdownMenuItem>
                                                 </DropdownMenuSub>
 
                                             </div>

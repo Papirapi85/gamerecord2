@@ -35,8 +35,8 @@ export const TopBar: React.FC<Props> = ({category, product, productItem, classNa
                     </div>
                     <div className={cn('cursor-pointer absolute left-1/4 ', className)}>
                         <DropmenuTopLeft category={category} product={product} productItem={productItem}/>
-                        <Link href={`/medal`}>Medal</Link>
-                        {/*<DropmenuTopRight category={category} product={product} productItem={productItem}/>*/}
+                        {/*<Link href={`/medal`}>Medal</Link>*/}
+                        <DropmenuTopRight category={category} product={product} productItem={productItem}/>
                     </div>
                     {session &&
                         <div className={cn('cursor-pointer absolute  right-1 mr-2', className)}>
