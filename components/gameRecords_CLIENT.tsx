@@ -17,6 +17,7 @@ import {cn} from "@/components/lib/utils";
 import {className} from "postcss-selector-parser";
 import {ImageBlopDialog} from "@/components/image-blop-dialog";
 import {VideoYouTube} from "@/components/video-you-tube";
+import Link from "next/link";
 
 interface Props {
     gameRecords: any[];
@@ -56,7 +57,9 @@ export const GameRecord_CLIENT: React.FC<Props> = ({gameRecords}) => {
                                     <TableRow>
                                         <TableCell>
                                             <div className="text-ellipsis overflow-hidden whitespace-nowrap">{records.user.fullName}</div>
-                                            <div className="text-ellipsis overflow-hidden whitespace-nowrap">{records.category.name}</div>
+                                            <div className="text-ellipsis overflow-hidden whitespace-nowrap">
+                                                <Link href={`/game/${records.category.name.replaceAll(" ", "-")}`}>{records.category.name}</Link>
+                                            </div>
                                         </TableCell>
                                         <TableCell>
                                             <div className="text-ellipsis overflow-hidden whitespace-nowrap">{records.product.name}</div>

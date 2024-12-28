@@ -1,69 +1,106 @@
-import { Container } from '@/components/container';
-import { prisma } from '@/prisma/prisma-client';
-import { notFound } from 'next/navigation';
+import {Container} from '@/components/container';
+import {prisma} from '@/prisma/prisma-client';
+import {notFound} from 'next/navigation';
 
 import React, {Suspense} from "react";
 import Loading from "@/app/(root)/loading";
-import { InferGetServerSidePropsType } from 'next';
-import {GameRecord_CLIENT} from "@/components/gameRecords_CLIENT";
+import {InferGetServerSidePropsType} from 'next';
+import {GameRecord_MEDAL} from "@/components/gameRecords_MEDAL";
 import Link from "next/link";
 import {Button} from "@/components/ui";
+
 export const dynamic = 'force-dynamic'
 
-export default async function Medal({
-                                               params,
-                                               searchParams,
-                                           }: {
-    params: Promise<{ categoryPage: string }>;
-    searchParams: Promise<{ page?: string | undefined }>;
-}) {
-    // Явно дожидаемся params (expected as a Promise)
-    const { categoryPage } = await params;
-    const resolvedSearchParams = await searchParams; // Ждём Promise
-    const page = parseInt(resolvedSearchParams.page ?? '1', 30);
-    const pageSize = 30;
-    const offset = (page - 1) * pageSize;
 
-    const gameRecords = await prisma.gameRecords.findMany({
-        skip: offset,
-        take: pageSize,
-        orderBy: { updatedAt: 'desc' },
-        include: {
-            user: true,
-            product: true,
-            productItem: true,
-            category: true,
-        },
-    });
+export default async function Medal() {
 
-    const totalRecords = await prisma.gameRecords.count({});
+    async function getMedals() {
 
-    const totalPages = Math.ceil(totalRecords / pageSize);
+        const medals = await prisma.gameRecords.findMany({
+            where: {
+                productId: 1,
+                categoryId: 1,
+            },
+            orderBy: {
+                timestate: 'asc',
+            },
+            select: {
+                timestate: true,
+                productItem: {
+                    select: {
+                        name: true,
+                    },
+                },
+                user: {
+                    select: {
+                        fullName: true,
+                    },
+                },
+            },
+        });
+
+        const result: any = {};
+
+        for (const medal of medals) {
+            const productName = medal.productItem.name;
+            const userName = medal.user.fullName;
+
+            if (!result[productName]) {
+                result[productName] = {
+                    gold: null,
+                    silver: null,
+                    bronze: null,
+                };
+            }
+
+            if (!result[productName].gold || (result[productName].gold.timestate > medal.timestate)) {
+                result[productName].bronze = result[productName].silver;
+                result[productName].silver = result[productName].gold;
+                result[productName].gold = {...medal, userName};
+            } else if (!result[productName].silver || (result[productName].silver.timestate > medal.timestate)) {
+                result[productName].bronze = result[productName].silver;
+                result[productName].silver = {...medal, userName};
+            } else if (!result[productName].bronze || (result[productName].bronze.timestate > medal.timestate)) {
+                result[productName].bronze = {...medal, userName};
+            }
+        }
+        //@ts-ignore
+        return Object.entries(result).map(([key, value]) => ({productName: key, ...value}));
+    }
+
+    async function countMedals() {
+
+        const medals = await getMedals();
+
+        const medalCounts = medals.reduce<Record<string, {
+            gold: number,
+            silver: number,
+            bronze: number
+        }>>((acc, medal) => {
+            const userName = medal.gold?.userName || medal.silver?.userName || medal.bronze?.userName;
+            if (userName) {
+                if (!acc[userName]) {
+                    acc[userName] = {gold: 0, silver: 0, bronze: 0};
+                }
+                if (medal.gold) acc[userName].gold += 1;
+                if (medal.silver) acc[userName].silver += 1;
+                if (medal.bronze) acc[userName].bronze += 1;
+            }
+            return acc;
+        }, {});
+
+
+        return Object.entries(medalCounts).map(([userName, counts]) => ({
+            userName,
+            ...counts
+        }));
+    }
+
 
     return (
         <Container className="flex flex-col my-10">
-            <Suspense fallback={<Loading />}>
-                <GameRecord_CLIENT gameRecords={gameRecords} />
-                <div className="pagination-buttons flex justify-center mt-6">
-                    <Link href={`/?page=${page - 1}`}>
-                        <Button
-                            className="btn btn-primary mx-2 w-[100px]"
-                            disabled={page === 1}
-                        >
-                            Previous
-                        </Button>
-                    </Link>
-                    <span className="mx-3 text-lg font-semibold">
-                        Page {page} of {totalPages}
-                    </span>
-                    {page < totalPages && (
-                        <Link href={`/?page=${page + 1}`}>
-                            <Button className="btn btn-primary mx-2 w-[100px]">
-                                Next
-                            </Button>
-                        </Link>
-                    )}
-                </div>
+            <Suspense fallback={<Loading/>}>
+                <GameRecord_MEDAL medals={await getMedals()} countMedals={await countMedals()}/>
             </Suspense>
         </Container>
     );

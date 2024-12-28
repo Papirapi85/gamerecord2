@@ -8,6 +8,8 @@ import {redirect} from 'next/navigation'
 import {put, PutBlobResult} from "@vercel/blob";
 import {list} from "@vercel/blob"
 
+
+
 export async function fetchPaginatedGameRecords(page: number, limit: number) {
   // Смещение для текущей страницы
   const offset = (page - 1) * limit;

@@ -11,17 +11,21 @@ datasource db {
 }
 
 model User {
-  id          Int           @id @default(autoincrement())
-  fullName    String
-  email       String        @unique
-  password    String
-  role        UserRole      @default(USER)
-  provider    String?
-  providerId  String?
-  img         String?
-  Gamerecords GameRecords[]
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
+  id                   Int           @id @default(autoincrement())
+  fullName             String
+  email                String        @unique
+  provider             String?
+  providerId           String?
+  password             String
+  role                 UserRole      @default(USER)
+  img                  String?
+  gameRecords          GameRecords[]
+  goldProductItems     ProductItem[] @relation("GoldUser")
+  silverProductItems   ProductItem[] @relation("SilverUser")
+  bronzeProductItems   ProductItem[] @relation("BronzeUser")
+  platinumProductItems ProductItem[] @relation("PlatinumUser")
+  createdAt            DateTime      @default(now())
+  updatedAt            DateTime      @updatedAt
 }
 
 model Category {
@@ -55,6 +59,15 @@ model ProductItem {
   productId   Int
   createdAt   DateTime      @default(now())
   updatedAt   DateTime      @updatedAt
+
+  goldId       Int?
+  goldUser     User? @relation("GoldUser", fields: [goldId], references: [id])
+  silverId     Int?
+  silverUser   User? @relation("SilverUser", fields: [silverId], references: [id])
+  bronzeId     Int?
+  bronzeUser   User? @relation("BronzeUser", fields: [bronzeId], references: [id])
+  platinumId   Int?
+  platinumUser User? @relation("PlatinumUser", fields: [platinumId], references: [id])
 }
 
 model GameRecords {

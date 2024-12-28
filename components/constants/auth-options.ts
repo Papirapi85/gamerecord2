@@ -55,10 +55,6 @@ export const authOptions: AuthOptions = {
           return null;
         }
 
-        // if (!findUser.verified) {
-        //   return null;
-        // }
-
         return {
           id: findUser.id,
           email: findUser.email,
@@ -111,7 +107,6 @@ export const authOptions: AuthOptions = {
             email: user.email,
             fullName: user.name || 'User #' + user.id,
             password: hashSync(user.id.toString(), 10),
-            //verified: new Date(),
             provider: account?.provider,
             providerId: account?.providerAccountId,
           },

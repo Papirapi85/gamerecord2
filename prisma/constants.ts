@@ -1,11 +1,17 @@
 export const categories = [
   {
-    name: 'NFS',
+    name: 'Need for Speed',
     "createdAt": "2024-08-06T21:08:16.720Z",
     "updatedAt": "2024-08-06T21:08:16.720Z",
   },
   {
-    name: 'F1',
+    name: 'F1 24',
+    "createdAt": "2024-08-06T21:08:16.720Z",
+    "updatedAt": "2024-08-06T21:08:16.720Z",
+  },
+
+  {
+    name: 'F1 23',
     "createdAt": "2024-08-06T21:08:16.720Z",
     "updatedAt": "2024-08-06T21:08:16.720Z",
   },
