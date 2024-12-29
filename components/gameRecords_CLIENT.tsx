@@ -51,17 +51,21 @@ export const GameRecord_CLIENT: React.FC<Props> = ({gameRecords}) => {
                     <Suspense>
                         {
                             gameRecords.map((records, index) => (
-                                <TableBody key={index}>
+                                <TableBody key={index} className="border-b border-b-gray-200 dark:border-b-gray-900">
                                     <TableRow>
                                         <TableCell>
-                                            <div className="text-ellipsis overflow-hidden whitespace-nowrap">{records.user.fullName}</div>
+                                            <div
+                                                className="text-ellipsis overflow-hidden whitespace-nowrap">{records.user.fullName}</div>
                                             <div className="text-ellipsis overflow-hidden whitespace-nowrap">
-                                                <Link href={`/game/${records.category.name.replaceAll(" ", "-")}`}>{records.category.name}</Link>
+                                                <Link
+                                                    href={`/game/${records.category.name.replaceAll(" ", "-")}`}>{records.category.name}</Link>
                                             </div>
                                         </TableCell>
                                         <TableCell>
-                                            <div className="text-ellipsis overflow-hidden whitespace-nowrap">{records.product.name}</div>
-                                            <div className="text-ellipsis overflow-hidden whitespace-nowrap">{records.productItem.name}</div>
+                                            <div
+                                                className="text-ellipsis overflow-hidden whitespace-nowrap">{records.product.name}</div>
+                                            <div
+                                                className="text-ellipsis overflow-hidden whitespace-nowrap">{records.productItem.name}</div>
                                         </TableCell>
                                         <TableCell>
                                             <div>{records.timestate.substring(3)}</div>
@@ -72,11 +76,11 @@ export const GameRecord_CLIENT: React.FC<Props> = ({gameRecords}) => {
                                         </TableCell>
                                         <TableCell className="text-right">
                                             <div>{new Date(records.updatedAt).toLocaleDateString('ru-RU')}</div>
-                                            <div className="mr-2">{new Date(records.updatedAt).toLocaleTimeString('ru-RU')}</div>
+                                            <div
+                                                className="mr-2">{new Date(records.updatedAt).toLocaleTimeString('ru-RU')}</div>
                                         </TableCell>
                                     </TableRow>
                                 </TableBody>
-
                             ))}
                     </Suspense>
                 </Table>
