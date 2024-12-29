@@ -114,7 +114,7 @@ export const EditGameRecord: React.FC<Props> = ({ user, gameRecords, className})
                                         <input
                                             type="time"
                                             step="0.001"
-                                            defaultValue="00:00"
+                                            defaultValue="00:00:00.000"
                                             onChange={e => {
                                                 setTimeState(e.target.value);
                                                 checkButtonUpdateRef.current = records.id;

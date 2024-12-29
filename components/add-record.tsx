@@ -197,8 +197,8 @@ export const AddRecord: React.FC<Props> = ({user, category, product, productItem
                                     name="timestate"
                                     type="time"
                                     step="0.001"
-                                    pattern="[0-2]{1}[0-9]{1}:[0-5]{1}[0-9]{1}"
-                                    defaultValue="00:00"
+                                    // pattern="[0-2]{1}[0-9]{1}:[0-5]{1}[0-9]{1}"
+                                    defaultValue="00:00:00.000"
                                     onChange={e => {
                                         setTimestatState(e.target.value)
                                     }}
