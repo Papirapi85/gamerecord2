@@ -93,9 +93,9 @@ export const EditGameRecord: React.FC<Props> = ({ user, gameRecords, className})
                 <TableHeader>
                     <TableRow>
                         <TableHead className="w-[20%] text-left overflow-hidden text-ellipsis whitespace-nowrap">GAME</TableHead>
-                        <TableHead className="w-[20%] text-left overflow-hidden text-ellipsis whitespace-nowrap">Edit</TableHead>
-                        <TableHead className="w-[30%] text-left overflow-hidden text-ellipsis whitespace-nowrap">Edit</TableHead>
-                        <TableCell className="w-[10%] text-right"></TableCell>
+                        <TableHead className="w-[33%] text-left overflow-hidden text-ellipsis whitespace-nowrap">Edit</TableHead>
+                        <TableHead className="w-[33%] text-left overflow-hidden text-ellipsis whitespace-nowrap">Edit</TableHead>
+                        <TableCell className="w-[14%] text-right"></TableCell>
                     </TableRow>
                 </TableHeader>
 
@@ -146,7 +146,7 @@ export const EditGameRecord: React.FC<Props> = ({ user, gameRecords, className})
                                         <div className="text-ellipsis overflow-hidden whitespace-nowrap">
                                             <ImageAddBlobScreen onFormDataReady={handleFormDataReady}/>
                                         </div>
-                                        <div>
+                                        <div className="text-ellipsis overflow-hidden whitespace-nowrap">
                                             <Input className="h-7 mt-0.5"
                                                 type='text'
                                                 placeholder="VIDEO YOUTUBE"
@@ -164,7 +164,7 @@ export const EditGameRecord: React.FC<Props> = ({ user, gameRecords, className})
 
 
                                     <TableCell className="text-right">
-                                        <div>
+                                        <div className="text-ellipsis overflow-hidden whitespace-nowrap">
                                             <Button className="w-[60px] h-[20px] mb-1"
                                                     disabled={!formDataImage || checkButtonUpdateRef.current !== records.id}
                                                     onClick={()=>{
