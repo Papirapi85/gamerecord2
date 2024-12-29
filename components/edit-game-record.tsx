@@ -4,7 +4,7 @@ import {GameRecords, User} from '@prisma/client';
 import {Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
 import {Container} from "@/components/container";
 import {Button, Input} from "@/components/ui";
-import {addRecordActions, editRecordActions, updateImage, uploadImage} from "@/app/actions";
+import {addRecordActions, editRecordActions, uploadImage} from "@/app/actions";
 import toast from "react-hot-toast";
 import ImageAddBlobScreen from "@/components/image-add-blop-screen";
 import {PutBlobResult} from "@vercel/blob";
@@ -12,6 +12,7 @@ import { del } from '@vercel/blob';
 import {DeleteRecordDialog} from "@/components/delete-record-dialog";
 import {ImageBlopDialog} from "@/components/image-blop-dialog";
 import TimeInput from "@/components/time-input";
+import imageCompression from 'browser-image-compression';
 
 interface Props {
     user: User;
@@ -40,7 +41,7 @@ export const EditGameRecord: React.FC<Props> = ({ user, gameRecords, className})
     };
 
     const addRecordIMAGE = async (img : any) => {
-        await updateImage(formDataImage as FormData).then(blop => {
+        await uploadImage(formDataImage as FormData).then(blop => {
             if ('error' in blop) {
                 return toast.error(`Failed to upload image: ${blop.error}`, {icon: '❌',});
             }
@@ -93,9 +94,9 @@ export const EditGameRecord: React.FC<Props> = ({ user, gameRecords, className})
                 <TableHeader>
                     <TableRow>
                         <TableHead className="w-[20%] text-left overflow-hidden text-ellipsis whitespace-nowrap">GAME</TableHead>
+                        <TableHead className="w-[30%] text-left overflow-hidden text-ellipsis whitespace-nowrap">Edit</TableHead>
                         <TableHead className="w-[33%] text-left overflow-hidden text-ellipsis whitespace-nowrap">Edit</TableHead>
-                        <TableHead className="w-[33%] text-left overflow-hidden text-ellipsis whitespace-nowrap">Edit</TableHead>
-                        <TableCell className="w-[14%] text-right"></TableCell>
+                        <TableCell className="w-[17%] text-right"></TableCell>
                     </TableRow>
                 </TableHeader>
 
@@ -127,14 +128,21 @@ export const EditGameRecord: React.FC<Props> = ({ user, gameRecords, className})
                                                 name="image"
                                                 accept=".jpg, .jpeg, .png, image/*"
                                                 required
-                                                onChange={(e)=>{
+                                                onChange={async (e) => {
                                                     if (e.target.files && e.target.files[0]) {
                                                         if (e.target.files[0].size > 2 * 1000 * 1024) {
-                                                            return toast.error('Error create, Image > 2MB', {
-                                                                icon: '❌',
-                                                            });
-                                                        }else {
-                                                            const data  = new FormData();
+
+                                                            const options = {
+                                                                maxSizeMB: 1, // Максимальный размер в мегабайтах
+                                                                maxWidthOrHeight: 1280, // Максимальная ширина или высота
+                                                                useWebWorker: true, // Использовать веб-воркеры для повышения производительности
+                                                            };
+                                                            const compressedFile = await imageCompression(e.target.files[0], options);
+                                                            const data = new FormData();
+                                                            data.append('image', compressedFile, e.target.files[0].name)
+                                                            setFormDataImage(data)
+                                                        } else {
+                                                            const data = new FormData();
                                                             data.append('image', e.target.files[0], e.target.files[0].name)
                                                             setFormDataImage(data)
                                                         }

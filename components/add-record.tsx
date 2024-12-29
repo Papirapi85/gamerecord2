@@ -8,6 +8,7 @@ import {Button, Input} from '@/components/ui';
 import {addRecordActions, uploadImage} from '@/app/actions';
 import {PutBlobResult} from '@vercel/blob';
 import ImageAddBlobScreen from "@/components/image-add-blop-screen";
+import imageCompression from "browser-image-compression";
 
 
 interface Props {
@@ -73,17 +74,23 @@ export const AddRecord: React.FC<Props> = ({user, category, product, productItem
         addRecordViewRef.current = false;
     }
 
-    const selectFile = (e : any) => {
+    const selectFile = async (e: any) => {
         if (e.target.files[0]) {
             if (e.target.files[0].size > 2 * 1000 * 1024) {
-                //setFile(null)
+                const options = {
+                    maxSizeMB: 1, // Максимальный размер в мегабайтах
+                    maxWidthOrHeight: 1280, // Максимальная ширина или высота
+                    useWebWorker: true, // Использовать веб-воркеры для повышения производительности
+                };
+                const compressedFile = await imageCompression(e.target.files[0], options);
+                const data = new FormData();
+                data.append('image', compressedFile, e.target.files[0].name)
+                setFormData(data)
                 imgRef.current = true;
-                return toast.error('Error create, Image > 2MB', {
-                    icon: '❌',
-                });
-            }else {
+
+            } else {
                 //setFile(e.target.files[0])
-                const data  = new FormData();
+                const data = new FormData();
                 data.append('image', e.target.files[0], e.target.files[0].name)
                 setFormData(data)
                 imgRef.current = true;

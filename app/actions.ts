@@ -9,30 +9,6 @@ import {put, PutBlobResult} from "@vercel/blob";
 import {list} from "@vercel/blob"
 
 
-
-export async function fetchPaginatedGameRecords(page: number, limit: number) {
-  // Смещение для текущей страницы
-  const offset = (page - 1) * limit;
-
-  // Пример: извлечение данных из базы данных
-  const records = await prisma.gameRecords.findMany({
-    include: {
-      user: true,
-      product: true,
-      productItem: true,
-      category: true,
-    },
-    skip: offset,
-    take: limit,
-    orderBy: { updatedAt: 'desc' }, // Ваши настройки сортировки
-  });
-
-  // Подсчёт общего количества записей
-  const total = await prisma.gameRecords.count();
-
-  return { records, total };
-}
-
 export async function updateUserInfo(body: Prisma.UserUpdateInput) {
   try {
     const currentUser = await getUserSession();
@@ -95,24 +71,7 @@ export async function uploadImage(formData: FormData) {
     const blob = await put('nfs/' + imageFile.name, imageFile, {
       access: 'public',
     });
-    revalidatePath('/add-game');
-    return blob;
-
-  } catch (error: any) {
-    if (error.code === 'P2002') {
-      return {error: 'That slug already exists.'}
-    }
-    return {error: error.message || 'Failed to create the blog.'}
-  }
-}
-
-export async function updateImage(formData: FormData) {
-  try {
-    const imageFile = formData.get('image') as File;
-    const blob = await put('nfs/' + imageFile.name, imageFile, {
-      access: 'public',
-    });
-    revalidatePath('/edit-game');
+    //revalidatePath('/add-game');
     return blob;
 
   } catch (error: any) {
