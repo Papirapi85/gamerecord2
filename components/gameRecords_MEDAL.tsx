@@ -87,16 +87,16 @@ export const GameRecord_MEDAL: React.FC<Props> = ({medals, countMedals, category
                                 <TableHead className="w-[30%] overflow-hidden text-ellipsis whitespace-nowrap">
                                     <div>Player</div>
                                 </TableHead>
-                                <TableHead className="w-[15%] overflow-hidden text-ellipsis whitespace-nowrap">
+                                <TableHead className="w-[15%] overflow-hidden text-center whitespace-nowrap">
                                     <div>GOLD</div>
                                 </TableHead>
-                                <TableHead className="w-[15%] overflow-hidden text-ellipsis whitespace-nowrap">
+                                <TableHead className="w-[15%] overflow-hidden text-center whitespace-nowrap">
                                     <div>SILVER</div>
                                 </TableHead>
-                                <TableHead className="w-[15%] overflow-hidden text-ellipsis whitespace-nowrap">
+                                <TableHead className="w-[15%] overflow-hidden text-center whitespace-nowrap">
                                     <div>BRONZE</div>
                                 </TableHead>
-                                <TableHead className="w-[15%] overflow-hidden text-ellipsis whitespace-nowrap">
+                                <TableHead className="w-[15%] overflow-hidden text-center whitespace-nowrap">
                                     <div>PLATINUM</div>
                                 </TableHead>
                             </TableRow>
