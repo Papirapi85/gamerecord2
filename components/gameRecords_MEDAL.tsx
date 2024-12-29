@@ -9,18 +9,22 @@ interface Props {
     className?: string;
     medals: any[];
     countMedals: any[];
+    categoryPage: string;
+    productPage: string;
 }
 
-export const GameRecord_MEDAL: React.FC<Props> = ({medals, countMedals}) => {
+export const GameRecord_MEDAL: React.FC<Props> = ({medals, countMedals, categoryPage, productPage}) => {
 
-    // console.log(medals);
-    // console.log(countMedals);
+    console.log(medals);
+    console.log(countMedals);
 
     return (
 
             <Container className="w-[100%]">
+                <h1 className="text-center text-2xl font-bold">{categoryPage.replaceAll("-"," ")} </h1>
+                <div className="text-center text-md">{productPage.replaceAll("-"," ")}</div>
                 <Table className="table-fixed">
-                    <TableCaption>Gamerecord.online</TableCaption>
+                    <TableCaption>{productPage.replaceAll("-"," ")}</TableCaption>
                     <TableHeader>
                         <TableRow>
                             <TableHead className="w-[30%] text-left overflow-hidden text-ellipsis whitespace-nowrap">
@@ -77,7 +81,7 @@ export const GameRecord_MEDAL: React.FC<Props> = ({medals, countMedals}) => {
                     </Suspense>
                 </Table>
                     <Table className="table-fixed">
-                        <TableCaption>Gamerecord.online</TableCaption>
+                        <TableCaption>{productPage.replaceAll("-"," ")}</TableCaption>
                         <TableHeader>
                             <TableRow>
                                 <TableHead className="w-[30%] overflow-hidden text-ellipsis whitespace-nowrap">

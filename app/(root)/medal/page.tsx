@@ -10,7 +10,8 @@ export const dynamic = 'force-dynamic'
 
 export default async function Medal() {
 
-
+    const  categoryPage = "Need-for-Speed"
+    const  productPage = "Most-Wanted-2005"
     async function getMedals() {
 
         const result: any = {};
@@ -113,7 +114,7 @@ export default async function Medal() {
     return (
         <Container className="flex flex-col my-10">
             <Suspense fallback={<Loading/>}>
-                <GameRecord_MEDAL medals={await getMedals()} countMedals={await countMedals()}/>
+                <GameRecord_MEDAL medals={await getMedals()} countMedals={await countMedals()} categoryPage={categoryPage} productPage={productPage}/>
             </Suspense>
         </Container>
     );

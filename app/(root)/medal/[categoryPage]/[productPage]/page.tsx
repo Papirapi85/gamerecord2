@@ -37,10 +37,12 @@ export default async function ProductPage({
 
     async function getMedals() {
 
+        const result: any = {};
+
         const medals = await prisma.gameRecords.findMany({
             where: {
-                categoryId: Number(category?.id), // Убедитесь, что используете id
-                productId: Number(product?.id), // Убедитесь, что используете id
+                productId: 1,
+                categoryId: 1,
             },
             orderBy: {
                 timestate: 'asc',
@@ -62,8 +64,6 @@ export default async function ProductPage({
             },
         });
 
-        const result: any = {};
-
         for (const medal of medals) {
             const productName = medal.productItem.name;
             const userName = medal.user.fullName;
@@ -73,6 +73,7 @@ export default async function ProductPage({
                     gold: null,
                     silver: null,
                     bronze: null,
+                    platinum: null,
                 };
             }
 
@@ -86,29 +87,42 @@ export default async function ProductPage({
             } else if (!result[productName].bronze || (result[productName].bronze.timestate > medal.timestate)) {
                 result[productName].bronze = {...medal, userName};
             }
+
+            if (result[productName].gold && result[productName].silver && result[productName].bronze) {
+                if (result[productName].gold.userName === result[productName].silver.userName && result[productName].silver.userName === result[productName].bronze.userName) {
+                    result[productName].platinum = {
+                        userName: result[productName].gold.userName,
+                        timestate: '00:00:00.000',
+                        video: '',
+                        img: '',
+                    };
+                }
+            }
         }
         //@ts-ignore
         return Object.entries(result).map(([key, value]) => ({productName: key, ...value}));
     }
 
 
-    async function countMedals() {
 
+    async function countMedals() {
         const medals = await getMedals();
 
         const medalCounts = medals.reduce<Record<string, {
             gold: number,
             silver: number,
-            bronze: number
+            bronze: number,
+            platinum: number
         }>>((acc, medal) => {
-            const userName = medal.gold?.userName || medal.silver?.userName || medal.bronze?.userName;
+            const userName = medal.gold?.userName || medal.silver?.userName || medal.bronze?.userName || medal.platinum?.userName;
             if (userName) {
                 if (!acc[userName]) {
-                    acc[userName] = {gold: 0, silver: 0, bronze: 0};
+                    acc[userName] = {gold: 0, silver: 0, bronze: 0, platinum: 0};
                 }
                 if (medal.gold) acc[userName].gold += 1;
                 if (medal.silver) acc[userName].silver += 1;
                 if (medal.bronze) acc[userName].bronze += 1;
+                if (medal.platinum) acc[userName].platinum += 1;
             }
             return acc;
         }, {});
@@ -118,13 +132,12 @@ export default async function ProductPage({
                 userName,
                 ...counts
             })).sort((a, b) => b.gold - a.gold);
-
     }
 
     return (
         <Container className="flex flex-col my-10">
             <Suspense fallback={<Loading/>}>
-                <GameRecord_MEDAL medals={await getMedals()} countMedals={await countMedals()}/>
+                <GameRecord_MEDAL medals={await getMedals()} countMedals={await countMedals()} categoryPage={categoryPage} productPage={productPage}/>
             </Suspense>
         </Container>
     );
