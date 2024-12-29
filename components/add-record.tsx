@@ -9,6 +9,7 @@ import {addRecordActions, uploadImage} from '@/app/actions';
 import {PutBlobResult} from '@vercel/blob';
 import ImageAddBlobScreen from "@/components/image-add-blop-screen";
 import imageCompression from "browser-image-compression";
+import TimeInput from "@/components/time-input";
 
 
 interface Props {
@@ -131,45 +132,45 @@ export const AddRecord: React.FC<Props> = ({user, category, product, productItem
         }
     }
 
+    const handleTimeChange = (newTime : string) => {
+        setTimestatState(newTime);
+    };
+
 
     return (
         <Container className="mt-4">
 
-            {/*<Title text={`#${data.role}`} size="md" className="font-bold"/>*/}
-
             {/*CATEGORY_LIST*/}
-            <div className="flex">
-                <div className="flex-1 w-[20%]">
-                    <Title text={`Category List`} size="md" className="font-bold"/>
+            <div className="flex gap-4">
+                <div className="w-[22%] text-ellipsis overflow-hidden whitespace-nowrap">
+                    <Title text={`Category List`} size="xs" className="font-bold"/>
+
                     {category.map((item) => (
-                        <div key={item.id} className="flex w-full max-w-sm items-center space-x-2 mb-1">
-                            <Button onClick={() => productFind(item)}>{item.name}</Button>
+                        <div key={item.id}>
+                            <Button className="p-1 h-5" onClick={() => productFind(item)}>{item.name}</Button>
                         </div>
                     ))}
                 </div>
 
                 {/*PRODUCT_LIST*/}
-                <div className="flex-1 w-[20%]">
-                    <Title text={`${categoryNameState}`} size="md" className="font-bold"/>
+                <div className="w-[22%] text-ellipsis overflow-hidden whitespace-nowrap">
+                    <Title text={`${categoryNameState}`} size="xs" className="font-bold"/>
                     <Title text={`Game List`} size="xs"/>
                     {categoryIdRef.current !== 0 && productFindState.map((item, index) => (
-                        <div key={index} className="flex w-full max-w-sm items-center space-x-2 mb-1">
-                            {/*<p>{item.id}</p>*/}
-                            <Button
-                                onClick={e => productItemFind(productFindState[index])}
-                            >{item.name}</Button>
+                        <div key={index}>
+                            <Button className="p-1 h-5" onClick={e => productItemFind(productFindState[index])}>{item.name}</Button>
                         </div>
                     ))}
                 </div>
 
                 {/*PRODUCT_ITEM*/}
-                <div className="flex-1 w-[30%]">
-                    <Title text={`${productNameState}`} size="md" className="font-bold"/>
+                <div className="w-[22%] text-ellipsis overflow-hidden whitespace-nowrap">
+                    <Title text={`${productNameState}`} size="xs" className="font-bold"/>
                     <Title text={`Road List`} size="xs"/>
                     {productIdRef.current !== 0 && productItemState.map((item, index) => (
-                        <div key={index} className="flex w-full max-w-sm items-center space-x-2 mb-1">
+                        <div key={index} >
                                 {/*<p>{item.id}</p>*/}
-                                <Button
+                                <Button className="p-1 h-5"
                                     onClick={() => {
                                         productItemIdRef.current = productItemState[index].id;
                                         addRecordViewRef.current = true;
@@ -181,13 +182,12 @@ export const AddRecord: React.FC<Props> = ({user, category, product, productItem
                 </div>
 
                 {/*GAME_RECORD_CREATE*/}
-                <div className="flex-1 w-[25%] ml-5">
-                    <Title text={`${categoryNameState}`} size="md" className="font-bold"/>
-                    <Title text={`${productNameState}`} size="md" className="font-bold"/>
-                    <Title text={`${productItemNameState}`} size="md" className="font-bold"/>
+                <div className="w-[30%] text-ellipsis overflow-hidden whitespace-nowrap ml-1">
+                    <Title text={`${categoryNameState}`} size="xs" className="font-bold"/>
+                    <Title text={`${productNameState}`} size="xs" className="font-bold"/>
+                    <Title text={`${productItemNameState}`} size="xs" className="font-bold"/>
                     {(productItemIdRef.current !== 0 && addRecordViewRef.current === true) &&
                         <div>
-                            <label htmlFor="image">{"Image < 2Mb"}</label>
                             <Input
                                 type="file"
                                 id="image"
@@ -200,16 +200,17 @@ export const AddRecord: React.FC<Props> = ({user, category, product, productItem
                             <ImageAddBlobScreen onFormDataReady={handleFormDataReady} />
 
                             <div className="m-2">
-                                <Input
-                                    name="timestate"
-                                    type="time"
-                                    step="0.001"
-                                    // pattern="[0-2]{1}[0-9]{1}:[0-5]{1}[0-9]{1}"
-                                    defaultValue="00:00:00.000"
-                                    onChange={e => {
-                                        setTimestatState(e.target.value)
-                                    }}
-                                />
+                                <TimeInput onTimeChange={handleTimeChange}/>
+                                {/*<Input*/}
+                                {/*    name="timestate"*/}
+                                {/*    type="time"*/}
+                                {/*    step="0.001"*/}
+                                {/*    // pattern="[0-2]{1}[0-9]{1}:[0-5]{1}[0-9]{1}"*/}
+                                {/*    defaultValue="00:00:00.000"*/}
+                                {/*    onChange={e => {*/}
+                                {/*        setTimestatState(e.target.value)*/}
+                                {/*    }}*/}
+                                {/*/>*/}
                             </div>
 
                             <div className="m-2">

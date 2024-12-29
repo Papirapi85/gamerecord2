@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-
-const TimeInput = ({ onTimeChange, id }: {onTimeChange: any, id: number}) => {
+    const TimeInput = ({ onTimeChange, id = 0 }: {onTimeChange: any, id?: number}) => {
     const [hours, setHours] = useState('00');
     const [minutes, setMinutes] = useState('00');
     const [seconds, setSeconds] = useState('00');
@@ -14,7 +13,7 @@ const TimeInput = ({ onTimeChange, id }: {onTimeChange: any, id: number}) => {
 
     // Effect to call the onTimeChange callback whenever the time changes
     useEffect(() => {
-        onTimeChange(formatTime(), id);
+        onTimeChange(formatTime(), id || 0);
     }, [hours, minutes, seconds, milliseconds]); // Dependencies to trigger effect
 
     return (
