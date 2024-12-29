@@ -135,3 +135,6 @@ html {
 .font-medium {
   font-weight: 0;
 }
+.p-4 {
+  padding: .2rem;
+}

@@ -11,6 +11,7 @@ import {PutBlobResult} from "@vercel/blob";
 import { del } from '@vercel/blob';
 import {DeleteRecordDialog} from "@/components/delete-record-dialog";
 import {ImageBlopDialog} from "@/components/image-blop-dialog";
+import TimeInput from "@/components/time-input";
 
 interface Props {
     user: User;
@@ -77,18 +78,24 @@ export const EditGameRecord: React.FC<Props> = ({ user, gameRecords, className})
         }
     }
 
+   // const [timeValue, setTimeValue] = useState('');
+
+    const handleTimeChange = (newTime : string, id : number) => {
+        setTimeState(newTime);
+        checkButtonUpdateRef.current = id;
+    };
+
+
     return (
         <Container className="w-[100%]">
-            <Table>
+            <Table className="table-fixed">
                 <TableCaption>Gamerecord.online</TableCaption>
                 <TableHeader>
                     <TableRow>
-                        <TableHead className="w-[12%]">Category</TableHead>
-                        <TableHead className="w-[12%]">Game</TableHead>
-                        <TableHead className="w-[8%]">Time</TableHead>
-                        <TableHead className="w-[7%]">Image</TableHead>
-                        <TableHead className="w-[12%]">Link</TableHead>
-                        <TableCell className="w-[7%] text-right">Delete</TableCell>
+                        <TableHead className="w-[20%] text-left overflow-hidden text-ellipsis whitespace-nowrap">GAME</TableHead>
+                        <TableHead className="w-[20%] text-left overflow-hidden text-ellipsis whitespace-nowrap">Edit</TableHead>
+                        <TableHead className="w-[30%] text-left overflow-hidden text-ellipsis whitespace-nowrap">Edit</TableHead>
+                        <TableCell className="w-[10%] text-right"></TableCell>
                     </TableRow>
                 </TableHeader>
 
@@ -99,31 +106,21 @@ export const EditGameRecord: React.FC<Props> = ({ user, gameRecords, className})
 
                             <TableBody key={index}>
                                 <TableRow>
-
-                                    <TableCell className="font-medium">
-                                        <div>{records.user.fullName}</div>
-                                        <div>{records.category.name}</div>
-                                    </TableCell>
                                     <TableCell>
-                                        <div>{records.product.name}</div>
-                                        <div>{records.productItem.name}</div>
+                                        <div className="text-ellipsis overflow-hidden whitespace-nowrap">{records.user.fullName}</div>
+                                        <div className="text-ellipsis overflow-hidden whitespace-nowrap">{records.category.name}</div>
+                                        <div className="text-ellipsis overflow-hidden whitespace-nowrap">{records.product.name}</div>
+                                        <div className="text-ellipsis overflow-hidden whitespace-nowrap">{records.productItem.name}</div>
                                     </TableCell>
 
                                     <TableCell>
-                                        <label>{records.timestate}</label>
-                                        <input
-                                            type="time"
-                                            step="0.001"
-                                            defaultValue="00:00:00.000"
-                                            onChange={e => {
-                                                setTimeState(e.target.value);
-                                                checkButtonUpdateRef.current = records.id;
-                                            }}
-                                        />
+                                    <div>{records.timestate}</div>
+                                        {/*<div>{timeState}</div>*/}
+                                        <TimeInput onTimeChange={handleTimeChange} id={records.id}/>
                                     </TableCell>
 
                                     <TableCell>
-                                        <div>
+                                        <div className="text-ellipsis overflow-hidden whitespace-nowrap">
                                             <input
                                                 type="file"
                                                 id="image"
@@ -146,25 +143,25 @@ export const EditGameRecord: React.FC<Props> = ({ user, gameRecords, className})
                                             />
                                         </div>
 
-                                        <div>
+                                        <div className="text-ellipsis overflow-hidden whitespace-nowrap">
                                             <ImageAddBlobScreen onFormDataReady={handleFormDataReady}/>
+                                        </div>
+                                        <div>
+                                            <Input className="h-7 mt-0.5"
+                                                type='text'
+                                                placeholder="VIDEO YOUTUBE"
+                                                onChange={e => {
+                                                    if(e.target.value.includes("watch?v=")){
+                                                        setLinkVideo(e.target.value)
+                                                    }else{
+                                                        setLinkVideo("")
+                                                    }
+                                                }}
+                                            />
                                         </div>
 
                                     </TableCell>
 
-                                    <TableCell>
-                                        <Input
-                                            type='text'
-                                            placeholder="VIDEO YOUTUBE"
-                                            onChange={e => {
-                                                if(e.target.value.includes("watch?v=")){
-                                                    setLinkVideo(e.target.value)
-                                                }else{
-                                                    setLinkVideo("")
-                                                }
-                                            }}
-                                        />
-                                    </TableCell>
 
                                     <TableCell className="text-right">
                                         <div>
