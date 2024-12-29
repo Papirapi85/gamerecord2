@@ -14,7 +14,7 @@ async function up() {
       },
       {
         fullName: 'Yatsyk',
-        email: 'umdom555@gmail.com',
+        email: 'yatsyk@gmail.com',
         password: hashSync('123123', 10),
         role: 'USER',
       },

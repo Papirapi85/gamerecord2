@@ -13,8 +13,8 @@ interface Props {
 
 export const GameRecord_MEDAL: React.FC<Props> = ({medals, countMedals}) => {
 
-    console.log(medals);
-    console.log(countMedals);
+    // console.log(medals);
+    // console.log(countMedals);
 
     return (
 
@@ -80,17 +80,20 @@ export const GameRecord_MEDAL: React.FC<Props> = ({medals, countMedals}) => {
                         <TableCaption>Gamerecord.online</TableCaption>
                         <TableHeader>
                             <TableRow>
-                                <TableHead className="w-[30%] text-left overflow-hidden text-ellipsis whitespace-nowrap">
+                                <TableHead className="w-[30%] overflow-hidden text-ellipsis whitespace-nowrap">
                                     <div>Player</div>
                                 </TableHead>
-                                <TableHead className="w-[22%] text-left overflow-hidden text-ellipsis whitespace-nowrap">
+                                <TableHead className="w-[15%] overflow-hidden text-ellipsis whitespace-nowrap">
                                     <div>GOLD</div>
                                 </TableHead>
-                                <TableHead className="w-[22%] text-left overflow-hidden text-ellipsis whitespace-nowrap">
+                                <TableHead className="w-[15%] overflow-hidden text-ellipsis whitespace-nowrap">
                                     <div>SILVER</div>
                                 </TableHead>
-                                <TableHead className="w-[22%] text-left overflow-hidden text-ellipsis whitespace-nowrap">
+                                <TableHead className="w-[15%] overflow-hidden text-ellipsis whitespace-nowrap">
                                     <div>BRONZE</div>
+                                </TableHead>
+                                <TableHead className="w-[15%] overflow-hidden text-ellipsis whitespace-nowrap">
+                                    <div>PLATINUM</div>
                                 </TableHead>
                             </TableRow>
                         </TableHeader>
@@ -100,17 +103,19 @@ export const GameRecord_MEDAL: React.FC<Props> = ({medals, countMedals}) => {
                                 <TableBody key={index}>
                                     <TableRow>
                                         <TableHead>
-                                            <div
-                                                className="text-ellipsis overflow-hidden whitespace-nowrap">{medal.userName}</div>
+                                            <div className="text-ellipsis overflow-hidden whitespace-nowrap">{medal.userName}</div>
                                         </TableHead>
                                         <TableCell>
-                                            <div className="text-ellipsis overflow-hidden whitespace-nowrap">{medal.gold !== null && medal.gold}</div>
+                                            <div className="text-center overflow-hidden whitespace-nowrap">{medal.gold !== null && medal.gold}</div>
                                         </TableCell>
                                         <TableCell>
-                                            <div className="text-ellipsis overflow-hidden whitespace-nowrap">{medal.silver !== null && medal.silver}</div>
+                                            <div className="text-center overflow-hidden whitespace-nowrap">{medal.silver !== null && medal.silver}</div>
                                         </TableCell>
                                         <TableCell>
-                                            <div className="text-ellipsis overflow-hidden whitespace-nowrap">{medal.bronze !== null && medal.bronze}</div>
+                                            <div className="text-center overflow-hidden whitespace-nowrap">{medal.bronze !== null && medal.bronze}</div>
+                                        </TableCell>
+                                        <TableCell>
+                                            <div className="text-center overflow-hidden whitespace-nowrap">{medal.platinum !== null && medal.platinum}</div>
                                         </TableCell>
                                     </TableRow>
                                 </TableBody>
