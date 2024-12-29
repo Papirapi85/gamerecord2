@@ -24,12 +24,12 @@ export const TopBar: React.FC<Props> = ({category, product, productItem, classNa
     const {data: session} = useSession();
     return (
 
-        <div className={cn('sticky top-0 bg-secondary py-2 shadow-lg shadow-black/5 z-10', className)}>
+        <div className={cn('sticky top-0 bg-secondary py-1 shadow-lg shadow-black/5 z-10', className)}>
             <Container className="flex items-center justify-between ">
                 {/*<Categories items={categories} />*/}
                 {/*<SortPopup />*/}
 
-                <div className={cn('inline-flex gap-1 p-1 rounded-2xl h-12', className)}>
+                <div className={cn('inline-flex gap-1  rounded-2xl h-12', className)}>
                     <div className={cn('cursor-pointer absolute left-1 mt-2', className)}>
                         <SheetDriverLeft/>
                     </div>
@@ -39,18 +39,24 @@ export const TopBar: React.FC<Props> = ({category, product, productItem, classNa
                         <DropmenuTopRight category={category} product={product} productItem={productItem}/>
                     </div>
                     {session &&
-                        <div className={cn('cursor-pointer absolute  right-1 mr-2', className)}>
+                        <div className={cn('cursor-pointer absolute right-1 mr-3', className)}>
                             <Link href="/add-record">
-                                <button className="flex items-center gap-2">
-                                    <FilePlus2 size={18}/>
+                                <button className="flex items-center h-2 gap-2">
+                                    <FilePlus2 size={14}/>
                                     ADD RECORD
                                 </button>
                             </Link>
 
                             <Link href="/edit-record">
                                 <button className="flex items-center gap-2">
-                                    <FileCog size={18}/>
+                                    <FileCog size={14}/>
                                     EDIT RECORD
+                                </button>
+                            </Link>
+                            <Link href="/add-game">
+                                <button className="flex items-center gap-2">
+                                    <FilePlus2 size={14}/>
+                                    ADD GAME
                                 </button>
                             </Link>
                         </div>

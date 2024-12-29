@@ -1,12 +1,11 @@
 'use server';
 import { prisma } from '@/prisma/prisma-client';
 import { getUserSession } from '@/components/lib/get-user-session';
-import {notFound, redirect} from 'next/navigation';
-import {AddRecord} from "@/components/add-record";
+import { redirect } from 'next/navigation';
+import {AddGame} from "@/components/add-game";
 
-export default async function AddRecordPage() {
+export default async function AdminPage() {
   const session = await getUserSession();
-
 
   if (!session) {
     return redirect('/not-auth');
@@ -16,21 +15,9 @@ export default async function AddRecordPage() {
   const product = await prisma.product.findMany();
   const category = await prisma.category.findMany();
   const productItem = await prisma.productItem.findMany();
-  const gameRecords = await prisma.gameRecords.findMany({
-    include: {
-      user: true,
-      product: true,
-      productItem: true,
-      category: true,
-    },
-  });
-
-  if (!gameRecords || !user) {
-    return notFound();
-  }
 
   if (user) {
-    return <AddRecord user={user} category={category} product={product} productItem={productItem} gameRecords={gameRecords} />;
+    return <AddGame  category={category} product={product} productItem={productItem} />;
   }else{
     return redirect('/not-auth');
   }

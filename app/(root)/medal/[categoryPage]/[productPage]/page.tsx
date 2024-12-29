@@ -41,8 +41,8 @@ export default async function ProductPage({
 
         const medals = await prisma.gameRecords.findMany({
             where: {
-                productId: 1,
-                categoryId: 1,
+                productId: category?.id,
+                categoryId: product?.id,
             },
             orderBy: {
                 timestate: 'asc',
