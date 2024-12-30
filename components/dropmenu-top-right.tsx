@@ -29,7 +29,7 @@ export const DropmenuTopRight: React.FC<Props> = ({category, product, productIte
     const [productFindState, setProductFindState] = React.useState<Product[]>(product);
     const [productItemFindState, setProductItemFindState] = React.useState<ProductItem[]>(productItem);
 
-    const productFind = (id : Number) => {
+    const productFind = (id: Number) => {
         let array = []
         for (let i = 0; i < product.length; i++) {
             if (product[i].categoryId === id) {
@@ -39,7 +39,7 @@ export const DropmenuTopRight: React.FC<Props> = ({category, product, productIte
         setProductFindState(array);
     }
 
-    const productItemFind = (id : Number) => {
+    const productItemFind = (id: Number) => {
         let array = []
         for (let i = 0; i < productItem.length; i++) {
             if (productItem[i].productId === id) {
@@ -49,7 +49,6 @@ export const DropmenuTopRight: React.FC<Props> = ({category, product, productIte
         }
         setProductItemFindState(array);
     }
-
 
 
     return (
@@ -76,16 +75,17 @@ export const DropmenuTopRight: React.FC<Props> = ({category, product, productIte
             </DropdownMenuTrigger>
 
 
-            <DropdownMenuContent  >
+            <DropdownMenuContent>
 
 
                 {category.map((item) => (
-                    <div key={item.id} >
+                    <div key={item.id}>
                         <DropdownMenuGroup>
 
 
                             <DropdownMenuSub>
-                                <DropdownMenuSubTrigger  style={{height:"25px"}} onMouseEnter={() => productFind(item.id)}>
+                                <DropdownMenuSubTrigger style={{height: "25px"}}
+                                                        onMouseEnter={() => productFind(item.id)}>
                                     {item.name}
                                     {/*<Link href={`/game/${(item.name).replaceAll(" ", "-")}`}>{item.name}</Link>*/}
                                 </DropdownMenuSubTrigger>
@@ -98,10 +98,15 @@ export const DropmenuTopRight: React.FC<Props> = ({category, product, productIte
                                             <div key={products.id}>
 
                                                 <DropdownMenuSub>
-                                                    <DropdownMenuItem style={{height:"16px"}}  onMouseEnter={() => productItemFind(products.id)}>
-                                                        <Link href={`/medal/${(item.name).replaceAll(" ", "-")}/${(products.name).replaceAll(" ", "-")}`}>{products.name}</Link>
-                                                        {/*{products.name}*/}
-                                                    </DropdownMenuItem>
+
+                                                    <Link href={`/medal/${(item.name).replaceAll(" ", "-")}/${(products.name).replaceAll(" ", "-")}`}>
+                                                        <DropdownMenuItem style={{height: "16px", cursor: "pointer"}}
+                                                                          onMouseEnter={() => productItemFind(products.id)}>
+                                                            {products.name}
+                                                        </DropdownMenuItem>
+                                                    </Link>
+                                                    {/*{products.name}*/}
+
                                                 </DropdownMenuSub>
 
                                             </div>
@@ -111,14 +116,12 @@ export const DropmenuTopRight: React.FC<Props> = ({category, product, productIte
                                 </DropdownMenuPortal>
 
 
-
                             </DropdownMenuSub>
 
 
                         </DropdownMenuGroup>
                     </div>
                 ))}
-
 
 
             </DropdownMenuContent>

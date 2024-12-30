@@ -224,7 +224,8 @@ export async function productDelete(data: any) {
 export async function productCreate(data: any) {
   let product;
   let productNameFind;
-
+    console.log(data.name)
+    console.log(data.categoryId)
   try {
     productNameFind = await prisma.product.findFirst({
       where: {

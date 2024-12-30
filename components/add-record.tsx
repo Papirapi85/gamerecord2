@@ -144,7 +144,6 @@ export const AddRecord: React.FC<Props> = ({user, category, product, productItem
             <div className="flex gap-4">
                 <div className="w-[22%] text-ellipsis overflow-hidden whitespace-nowrap">
                     <Title text={`Category List`} size="xs" className="font-bold"/>
-
                     {category.map((item) => (
                         <div key={item.id}>
                             <Button className="p-1 h-5" onClick={() => productFind(item)}>{item.name}</Button>
@@ -201,16 +200,6 @@ export const AddRecord: React.FC<Props> = ({user, category, product, productItem
 
                             <div className="m-2">
                                 <TimeInput onTimeChange={handleTimeChange}/>
-                                {/*<Input*/}
-                                {/*    name="timestate"*/}
-                                {/*    type="time"*/}
-                                {/*    step="0.001"*/}
-                                {/*    // pattern="[0-2]{1}[0-9]{1}:[0-5]{1}[0-9]{1}"*/}
-                                {/*    defaultValue="00:00:00.000"*/}
-                                {/*    onChange={e => {*/}
-                                {/*        setTimestatState(e.target.value)*/}
-                                {/*    }}*/}
-                                {/*/>*/}
                             </div>
 
                             <div className="m-2">
