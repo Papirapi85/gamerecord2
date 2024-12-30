@@ -11,21 +11,22 @@ datasource db {
 }
 
 model User {
-  id                   Int           @id @default(autoincrement())
+  id                   Int              @id @default(autoincrement())
   fullName             String
-  email                String        @unique
+  email                String           @unique
   provider             String?
   providerId           String?
   password             String
-  role                 UserRole      @default(USER)
+  role                 UserRole         @default(USER)
   img                  String?
   gameRecords          GameRecords[]
-  goldProductItems     ProductItem[] @relation("GoldUser")
-  silverProductItems   ProductItem[] @relation("SilverUser")
-  bronzeProductItems   ProductItem[] @relation("BronzeUser")
-  platinumProductItems ProductItem[] @relation("PlatinumUser")
-  createdAt            DateTime      @default(now())
-  updatedAt            DateTime      @updatedAt
+  goldProductItems     ProductItem[]    @relation("GoldUser")
+  silverProductItems   ProductItem[]    @relation("SilverUser")
+  bronzeProductItems   ProductItem[]    @relation("BronzeUser")
+  platinumProductItems ProductItem[]    @relation("PlatinumUser")
+  createdAt            DateTime         @default(now())
+  updatedAt            DateTime         @updatedAt
+  gameCreateTime       GameCreateTime[]
 }
 
 model Category {
@@ -85,6 +86,18 @@ model GameRecords {
   img           String
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
+}
+
+model GameCreateTime {
+  id     Int  @id @default(autoincrement())
+  user   User @relation(fields: [userId], references: [id])
+  userId Int  @unique
+
+  category    DateTime
+  product     DateTime
+  productItem DateTime
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 enum UserRole {

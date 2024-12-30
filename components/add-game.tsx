@@ -5,16 +5,24 @@ import toast from 'react-hot-toast';
 import {Container} from './container';
 import {Title} from './title';
 import {Button, Input} from '@/components/ui';
-import {categoryUpdate, categoryCreate, categoryDelete, productCreate, productItemCreate} from '@/app/actions';
+import {
+    categoryUpdate,
+    categoryCreate,
+    categoryDelete,
+    productCreate,
+    productItemCreate,
+    categoryCreateDateTime, productCreateDateTime, productItemCreateDateTime
+} from '@/app/actions';
 import {useOpenInEditor} from "next/dist/client/components/react-dev-overlay/internal/helpers/use-open-in-editor";
 
 interface Props {
+    user: User;
     category: Category[];
     product: Product[];
     productItem: ProductItem[];
 }
 
-export const AddGame: React.FC<Props> = ({category, product, productItem}) => {
+export const AddGame: React.FC<Props> = ({user, category, product, productItem}) => {
 
     const [categoryInputNameState, setCategoryInputNameState] = React.useState('');
     const [categoryNameFindProductsState, setCategoryNameFindProductsState] = React.useState('');
@@ -47,8 +55,9 @@ export const AddGame: React.FC<Props> = ({category, product, productItem}) => {
                 });
             }
 
-            await categoryCreate({
+            await categoryCreateDateTime({
                 name: categoryInputNameState,
+                userId: Number(user.id),
             });
 
             setCategoryInputNameState('');
@@ -58,7 +67,7 @@ export const AddGame: React.FC<Props> = ({category, product, productItem}) => {
             });
 
         } catch (error) {
-            return toast.error('Ошибка при создании данных', {
+            return toast.error('Error create data, one record one hour', {
                 icon: '❌',
             });
         }
@@ -70,16 +79,17 @@ export const AddGame: React.FC<Props> = ({category, product, productItem}) => {
                     icon: '❌',
                 });
             }
-            await productCreate({
+            await productCreateDateTime({
                 name: createProductNameState,
                 categoryId: categoryIdRef.current,
+                userId: Number(user.id),
             });
             setCreateProductNameState('');
             toast.error('Data create 📝', {
                 icon: '✅',
             });
         } catch (error) {
-            return toast.error('Error create data', {
+            return toast.error('Error create data, one record one hour', {
                 icon: '❌',
             });
         }
@@ -91,16 +101,17 @@ export const AddGame: React.FC<Props> = ({category, product, productItem}) => {
                     icon: '❌',
                 });
             }
-            await productItemCreate({
+            await productItemCreateDateTime({
                 name: productItemInputNameState,
                 productId: productIdRef.current,
+                userId: Number(user.id),
             });
             setProductItemInputNameState('')
             toast.error('Data create 📝', {
                 icon: '✅',
             });
         } catch (error) {
-            return toast.error('Error create data', {
+            return toast.error('Error create data, one record one hour', {
                 icon: '❌',
             });
         }

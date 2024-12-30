@@ -17,7 +17,7 @@ export default async function AdminPage() {
   const productItem = await prisma.productItem.findMany();
 
   if (user) {
-    return <AddGame category={category} product={product} productItem={productItem} />;
+    return <AddGame user={user} category={category} product={product} productItem={productItem} />;
   }else{
     return redirect('/not-auth');
   }
