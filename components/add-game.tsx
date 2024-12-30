@@ -144,6 +144,7 @@ export const AddGame: React.FC<Props> = ({user, category, product, productItem})
                     <div className="flex w-full max-w-sm items-center space-x-2 mb-1">
                         <Input className="m-2 h-5" type='text'
                                value={categoryInputNameState}
+                               placeholder="One hour update create"
                                onChange={e => {
                                    setCategoryInputNameState(e.target.value)
                                }
@@ -169,6 +170,7 @@ export const AddGame: React.FC<Props> = ({user, category, product, productItem})
                         <div className="flex w-full max-w-sm items-center space-x-2 mb-1">
                             <Input className="m-2 h-5" type='text'
                                    value={createProductNameState}
+                                   placeholder="One hour update create"
                                    onChange={e => {
                                        setCreateProductNameState(e.target.value)
                                    }}
@@ -201,6 +203,7 @@ export const AddGame: React.FC<Props> = ({user, category, product, productItem})
                             <div className="flex w-full max-w-sm items-center space-x-2 p-1">
                                 <Input type='text' className="m-2 h-5"
                                        value={productItemInputNameState}
+                                       placeholder="One hour update create"
                                        onChange={e => {setProductItemInputNameState(e.target.value)}}
                                 />
                                 <Button
