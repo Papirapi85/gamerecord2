@@ -133,7 +133,7 @@ export const EditGameRecord: React.FC<Props> = ({ user, gameRecords, className})
                                                         const data = new FormData();
                                                         if (e.target.files[0].size > 2 * 1000 * 1024) {
                                                             const options = {
-                                                                maxSizeMB: 2, // Максимальный размер в мегабайтах
+                                                                maxSizeMB: 1, // Максимальный размер в мегабайтах
                                                                 maxWidthOrHeight: 1920, // Максимальная ширина или высота
                                                                 useWebWorker: true, // Использовать веб-воркеры для повышения производительности
                                                             };
