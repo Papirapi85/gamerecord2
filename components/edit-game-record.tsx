@@ -130,22 +130,22 @@ export const EditGameRecord: React.FC<Props> = ({ user, gameRecords, className})
                                                 required
                                                 onChange={async (e) => {
                                                     if (e.target.files && e.target.files[0]) {
-                                                        if (e.target.files[0].size > 5 * 1000 * 1024) {
-
-                                                            // const options = {
-                                                            //     maxSizeMB: 2, // Максимальный размер в мегабайтах
-                                                            //     maxWidthOrHeight: 1920, // Максимальная ширина или высота
-                                                            //     useWebWorker: true, // Использовать веб-воркеры для повышения производительности
-                                                            // };
-                                                            // const compressedFile = await imageCompression(e.target.files[0], options);
-                                                            const data = new FormData();
-                                                            data.append('image', e.target.files[0], e.target.files[0].name)
+                                                        const data = new FormData();
+                                                        if (e.target.files[0].size > 2 * 1000 * 1024) {
+                                                            const options = {
+                                                                maxSizeMB: 2, // Максимальный размер в мегабайтах
+                                                                maxWidthOrHeight: 1920, // Максимальная ширина или высота
+                                                                useWebWorker: true, // Использовать веб-воркеры для повышения производительности
+                                                            };
+                                                            const compressedFile = await imageCompression(e.target.files[0], options);
+                                                            data.append('image', compressedFile, e.target.files[0].name)
                                                             setFormDataImage(data)
                                                         } else {
-                                                            const data = new FormData();
                                                             data.append('image', e.target.files[0], e.target.files[0].name)
                                                             setFormDataImage(data)
                                                         }
+
+
                                                     }
                                                 }}
                                             />
