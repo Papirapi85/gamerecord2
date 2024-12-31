@@ -132,8 +132,9 @@ export const EditGameRecord: React.FC<Props> = ({ user, gameRecords, className})
                                                     if (e.target.files && e.target.files[0]) {
                                                         const data = new FormData();
                                                         if (e.target.files[0].size > 2 * 1000 * 1024) {
+                                                            console.log("yes")
                                                             const options = {
-                                                                maxSizeMB: 1, // Максимальный размер в мегабайтах
+                                                                maxSizeMB: 2, // Максимальный размер в мегабайтах
                                                                 maxWidthOrHeight: 1920, // Максимальная ширина или высота
                                                                 useWebWorker: true, // Использовать веб-воркеры для повышения производительности
                                                             };
@@ -141,11 +142,10 @@ export const EditGameRecord: React.FC<Props> = ({ user, gameRecords, className})
                                                             data.append('image', compressedFile, e.target.files[0].name)
                                                             setFormDataImage(data)
                                                         } else {
+                                                            console.log("no")
                                                             data.append('image', e.target.files[0], e.target.files[0].name)
                                                             setFormDataImage(data)
                                                         }
-
-
                                                     }
                                                 }}
                                             />
