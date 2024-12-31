@@ -229,7 +229,7 @@ export async function productCreateDateTime(data: any) {
     if (lastProductTime && lastProductTime.product) {
       const timeDiff = currentTime.getTime() - new Date(lastProductTime.product).getTime();
       if (timeDiff < 60000 * 60) { // 60000 мс = 1 минута
-        throw new Error('Вы можете добавлять категории только раз в час');
+        throw new Error('Вы можете добавлять продукты только раз в час');
       }
     }
     console.log("444444444444")
