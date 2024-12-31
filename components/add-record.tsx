@@ -84,7 +84,7 @@ export const AddRecord: React.FC<Props> = ({user, category, product, productItem
                     useWebWorker: true, // Использовать веб-воркеры для повышения производительности
                 };
                 //const compressedFile = await imageCompression(e.target.files[0], options);
-                //const data = new FormData();
+                const data = new FormData();
                 data.append('image', e.target.files[0], e.target.files[0].name)
                 setFormData(data)
                 imgRef.current = true;
