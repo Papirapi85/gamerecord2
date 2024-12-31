@@ -133,8 +133,8 @@ export const EditGameRecord: React.FC<Props> = ({ user, gameRecords, className})
                                                         if (e.target.files[0].size > 2 * 1000 * 1024) {
 
                                                             const options = {
-                                                                maxSizeMB: 1, // Максимальный размер в мегабайтах
-                                                                maxWidthOrHeight: 1280, // Максимальная ширина или высота
+                                                                maxSizeMB: 2, // Максимальный размер в мегабайтах
+                                                                maxWidthOrHeight: 1920, // Максимальная ширина или высота
                                                                 useWebWorker: true, // Использовать веб-воркеры для повышения производительности
                                                             };
                                                             const compressedFile = await imageCompression(e.target.files[0], options);
