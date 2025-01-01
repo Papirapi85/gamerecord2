@@ -207,7 +207,7 @@ export const EditGameRecord: React.FC<Props> = ({ user, gameRecords, carModel, c
                                     <TableCell className="text-right">
                                         <div className="text-ellipsis overflow-hidden whitespace-nowrap">
                                             <Button className="w-[60px] h-[20px] mb-1"
-                                                    disabled={!formDataImage || checkButtonUpdateRef.current !== records.id}
+                                                    // disabled={!formDataImage && checkButtonUpdateRef.current !== records.id}
                                                     onClick={() => {
                                                         idRef.current = records.id;
                                                         categoryIdRef.current = records.categoryId;
