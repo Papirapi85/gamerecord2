@@ -45,6 +45,7 @@ model Product {
   img         String?
   productItem ProductItem[]
   gameRecords GameRecords[]
+  carModel    CarModel[]
   category    Category      @relation(fields: [categoryId], references: [id])
   categoryId  Int
   createdAt   DateTime      @default(now())
@@ -81,11 +82,15 @@ model GameRecords {
   productId     Int
   productItem   ProductItem @relation(fields: [productItemId], references: [id])
   productItemId Int
-  timestate     String
-  video         String
-  img           String
-  createdAt     DateTime    @default(now())
-  updatedAt     DateTime    @updatedAt
+
+  carModel   CarModel? @relation(fields: [carModelId], references: [id])
+  carModelId Int?
+
+  timestate String
+  video     String
+  img       String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model GameCreateTime {
@@ -98,6 +103,14 @@ model GameCreateTime {
   productItem DateTime
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+}
+
+model CarModel {
+  id          Int           @id @default(autoincrement())
+  name        String
+  gameRecords GameRecords[]
+  product     Product       @relation(fields: [productId], references: [id])
+  productId   Int
 }
 
 enum UserRole {

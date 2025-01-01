@@ -33,6 +33,7 @@ export default async function Home({
             product: true,
             productItem: true,
             category: true,
+            carModel: true,
         },
     });
 

@@ -16,21 +16,14 @@ export default async function AddRecordPage() {
   const product = await prisma.product.findMany();
   const category = await prisma.category.findMany();
   const productItem = await prisma.productItem.findMany();
-  const gameRecords = await prisma.gameRecords.findMany({
-    include: {
-      user: true,
-      product: true,
-      productItem: true,
-      category: true,
-    },
-  });
+  const carModel = await prisma.carModel.findMany();
 
-  if (!gameRecords || !user) {
+  if (!user) {
     return notFound();
   }
 
   if (user) {
-    return <AddRecord user={user} category={category} product={product} productItem={productItem} gameRecords={gameRecords} />;
+    return <AddRecord user={user} category={category} product={product} productItem={productItem} carModel={carModel} />;
   }else{
     return redirect('/not-auth');
   }

@@ -36,6 +36,7 @@ export default async function AdminPage({
             product: true,
             productItem: true,
             category: true,
+            carModel: true,
         },
     });
 
@@ -47,6 +48,8 @@ export default async function AdminPage({
 
     const totalPages = Math.ceil(totalRecords / pageSize);
 
+    const carModel = await prisma.carModel.findMany();
+
     if (!user) {
         return notFound();
     }
@@ -54,7 +57,7 @@ export default async function AdminPage({
     if (user) {
         return (
             <div>
-                <EditGameRecord user={user} gameRecords={gameRecords}/>
+                <EditGameRecord user={user} gameRecords={gameRecords} carModel={carModel}/>
                 <div className="pagination-buttons flex justify-center mt-6">
                     <Link href={`/edit-record/?page=${page - 1}`}>
                         <Button

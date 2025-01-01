@@ -1,6 +1,6 @@
 'use client';
 import React, {useEffect, useState} from 'react';
-import {Category, Product, ProductItem, User} from '@prisma/client';
+import {CarModel, Category, Product, ProductItem, User} from '@prisma/client';
 import toast from 'react-hot-toast';
 import {Container} from './container';
 import {Title} from './title';
@@ -11,16 +11,26 @@ import ImageAddBlobScreen from "@/components/image-add-blop-screen";
 import imageCompression from "browser-image-compression";
 import TimeInput from "@/components/time-input";
 
+import {
+    Select,
+    SelectContent,
+    SelectGroup,
+    SelectItem,
+    SelectLabel,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select"
+import {number} from "zod";
 
 interface Props {
     user: User;
     category: Category[];
-    product: Product[];
     productItem: ProductItem[];
-    gameRecords: any[];
+    product: Product[];
+    carModel: any[];
 }
 
-export const AddRecord: React.FC<Props> = ({user, category, product, productItem, gameRecords}) => {
+export const AddRecord: React.FC<Props> = ({user, category, product, productItem, carModel}) => {
 
     const [formData, setFormData] = useState<FormData | null>(null); // State для хранения FormData
 
@@ -39,6 +49,7 @@ export const AddRecord: React.FC<Props> = ({user, category, product, productItem
     const [videoState, setVideoState] = React.useState('');
     const [productFindState, setProductFindState] = React.useState<Product[]>([]);
     const [productItemState, setProductItemState] = React.useState<ProductItem[]>([]);
+    const [carModelArrayState, setCarModelArrayState] = React.useState<CarModel[]>([]);
 
     const categoryIdRef = React.useRef(0);
     const productIdRef = React.useRef(0);
@@ -46,6 +57,7 @@ export const AddRecord: React.FC<Props> = ({user, category, product, productItem
     const addRecordViewRef = React.useRef(false);
     const imgRef = React.useRef(true);
     const videSetRef = React.useRef(true);
+    const selectCarRef = React.useRef<number | null>(null);
 
     const productFind = (item : any) => {
         categoryIdRef.current = item.id;
@@ -63,6 +75,14 @@ export const AddRecord: React.FC<Props> = ({user, category, product, productItem
 
     const productItemFind = (item : any) => {
         productIdRef.current = item.id;
+        const arrayCarModel = [];
+        for (let i = 0; i < carModel.length; i++) {
+            if (carModel[i].productId === item.id) {
+                arrayCarModel.push(carModel[i]);
+            }
+        }
+        setCarModelArrayState(arrayCarModel);
+
         //console.log(productIdRef.current);
         let array = []
         for (let i = 0; i < productItem.length; i++) {
@@ -120,6 +140,7 @@ export const AddRecord: React.FC<Props> = ({user, category, product, productItem
                 timestate: timestatState,
                 video: videoState,
                 img: blop.url,
+                carModelId: selectCarRef.current,
             });
             imgRef.current = true;
             toast.error('Record create 📝', {
@@ -197,43 +218,67 @@ export const AddRecord: React.FC<Props> = ({user, category, product, productItem
                                 onChange={selectFile}
                             />
 
-                            <ImageAddBlobScreen onFormDataReady={handleFormDataReady} />
+                            <ImageAddBlobScreen onFormDataReady={handleFormDataReady}/>
 
                             <div className="m-2">
                                 <TimeInput onTimeChange={handleTimeChange}/>
                             </div>
 
-                            <div className="m-2">
+                            <div className="m-1">
                                 <Input type='text'
                                        placeholder="VIDEO YOUTUBE"
                                        onChange={e => {
-                                           if(e.target.value.includes("watch?v=")){
+                                           if (e.target.value.includes("watch?v=")) {
                                                setVideoState(e.target.value)
                                                videSetRef.current = false
-                                           }else{
+                                           } else {
                                                videSetRef.current = true
                                                setVideoState("")
                                            }
                                        }}
                                 />
                             </div>
+                            <div className="m-1">
+                                { carModelArrayState.length !== 0 &&
+                                <Select onValueChange={(e) => {
 
-                            {formData && (
-                            <Button type="submit"
-                                    disabled={timestatState === "" || imgRef.current === false  }
-                                    onClick={() => {
-                                        if (videSetRef.current) {
-                                            addRecordIMAGE().then(()=>  toast.error('Error create Link video', {icon: '❌',}));
-                                        } else {
-                                            addRecordIMAGE().then(()=>  toast.error('Create Link video', {icon: '✅',}));
-                                        }
-                                    }}
-                            >Upload</Button>
-                            )}
+                                    selectCarRef.current = Number(e)
+                                    console.log(selectCarRef.current)
+
+                                }}>
+                                    <SelectTrigger className="w-[180px]">
+                                        <SelectValue placeholder="Car Model"/>
+                                    </SelectTrigger>
+                                    <SelectContent>
+                                        <SelectGroup>
+                                            {carModelArrayState.map((item) => (
+                                                <SelectItem key={item.id} value={String(item.id)}>
+                                                    {item.name}
+                                                </SelectItem>
+
+                                            ))}
+                                        </SelectGroup>
+                                    </SelectContent>
+                                </Select>
+                                }
+                            </div>
+
+                                {formData && (
+                                    <Button type="submit"
+                                            disabled={timestatState === "" || imgRef.current === false}
+                                            onClick={() => {
+                                                if (videSetRef.current) {
+                                                    addRecordIMAGE().then(() => toast.error('Error create Link video', {icon: '❌',}));
+                                                } else {
+                                                    addRecordIMAGE().then(() => toast.error('Create Link video', {icon: '✅',}));
+                                                }
+                                            }}
+                                    >Upload</Button>
+                                )}
+                            </div>
+                            }
                         </div>
-                    }
-                </div>
-            </div>
-        </Container>
+                        </div>
+                        </Container>
     );
 };

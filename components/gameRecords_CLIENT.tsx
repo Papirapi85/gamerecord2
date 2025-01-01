@@ -55,6 +55,7 @@ export const GameRecord_CLIENT: React.FC<Props> = ({gameRecords}) => {
                                     <TableRow>
                                         <TableCell>
                                             <div
+
                                                 className="text-ellipsis overflow-hidden whitespace-nowrap">{records.user.fullName}</div>
                                             <div className="text-ellipsis overflow-hidden whitespace-nowrap">
                                                 <Link
@@ -62,20 +63,21 @@ export const GameRecord_CLIENT: React.FC<Props> = ({gameRecords}) => {
                                             </div>
                                         </TableCell>
                                         <TableCell>
-                                            <div
-                                                className="text-ellipsis overflow-hidden whitespace-nowrap">{records.product.name}</div>
-                                            <div
-                                                className="text-ellipsis overflow-hidden whitespace-nowrap">{records.productItem.name}</div>
+                                            <div className="text-ellipsis overflow-hidden whitespace-nowrap">{records.product.name}</div>
+                                            <div className="text-ellipsis overflow-hidden whitespace-nowrap">{records.productItem.name}</div>
                                         </TableCell>
                                         <TableCell>
-                                            <div>{records.timestate.substring(3)}</div>
-                                            <div>
+                                            <div className="text-ellipsis overflow-hidden whitespace-nowrap">
+                                                {records.timestate.substring(3)}
+                                            </div>
+                                            <div className="text-ellipsis overflow-hidden whitespace-nowrap">
                                                 <ImageBlopDialog img={records.img}/>
                                                 {records.video !== "" && <VideoYouTube video={records.video}/>}
+                                                {records.carModel !== null && records.carModel.name}
                                             </div>
                                         </TableCell>
                                         <TableCell className="text-right">
-                                            <div>{new Date(records.updatedAt).toLocaleDateString('ru-RU')}</div>
+                                        <div>{new Date(records.updatedAt).toLocaleDateString('ru-RU')}</div>
                                             <div
                                                 className="mr-2">{new Date(records.updatedAt).toLocaleTimeString('ru-RU')}</div>
                                         </TableCell>

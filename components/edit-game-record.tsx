@@ -1,9 +1,9 @@
 'use client';
 import React, {Suspense, useEffect, useRef, useState} from 'react';
-import {GameRecords, User} from '@prisma/client';
+import {CarModel, GameRecords, User} from '@prisma/client';
 import {Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
 import {Container} from "@/components/container";
-import {Button, Input} from "@/components/ui";
+import {Button, Input, Select} from "@/components/ui";
 import {addRecordActions, editRecordActions, uploadImage} from "@/app/actions";
 import toast from "react-hot-toast";
 import ImageAddBlobScreen from "@/components/image-add-blop-screen";
@@ -13,14 +13,17 @@ import {DeleteRecordDialog} from "@/components/delete-record-dialog";
 import {ImageBlopDialog} from "@/components/image-blop-dialog";
 import TimeInput from "@/components/time-input";
 import imageCompression from 'browser-image-compression';
+import {SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
+import {number} from "zod";
 
 interface Props {
     user: User;
     gameRecords: any[];
     className?: string;
+    carModel: CarModel[];
 }
 
-export const EditGameRecord: React.FC<Props> = ({ user, gameRecords, className}) => {
+export const EditGameRecord: React.FC<Props> = ({ user, gameRecords, carModel, className}) => {
 
     const [formDataImage, setFormDataImage] = useState<FormData | null>(null);
 
@@ -32,6 +35,9 @@ export const EditGameRecord: React.FC<Props> = ({ user, gameRecords, className})
     const productIdRef = useRef("");
     const productItemIdRef = useRef("");
     const checkButtonUpdateRef = useRef(0);
+
+    const selectCarRef = React.useRef<number | null>(null);
+    const [carModelArrayState, setCarModelArrayState] = React.useState<CarModel[]>(carModel);
 
 
 
@@ -105,7 +111,7 @@ export const EditGameRecord: React.FC<Props> = ({ user, gameRecords, className})
                     {
                         gameRecords.map((records, index) => (
 
-                            <TableBody key={index}>
+                            <TableBody key={index} className="border-b border-b-gray-200 dark:border-b-gray-800">
                                 <TableRow>
                                     <TableCell>
                                         <div className="text-ellipsis overflow-hidden whitespace-nowrap">{records.user.fullName}</div>
@@ -155,17 +161,44 @@ export const EditGameRecord: React.FC<Props> = ({ user, gameRecords, className})
                                             <ImageAddBlobScreen onFormDataReady={handleFormDataReady}/>
                                         </div>
                                         <div className="text-ellipsis overflow-hidden whitespace-nowrap">
-                                            <Input className="h-7 mt-0.5"
-                                                type='text'
-                                                placeholder="VIDEO YOUTUBE"
-                                                onChange={e => {
-                                                    if(e.target.value.includes("watch?v=")){
-                                                        setLinkVideo(e.target.value)
-                                                    }else{
-                                                        setLinkVideo("")
-                                                    }
-                                                }}
+                                            <Input className="h-5 mr-1"
+                                                   type='text'
+                                                   placeholder="VIDEO YOUTUBE"
+                                                   onChange={e => {
+                                                       if (e.target.value.includes("watch?v=")) {
+                                                           setLinkVideo(e.target.value)
+                                                       } else {
+                                                           setLinkVideo("")
+                                                       }
+                                                   }}
                                             />
+
+                                            <div>
+                                                {carModelArrayState.length !== 0 &&
+                                                    <Select onValueChange={(e) => {
+
+                                                        selectCarRef.current = Number(e)
+                                                        console.log(selectCarRef.current)
+
+                                                    }}>
+                                                        <SelectTrigger className="mr-1 w-[100%] h-5">
+                                                            <SelectValue placeholder="Car Model"/>
+                                                        </SelectTrigger>
+                                                        <SelectContent>
+                                                            <SelectGroup>
+                                                                {carModelArrayState
+                                                                    .filter((item) => item.productId === records.productId) // Filter by records.productId
+                                                                    .map((item) =>  (
+                                                                    <SelectItem key={item.id} value={String(item.id)}>
+                                                                        {item.name}
+                                                                    </SelectItem>
+
+                                                                ))}
+                                                            </SelectGroup>
+                                                        </SelectContent>
+                                                    </Select>
+                                                }
+                                            </div>
                                         </div>
 
                                     </TableCell>
@@ -175,17 +208,17 @@ export const EditGameRecord: React.FC<Props> = ({ user, gameRecords, className})
                                         <div className="text-ellipsis overflow-hidden whitespace-nowrap">
                                             <Button className="w-[60px] h-[20px] mb-1"
                                                     disabled={!formDataImage || checkButtonUpdateRef.current !== records.id}
-                                                    onClick={()=>{
+                                                    onClick={() => {
                                                         idRef.current = records.id;
                                                         categoryIdRef.current = records.categoryId;
                                                         productIdRef.current = records.productId;
                                                         productItemIdRef.current = records.productItemId;
-                                                        addRecordIMAGE(records.img).then(()=>toast.error('Record edit 📝', {icon: '✅'}));
+                                                        addRecordIMAGE(records.img).then(() => toast.error('Record edit 📝', {icon: '✅'}));
                                                     }}
                                             >Update</Button>
                                         </div>
                                         <div>
-                                            <DeleteRecordDialog id={records.id} />
+                                        <DeleteRecordDialog id={records.id} />
                                         </div>
                                     </TableCell>
                                 </TableRow>

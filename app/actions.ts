@@ -632,6 +632,8 @@ export async function productItemCreate(data: any) {
 export async function addRecordActions(data :any) {
 
   try {
+    console.log("data.carModelId");
+    console.log(data.carModelId);
     await prisma.gameRecords.create({
         data: {
           userId: data.userId,
@@ -641,6 +643,7 @@ export async function addRecordActions(data :any) {
           timestate: data.timestate,
           video: data.video,
           img: data.img,
+          carModelId: data.carModelId,
         }
       });
 
