@@ -96,6 +96,7 @@ export default async function ProductPage({
                         timestate: '00:00:00.000',
                         video: '',
                         img: '',
+                        carModel: null,
                     };
                 }
             }

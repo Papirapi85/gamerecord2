@@ -690,6 +690,7 @@ export async function editRecordActions(data :any) {
         timestate: String(data.timestate),
         video: data.video,
         img: data.img,
+        carModelId: data.carModelId,
       },
     });
 

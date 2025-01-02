@@ -38,6 +38,7 @@ export default async function CategoryPage({
             product: true,
             productItem: true,
             category: true,
+            carModel: true,
         },
     });
 
