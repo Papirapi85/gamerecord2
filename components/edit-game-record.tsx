@@ -219,7 +219,7 @@ export const EditGameRecord: React.FC<Props> = ({ user, gameRecords, carModel, c
                                             >Update</Button>
                                         </div>
                                         <div>
-                                        <DeleteRecordDialog id={records.id} />
+                                        <DeleteRecordDialog id={records.id} img={records.img} />
                                         </div>
                                     </TableCell>
                                 </TableRow>

@@ -375,19 +375,21 @@ export async function categoryUpdate(data: any) {
     });
 
     if (!findCategory) {
-      throw new Error('Пользователь не найден');
+      throw new Error('Category non found');
     }
 
-    if (findCategory.name === data.name) {
-      throw new Error('Данные не обновлены, они одинаковые.');
-    }
+    // if (findCategory.name === data.name) {
+    //   throw new Error('Данные не обновлены, они одинаковые.');
+    // }
 
     await prisma.category.update({
       where: {
         id: Number(data.id),
+
       },
       data: {
         name: data.name,
+        img: data?.img,
       },
     });
 
@@ -413,6 +415,7 @@ export async function categoryCreate(data: any) {
     category = await prisma.category.create({
       data: {
         name: data.name,
+        img: data.img,
       }
     })
 

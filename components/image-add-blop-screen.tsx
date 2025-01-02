@@ -1,13 +1,13 @@
 "use client";
 
-import React, { useState } from "react";
+import React, {useState} from "react";
 import imageCompression from "browser-image-compression";
 
 interface ImageAddBlobScreenProps {
     onFormDataReady: (formData: FormData) => void; // Функция передачи FormData
 }
 
-const ImageAddBlobScreen: React.FC<ImageAddBlobScreenProps> = ({ onFormDataReady }) => {
+const ImageAddBlobScreen: React.FC<ImageAddBlobScreenProps> = ({onFormDataReady}) => {
     const [preview, setPreview] = useState<string | null>(null); // Для превью изображения
 
     const handlePaste = async (event: React.ClipboardEvent) => {
@@ -52,21 +52,23 @@ const ImageAddBlobScreen: React.FC<ImageAddBlobScreenProps> = ({ onFormDataReady
     };
 
     return (
-        <div
-            onPaste={handlePaste}
-            style={{
-                border: "1px dashed #ccc",
-                padding: "2px",
-                textAlign: "center",
-            }}
-        >
-            <h2>Buffer input Ctrl+V</h2>
-            {preview && (
-                <div>
-                    {/*<h3>Предпросмотр:</h3>*/}
-                    <img src={preview} alt="Preview" style={{ maxWidth: "100%" }} />
-                </div>
-            )}
+        <div className="m-2">
+            <div
+                onPaste={handlePaste}
+                style={{
+                    border: "1px dashed #ccc",
+                    padding: "2px",
+                    textAlign: "center",
+                }}
+            >
+                <h2>Buffer input Ctrl+V</h2>
+                {preview && (
+                    <div>
+                        {/*<h3>Предпросмотр:</h3>*/}
+                        <img src={preview} alt="Preview" style={{maxWidth: "100%"}}/>
+                    </div>
+                )}
+            </div>
         </div>
     );
 };

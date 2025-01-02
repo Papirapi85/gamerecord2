@@ -1,15 +1,27 @@
 import { useState } from "react";
 import { Dialog, DialogTrigger, DialogContent, DialogTitle, DialogClose } from "@/components/ui/dialog"; // Импорт вашего компонента Dialog
 import { Button } from "@/components/ui/button";
-import {deleteRecordActions} from "@/app/actions"; // Ваш компонент кнопки
+import {deleteRecordActions} from "@/app/actions";
+import toast from "react-hot-toast"; // Ваш компонент кнопки
 
-export const DeleteRecordDialog = ({ id }: { id: number }) => {
+export const DeleteRecordDialog = ({ id, img }: { id: number, img: string }) => {
     const [open, setOpen] = useState(false); // Управление состоянием диалога
 
     const handleDelete = async () => {
         try {
             await deleteRecordActions({ id }); // Выполнение логики удаления записи
             setOpen(false); // Закрытие диалога после успешного удаления
+
+            await fetch('/api/blop/del/' + encodeURIComponent(img), {
+                method: 'DELETE',
+                headers: { 'Content-Type': 'application/json' },
+            });
+
+            toast.error('Record DELETE 📝', {
+                icon: '✅',
+            });
+
+
         } catch (error) {
             console.error("Error deleting game:", error); // Обработка ошибок
         }
