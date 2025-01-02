@@ -1,21 +1,19 @@
-import {Container} from '@/components/container';
-import {prisma} from '@/prisma/prisma-client';
-
-import React, {Suspense} from "react";
+import { Container } from '@/components/container';
+import { prisma } from '@/prisma/prisma-client';
+import React, { Suspense } from "react";
 import Loading from "@/app/(root)/loading";
-import {GameRecord_MEDAL} from "@/components/gameRecords_MEDAL";
+import { GameRecord_MEDAL_TEST } from "@/components/gameRecords_MEDAL_TEST";
 
-export const dynamic = 'force-dynamic'
+export const dynamic = 'force-dynamic';
 
+export default async function ProductPage({
+                                              params,
+                                          }: {
+    params: Promise<{ categoryPage: string, productPage: string }>;
+}) {
+    const { categoryPage, productPage } = await params;
 
-export default async function Medal() {
-
-    const  categoryPage = "Need-for-Speed"
-    const  productPage = "Most-Wanted-2005"
     async function getMedals() {
-
-        const result: any = {};
-
         const medals = await prisma.gameRecords.findMany({
             where: {
                 productId: 1,
@@ -38,49 +36,54 @@ export default async function Medal() {
                 },
                 video: true,
                 img: true,
+                carModel: true,
             },
         });
 
+        // Группируем медали по productItem.name
+        const groupedMedals: Record<string, any[]> = {};
         for (const medal of medals) {
             const productName = medal.productItem.name;
-            const userName = medal.user.fullName;
-
-            if (!result[productName]) {
-                result[productName] = {
-                    gold: null,
-                    silver: null,
-                    bronze: null,
-                    platinum: null,
-                };
+            if (!groupedMedals[productName]) {
+                groupedMedals[productName] = [];
             }
+            groupedMedals[productName].push(medal);
+        }
 
-            if (!result[productName].gold || (result[productName].gold.timestate > medal.timestate)) {
-                result[productName].bronze = result[productName].silver;
-                result[productName].silver = result[productName].gold;
-                result[productName].gold = {...medal, userName};
-            } else if (!result[productName].silver || (result[productName].silver.timestate > medal.timestate)) {
-                result[productName].bronze = result[productName].silver;
-                result[productName].silver = {...medal, userName};
-            } else if (!result[productName].bronze || (result[productName].bronze.timestate > medal.timestate)) {
-                result[productName].bronze = {...medal, userName};
-            }
+        // Присваиваем медали для каждого продукта
+        const result = Object.entries(groupedMedals).map(([productName, medals]) => {
+            // Сортируем медали по timestate
+            const sortedMedals = medals.sort((a, b) => a.timestate.localeCompare(b.timestate));
 
-            if (result[productName].gold && result[productName].silver && result[productName].bronze) {
-                if (result[productName].gold.userName === result[productName].silver.userName && result[productName].silver.userName === result[productName].bronze.userName) {
-                    result[productName].platinum = {
-                        userName: result[productName].gold.userName,
+            // Присваиваем золото, серебро и бронзу
+            const gold = sortedMedals[0];
+            const silver = sortedMedals[1];
+            const bronze = sortedMedals[2];
+
+            // Проверяем, есть ли платина (один пользователь получил все три медали)
+            const platinum =
+                gold?.user.fullName === silver?.user.fullName &&
+                silver?.user.fullName === bronze?.user.fullName
+                    ? {
+                        userName: gold.user.fullName,
                         timestate: '00:00:00.000',
                         video: '',
                         img: '',
-                    };
-                }
-            }
-        }
-        //@ts-ignore
-        return Object.entries(result).map(([key, value]) => ({productName: key, ...value}));
+                        carModel: null,
+                    }
+                    : null;
+
+            return {
+                productName,
+                gold: gold ? { ...gold, userName: gold.user.fullName } : null,
+                silver: silver ? { ...silver, userName: silver.user.fullName } : null,
+                bronze: bronze ? { ...bronze, userName: bronze.user.fullName } : null,
+                platinum,
+            };
+        });
+
+        return result;
     }
-
-
 
     async function countMedals() {
         const medals = await getMedals();
@@ -91,30 +94,43 @@ export default async function Medal() {
             bronze: number,
             platinum: number
         }>>((acc, medal) => {
-            const userName = medal.gold?.userName || medal.silver?.userName || medal.bronze?.userName || medal.platinum?.userName;
-            if (userName) {
-                if (!acc[userName]) {
-                    acc[userName] = {gold: 0, silver: 0, bronze: 0, platinum: 0};
-                }
-                if (medal.gold) acc[userName].gold += 1;
-                if (medal.silver) acc[userName].silver += 1;
-                if (medal.bronze) acc[userName].bronze += 1;
-                if (medal.platinum) acc[userName].platinum += 1;
+            const goldUser = medal.gold?.userName;
+            const silverUser = medal.silver?.userName;
+            const bronzeUser = medal.bronze?.userName;
+            const platinumUser = medal.platinum?.userName;
+
+            if (goldUser) {
+                if (!acc[goldUser]) acc[goldUser] = { gold: 0, silver: 0, bronze: 0, platinum: 0 };
+                acc[goldUser].gold += 1;
             }
+            if (silverUser) {
+                if (!acc[silverUser]) acc[silverUser] = { gold: 0, silver: 0, bronze: 0, platinum: 0 };
+                acc[silverUser].silver += 1;
+            }
+            if (bronzeUser) {
+                if (!acc[bronzeUser]) acc[bronzeUser] = { gold: 0, silver: 0, bronze: 0, platinum: 0 };
+                acc[bronzeUser].bronze += 1;
+            }
+            if (platinumUser) {
+                if (!acc[platinumUser]) acc[platinumUser] = { gold: 0, silver: 0, bronze: 0, platinum: 0 };
+                acc[platinumUser].platinum += 1;
+            }
+
             return acc;
         }, {});
 
         return Object.entries(medalCounts)
             .map(([userName, counts]) => ({
                 userName,
-                ...counts
-            })).sort((a, b) => b.gold - a.gold);
+                ...counts,
+            }))
+            .sort((a, b) => b.gold - a.gold);
     }
 
     return (
         <Container className="flex flex-col my-10">
-            <Suspense fallback={<Loading/>}>
-                <GameRecord_MEDAL medals={await getMedals()} countMedals={await countMedals()} categoryPage={categoryPage} productPage={productPage}/>
+            <Suspense fallback={<Loading />}>
+                <GameRecord_MEDAL_TEST medals={await getMedals()} countMedals={await countMedals()} categoryPage={categoryPage} productPage={productPage} />
             </Suspense>
         </Container>
     );
