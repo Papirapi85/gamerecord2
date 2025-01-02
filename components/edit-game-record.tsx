@@ -174,30 +174,30 @@ export const EditGameRecord: React.FC<Props> = ({ user, gameRecords, carModel, c
                                             />
 
                                             <div>
-                                                {carModelArrayState.length !== 0 &&
-                                                    <Select onValueChange={(e) => {
+                                                {/*{carModelArrayState.length !== 0 &&*/}
+                                                {/*    <Select onValueChange={(e) => {*/}
 
-                                                        selectCarRef.current = Number(e)
-                                                        console.log(selectCarRef.current)
+                                                {/*        selectCarRef.current = Number(e)*/}
+                                                {/*        console.log(selectCarRef.current)*/}
 
-                                                    }}>
-                                                        <SelectTrigger className="mr-1 w-[100%] h-5">
-                                                            <SelectValue placeholder="Car Model"/>
-                                                        </SelectTrigger>
-                                                        <SelectContent>
-                                                            <SelectGroup>
-                                                                {carModelArrayState
-                                                                    .filter((item) => item.productId === records.productId) // Filter by records.productId
-                                                                    .map((item) =>  (
-                                                                    <SelectItem key={item.id} value={String(item.id)}>
-                                                                        {item.name}
-                                                                    </SelectItem>
+                                                {/*    }}>*/}
+                                                {/*        <SelectTrigger className="mr-1 w-[100%] h-5">*/}
+                                                {/*            <SelectValue placeholder="Car Model"/>*/}
+                                                {/*        </SelectTrigger>*/}
+                                                {/*        <SelectContent>*/}
+                                                {/*            <SelectGroup>*/}
+                                                {/*                {carModelArrayState*/}
+                                                {/*                    .filter((item) => item.productId === records.productId) // Filter by records.productId*/}
+                                                {/*                    .map((item) =>  (*/}
+                                                {/*                    <SelectItem key={item.id} value={String(item.id)}>*/}
+                                                {/*                        {item.name}*/}
+                                                {/*                    </SelectItem>*/}
 
-                                                                ))}
-                                                            </SelectGroup>
-                                                        </SelectContent>
-                                                    </Select>
-                                                }
+                                                {/*                ))}*/}
+                                                {/*            </SelectGroup>*/}
+                                                {/*        </SelectContent>*/}
+                                                {/*    </Select>*/}
+                                                {/*}*/}
                                             </div>
                                         </div>
 
@@ -207,7 +207,7 @@ export const EditGameRecord: React.FC<Props> = ({ user, gameRecords, carModel, c
                                     <TableCell className="text-right">
                                         <div className="text-ellipsis overflow-hidden whitespace-nowrap">
                                             <Button className="w-[60px] h-[20px] mb-1"
-                                                    // disabled={!formDataImage && checkButtonUpdateRef.current !== records.id}
+                                                    disabled={!formDataImage || checkButtonUpdateRef.current !== records.id}
                                                     onClick={() => {
                                                         idRef.current = records.id;
                                                         categoryIdRef.current = records.categoryId;
