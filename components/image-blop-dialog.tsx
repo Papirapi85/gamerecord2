@@ -36,8 +36,10 @@ export const ImageBlopDialog: React.FC<Props> = ({img}) => {
                                     }
                                     src={imageSrc}
                                     alt={''}
-                                    layout="fill" // Используем fill для адаптивного изображения
-                                    objectFit="contain" // Или cover, в зависимости от ваших предпочтений
+                                    width={500}
+                                    height={800}
+                                    // layout="fill" // Используем fill для адаптивного изображения
+                                    // objectFit="contain" // Или cover, в зависимости от ваших предпочтений
                                 />
                         </DialogDescription>
                     </DialogHeader>

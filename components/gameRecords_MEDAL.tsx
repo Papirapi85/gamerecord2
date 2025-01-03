@@ -49,7 +49,12 @@ export const GameRecord_MEDAL: React.FC<Props> = ({medals, countMedals, category
                                     <TableRow>
                                         <TableHead>
                                             <div
-                                                className="text-ellipsis overflow-hidden whitespace-nowrap">{medal.productName}</div>
+                                                className="text-ellipsis overflow-hidden whitespace-nowrap">{medal.productName}
+
+                                            </div>
+                                            <div>
+                                                { medal.productImg !== null && <ImageBlopDialog img={medal.productImg}/>}
+                                            </div>
                                         </TableHead>
                                         <TableCell>
                                             <div className="text-ellipsis overflow-hidden whitespace-nowrap">{medal.gold !== null && medal.gold.user.fullName}</div>

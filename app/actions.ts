@@ -558,9 +558,9 @@ export async function productItemUpdate(data: any) {
       throw new Error('product not found');
     }
 
-    if (product.name === data.name) {
-      throw new Error('No update, data identical.');
-    }
+    // if (product.name === data.name) {
+    //   throw new Error('No update, data identical.');
+    // }
 
     await prisma.productItem.update({
       where: {
@@ -568,6 +568,7 @@ export async function productItemUpdate(data: any) {
       },
       data: {
         name: data.name,
+        img: data?.img,
       },
     });
     revalidatePath('/admin/product')
@@ -576,7 +577,7 @@ export async function productItemUpdate(data: any) {
     throw err;
   }
 }
-export async function productItemDelete(data: any) {
+export async function productItemDelete(data : any) {
   let product;
   try {
     product = await prisma.productItem.findFirst({
@@ -587,12 +588,13 @@ export async function productItemDelete(data: any) {
     if (!product) {
       throw new Error('Product delete Error');
     }
+    console.log(Number(data.id))
     await prisma.productItem.delete({
       where: {
         id: Number(data.id),
       }
     })
-    revalidatePath('/admin/product')
+    revalidatePath('/admin/product-item')
   } catch (err) {
     //console.log('Error [CREATE_PRODUCT]', err);
     throw err;
@@ -616,6 +618,7 @@ export async function productItemCreate(data: any) {
         data: {
           name: data.name,
           productId: Number(data.productId),
+          img:data?.img,
         }
       });
       if (!product) {

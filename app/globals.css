@@ -139,12 +139,12 @@ html {
   padding: .2rem;
 }
 
-.dialog-content {
-  width: 95vw; /* Полная ширина экрана */
-  height: 90vh; /* Полная высота экрана */
-  padding: 0; /* Убираем отступы */
-  background: rgba(0, 0, 0, 0.8); /* Полупрозрачный фон для затемнения */
-}
+/*.dialog-content {*/
+/*  width: 95vw; !* Полная ширина экрана *!*/
+/*  height: 90vh; !* Полная высота экрана *!*/
+/*  padding: 0; !* Убираем отступы *!*/
+/*  background: rgba(0, 0, 0, 0.8); !* Полупрозрачный фон для затемнения *!*/
+/*}*/
 
 .image-container {
   position: relative; /* Для использования layout="fill" */

@@ -43,13 +43,11 @@ export const AdminCategory: React.FC<Props> = ({data, category}) => {
                 });
             }
             if(blobRef.current !== null) {
-                console.log("111111111111111")
                 await uploadImage(blobRef.current as FormData).then(async blop => {
                     if ('error' in blop) {
                         return toast.error(`Failed to upload image: ${blop.error}`, {icon: '❌',});
                     }
                     toast.error('Image create 📝', {icon: '✅',});
-                    console.log("222222222222222")
                     console.log(blop.url)
                     await categoryCreate({
                         name: categoryAdd,
@@ -103,27 +101,25 @@ export const AdminCategory: React.FC<Props> = ({data, category}) => {
                     icon: '❌',
                 });
             }
-
+            if(blobRef.current !== null) {
             await uploadImage(blobRef.current as FormData).then(async blop => {
                 if ('error' in blop) {
                     return toast.error(`Failed to upload image: ${blop.error}`, {icon: '❌',});
                 }
                 toast.error('Image create 📝', {icon: '✅',});
-
-                console.log("categories2Index.img")
-                console.log(categories2Index.img)
-                console.log("blop.url")
-                console.log(blop.url)
-
-
                 await categoryUpdate({
                     id: categories2Index.id,
                     name: categories2Index.name,
                     img: blop.url,
                 });
 
-            });
-
+            });}else{
+                await categoryUpdate({
+                    id: categories2Index.id,
+                    name: categories2Index.name,
+                    img: null,
+                });
+            }
 
 
             await fetch('/api/blop/del/' + encodeURIComponent(categories2Index.img), {
