@@ -29,6 +29,9 @@ export const EditGameRecord: React.FC<Props> = ({ user, gameRecords, carModel, c
 
     const [timeState, setTimeState] = useState('');
     const [linkVideo, setLinkVideo] = useState('');
+    const [linkVideoId, setLinkVideoId] = useState(0);
+    const linkCarModelRecordsId = useRef(0);
+
 
     const idRef = useRef("");
     const categoryIdRef = useRef("");
@@ -37,7 +40,6 @@ export const EditGameRecord: React.FC<Props> = ({ user, gameRecords, carModel, c
     const checkButtonUpdateRef = useRef(0);
 
     const selectCarRef = React.useRef<number | null>(null);
-    const [carModelArrayState, setCarModelArrayState] = React.useState<CarModel[]>(carModel);
 
 
 
@@ -66,8 +68,8 @@ export const EditGameRecord: React.FC<Props> = ({ user, gameRecords, carModel, c
                 productItemId: productItemIdRef.current,
                 timestate: timeState,
                 img: blop.url,
-                linkVideo: linkVideo,
-                carModelId: selectCarRef.current,
+                // video: linkVideo,
+                // carModelId: selectCarRef.current,
             })
 
             await fetch('/api/blop/del/' + encodeURIComponent(img), {
@@ -92,6 +94,71 @@ export const EditGameRecord: React.FC<Props> = ({ user, gameRecords, carModel, c
         setTimeState(newTime);
         checkButtonUpdateRef.current = id;
     };
+
+    const handleVideoLinkSubmit = async () => {
+        try {
+            await editRecordActions({
+                id: idRef.current,
+                userId: user.id,
+                categoryId: categoryIdRef.current,
+                productId: productIdRef.current,
+                productItemId: productItemIdRef.current,
+                video: linkVideo,
+            })
+            toast.error('Link video youTube update 📝', {
+                icon: '✅',
+            });
+        }catch (error) {
+            return toast.error('Error Link video youTube update', {
+                icon: '❌',
+            });
+        }
+
+    }
+
+    const handleCarModelSubmit = async () => {
+        try {
+            await editRecordActions({
+                id: idRef.current,
+                userId: user.id,
+                categoryId: categoryIdRef.current,
+                productId: productIdRef.current,
+                productItemId: productItemIdRef.current,
+                carModelId: selectCarRef.current,
+            })
+            toast.error('Car model update 📝', {
+                icon: '✅',
+            });
+
+        }catch (error) {
+            return toast.error('Error Car model update', {
+                icon: '❌',
+            });
+        }
+
+    }
+
+    function formatYouTubeLink(input : string) {
+        // Удаляем пробелы
+        input = input.trim();
+
+        if (input.includes("youtu.be/")) {
+            const videoId = input.split("youtu.be/")[1];
+            input = `https://www.youtube.com/watch?v=${videoId}`; // Формируем полную ссылку
+        }
+
+        if(input.includes("watch?v=")){
+            const videoId = input.split("watch?v=")[1];
+            input = `https://www.youtube.com/watch?v=${videoId}`; // Формируем полную ссылку
+        }
+
+        // Проверяем, является ли это полной ссылкой на YouTube
+        if (input.startsWith("https://www.youtube.com/watch?v=")) {
+            return input; // Возвращаем ссылку, если она уже в нужном формате
+        } else {
+            return ''; // Если ссылка не соответствует формату
+        }
+    }
 
 
     return (
@@ -162,43 +229,57 @@ export const EditGameRecord: React.FC<Props> = ({ user, gameRecords, carModel, c
                                             <ImageAddBlobScreen onFormDataReady={handleFormDataReady}/>
                                         </div>
                                         <div className="text-ellipsis overflow-hidden whitespace-nowrap">
-                                            <Input className="h-5 mr-1"
-                                                   type='text'
-                                                   placeholder="VIDEO YOUTUBE"
-                                                   onChange={e => {
-                                                       if (e.target.value.includes("watch?v=")) {
-                                                           setLinkVideo(e.target.value)
-                                                       } else {
-                                                           setLinkVideo("")
-                                                       }
-                                                   }}
-                                            />
+                                            <div className="flex">
+                                                <Input className="h-5 mr-1"
+                                                       type='text'
+                                                       defaultValue={records.video}
+                                                       onChange={e => {
+                                                           idRef.current = records.id;
+                                                           categoryIdRef.current = records.categoryId;
+                                                           productIdRef.current = records.productId;
+                                                           productItemIdRef.current = records.productItemId;
+                                                           setLinkVideoId(records.id);
+                                                           setLinkVideo(formatYouTubeLink(e.target.value));
+                                                       }}
+                                                />
+                                                <Button
+                                                    disabled={linkVideo === '' || linkVideoId !== records.id}
+                                                    onClick={handleVideoLinkSubmit} className="h-5">ADD</Button>
+                                            </div>
 
-                                            <div>
-                                                {carModelArrayState.length !== 0 &&
+
+                                            <div className="flex mt-1">
+                                                {carModel.length !== 0 &&
                                                     <Select onValueChange={(e) => {
-
+                                                        linkCarModelRecordsId.current = records.id;
                                                         selectCarRef.current = Number(e)
-                                                        console.log(selectCarRef.current)
+                                                        idRef.current = records.id;
+                                                        categoryIdRef.current = records.categoryId;
+                                                        productIdRef.current = records.productId;
+                                                        productItemIdRef.current = records.productItemId;
+                                                        handleCarModelSubmit();
 
                                                     }}>
                                                         <SelectTrigger className="mr-1 w-[100%] h-5">
-                                                            <SelectValue placeholder="Car Model"/>
+                                                            <SelectValue placeholder={records.carModel?.name}/>
                                                         </SelectTrigger>
                                                         <SelectContent>
                                                             <SelectGroup>
-                                                                {carModelArrayState
+                                                                {carModel
                                                                     .filter((item) => item.productId === records.productId) // Filter by records.productId
                                                                     .map((item) =>  (
                                                                     <SelectItem key={item.id} value={String(item.id)}>
                                                                         {item.name}
                                                                     </SelectItem>
-
                                                                 ))}
                                                             </SelectGroup>
                                                         </SelectContent>
                                                     </Select>
+
                                                 }
+                                                {/*<Button className="h-5"*/}
+                                                {/*    disabled={carModel.length !== 0 || linkCarModelRecordsId.current !== records.id}*/}
+                                                {/*    onClick={handleVideoLinkSubmit} >ADD</Button>*/}
                                             </div>
                                         </div>
 

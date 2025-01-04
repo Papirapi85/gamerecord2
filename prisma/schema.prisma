@@ -86,9 +86,9 @@ model GameRecords {
   carModel   CarModel? @relation(fields: [carModelId], references: [id])
   carModelId Int?
 
-  timestate String
-  video     String
-  img       String
+  timestate String?
+  video     String?
+  img       String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

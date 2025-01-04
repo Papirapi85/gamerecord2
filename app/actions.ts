@@ -693,10 +693,10 @@ export async function editRecordActions(data :any) {
         productItemId: data.productItemId,
       },
       data: {
-        timestate: String(data.timestate),
-        video: data.video,
-        img: data.img,
-        carModelId: data.carModelId,
+        timestate: data?.timestate,
+        video: data?.video,
+        img: data?.img,
+        carModelId: data?.carModelId,
       },
     });
 
