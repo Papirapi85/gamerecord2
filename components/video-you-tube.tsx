@@ -13,7 +13,7 @@ export const VideoYouTube: React.FC<Props> = ({video}) => {
 
     return (
         <Dialog>
-            <DialogTrigger><FileVideo /></DialogTrigger>
+            <DialogTrigger><FileVideo className="h-5" /></DialogTrigger>
             <DialogContent>
                 <DialogHeader>
                     <DialogTitle></DialogTitle>

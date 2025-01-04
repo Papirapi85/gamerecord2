@@ -68,11 +68,11 @@ export const GameRecord_CLIENT: React.FC<Props> = ({gameRecords}) => {
                                         </TableCell>
                                         <TableCell>
                                             <div className="text-ellipsis overflow-hidden whitespace-nowrap">
+                                                <ImageBlopDialog img={records.img}/>
+                                                {records.video !== "" && <VideoYouTube video={records.video}/>}
                                                 {records.timestate.substring(3)}
                                             </div>
                                             <div className="text-ellipsis overflow-hidden whitespace-nowrap">
-                                                <ImageBlopDialog img={records.img}/>
-                                                {records.video !== "" && <VideoYouTube video={records.video}/>}
                                                 {records.carModel !== null && records.carModel.name !== null && records.carModel?.name}
                                             </div>
                                         </TableCell>
