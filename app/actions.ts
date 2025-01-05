@@ -134,8 +134,13 @@ export async function categoryCreateDateTime(data: any) {
     // Проверяем, прошло ли больше 1 минуты
     if (lastCategoryTime && lastCategoryTime.category) {
       const timeDiff = currentTime.getTime() - new Date(lastCategoryTime.category).getTime();
-      if (timeDiff < 60000 * 60) { // 60000 мс = 1 минута
-        throw new Error('Вы можете добавлять категории только раз в час');
+
+      console.log("timeDiff")
+      console.log(timeDiff)
+      console.log(" process.env.DATE_TIME_UPDATE ")
+      console.log(Number(process.env.DATE_TIME_UPDATE))
+      if (timeDiff < Number(process.env.DATE_TIME_UPDATE)) { // 60000 мс = 1 минута
+          throw new Error('Вы можете добавлять категории только раз в час');
       }
     }
     console.log("444444444444")
@@ -181,6 +186,7 @@ export async function productCreateDateTime(data: any) {
   let userFindGameCreateTime;
   const currentTimeMinusOneHour = new Date();
   currentTimeMinusOneHour.setHours(currentTimeMinusOneHour.getHours() - 1);
+
   let gameTime;
   try {
 
@@ -228,7 +234,7 @@ export async function productCreateDateTime(data: any) {
     // Проверяем, прошло ли больше 1 минуты
     if (lastProductTime && lastProductTime.product) {
       const timeDiff = currentTime.getTime() - new Date(lastProductTime.product).getTime();
-      if (timeDiff < 60000 * 60) { // 60000 мс = 1 минута
+      if (timeDiff < Number(process.env.DATE_TIME_UPDATE)) { // 60000 мс = 1 минута
         throw new Error('Вы можете добавлять продукты только раз в час');
       }
     }
@@ -323,7 +329,7 @@ export async function productItemCreateDateTime(data: any) {
     // Проверяем, прошло ли больше 1 минуты
     if (lastProductItemTime && lastProductItemTime.productItem) {
       const timeDiff = currentTime.getTime() - new Date(lastProductItemTime.productItem).getTime();
-      if (timeDiff < 60000 * 60) { // 60000 мс = 1 минута
+      if (timeDiff < Number(process.env.DATE_TIME_UPDATE)) { // 60000 мс = 1 минута
         throw new Error('Вы можете добавлять категории только раз в час');
       }
     }

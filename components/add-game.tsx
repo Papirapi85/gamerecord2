@@ -1,19 +1,13 @@
 'use client';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {Category, Product, ProductItem, User} from '@prisma/client';
 import toast from 'react-hot-toast';
 import {Container} from './container';
 import {Title} from './title';
 import {Button, Input} from '@/components/ui';
-import {
-    categoryUpdate,
-    categoryCreate,
-    categoryDelete,
-    productCreate,
-    productItemCreate,
-    categoryCreateDateTime, productCreateDateTime, productItemCreateDateTime
-} from '@/app/actions';
-import {useOpenInEditor} from "next/dist/client/components/react-dev-overlay/internal/helpers/use-open-in-editor";
+import {categoryCreateDateTime, productCreateDateTime, productItemCreateDateTime} from '@/app/actions';
+
+
 
 interface Props {
     user: User;
@@ -39,13 +33,23 @@ export const AddGame: React.FC<Props> = ({user, category, product, productItem})
     const productIdRef = React.useRef(0);
 
 
+    const productFind = useCallback(() => {
+        const array = product.filter(p => p.categoryId === categoryIdRef.current);
+        setCategoryFindProductArrayState(array);
+    }, [product, categoryIdRef]); // ❇️  categoryIdRef без .current
+
+    const productItemFind = useCallback(() => {
+        const array = productItem.filter(item => item.productId === productIdRef.current);
+        setProductFindProductItemArrayState(array);
+    }, [productItem, productIdRef]); // ❇️ productIdRef без .current
+
     useEffect(() => {
         productFind();
-    }, [product]);
+    }, [productFind]); // ✅ Зависимость - мемоизированная функция
 
     useEffect(() => {
         productItemFind();
-    }, [productItem]);
+    }, [productItemFind]); // ✅ Зависимость - мемоизированная функция
     
     const CreateCategory = async () => {
         try {
@@ -115,25 +119,6 @@ export const AddGame: React.FC<Props> = ({user, category, product, productItem})
                 icon: '❌',
             });
         }
-    }
-
-    const productFind = () => {
-        let array = []
-        for (let i = 0; i < product.length; i++) {
-            if (product[i].categoryId === categoryIdRef.current) {
-                array.push(product[i]);
-            }
-        }
-        setCategoryFindProductArrayState(array);
-    }
-    const productItemFind = () => {
-        let array = []
-        for (let i = 0; i < productItem.length; i++) {
-            if (productItem[i].productId === productIdRef.current) {
-                array.push(productItem[i]);
-            }
-        }
-        setProductFindProductItemArrayState(array);
     }
 
     return (

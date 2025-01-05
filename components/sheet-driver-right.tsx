@@ -18,7 +18,7 @@ export function SheetDriverRight() {
             <SheetTrigger asChild>
                 <ArrowBigLeftDash />
             </SheetTrigger>
-            <SheetContent>
+            <SheetContent side="right">
                 <SheetHeader>
                     <SheetTitle>MENU</SheetTitle>
                     <SheetDescription>

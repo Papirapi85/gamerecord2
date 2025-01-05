@@ -913,4 +913,6 @@ export const carModel = [
   { id: 49, name: "Toyota Supra", productId: 1 },
   { id: 50, name: "Volkswagen Golf GTI", productId: 1 },
   { id: 51, name: "Volvo S60 R", productId: 1 },
+  { id: 52, name: "Chevrolet Cobalt SS", productId: 1 },
+  { id: 52, name: "Porsche Carrera GT", productId: 1 },
 ];

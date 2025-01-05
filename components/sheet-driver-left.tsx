@@ -12,8 +12,7 @@ import {
 } from "@/components/ui/sheet"
 import {ArrowBigRightDash} from "lucide-react";
 import React from "react";
-import {cn} from "@/components/lib/utils";
-import Link from "next/link";
+
 
 export function SheetDriverLeft() {
     return (
@@ -23,19 +22,13 @@ export function SheetDriverLeft() {
             </SheetTrigger>
             <SheetContent side="left">
                 <SheetHeader>
-                    <SheetTitle>SETTINGS</SheetTitle>
-                    <SheetClose asChild>
-                        <Link href="/add-record">
-                            ADD
-                        </Link>
-                    </SheetClose>
-                    <SheetClose asChild>
-                        <Link href="/edit-record">
-                            EDIT
-                        </Link>
-                    </SheetClose>
+                    <SheetTitle>MENU</SheetTitle>
+                    <SheetDescription>
+                        LEFT
+                    </SheetDescription>
                 </SheetHeader>
                 <div className="grid gap-4 py-4">
+
                     {/*<div className="grid grid-cols-4 items-center gap-4">*/}
                     {/*    <Label htmlFor="name" className="text-right">*/}
                     {/*        Name*/}
