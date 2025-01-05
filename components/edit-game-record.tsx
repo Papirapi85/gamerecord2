@@ -1,5 +1,5 @@
 'use client';
-import React, {Suspense, useEffect, useRef, useState} from 'react';
+import React, {Suspense, useCallback, useEffect, useRef, useState} from 'react';
 import {CarModel, GameRecords, User} from '@prisma/client';
 import {Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow} from "@/components/ui/table";
 import {Container} from "@/components/container";
@@ -90,10 +90,10 @@ export const EditGameRecord: React.FC<Props> = ({ user, gameRecords, carModel, c
 
    // const [timeValue, setTimeValue] = useState('');
 
-    const handleTimeChange = (newTime : string, id : number) => {
+    const handleTimeChange = useCallback((newTime : string, id : number) => {
         setTimeState(newTime);
         checkButtonUpdateRef.current = id;
-    };
+    },[]);
 
     const handleVideoLinkSubmit = async () => {
         try {

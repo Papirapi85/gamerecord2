@@ -1,20 +1,18 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 
-    const TimeInput = ({ onTimeChange, id = 0 }: {onTimeChange: any, id?: number}) => {
+const TimeInput = ({ onTimeChange, id = 0 }: {onTimeChange: any, id?: number}) => {
     const [hours, setHours] = useState('00');
     const [minutes, setMinutes] = useState('00');
     const [seconds, setSeconds] = useState('00');
     const [milliseconds, setMilliseconds] = useState('000');
 
-    // Function to format the time string
-    const formatTime = () => {
+    const formatTime = useCallback(() => { // ✅ useCallback для formatTime
         return `${hours}:${minutes}:${seconds}.${milliseconds}`;
-    };
+    }, [hours, minutes, seconds, milliseconds]);
 
-    // Effect to call the onTimeChange callback whenever the time changes
     useEffect(() => {
         onTimeChange(formatTime(), id || 0);
-    }, [hours, minutes, seconds, milliseconds]); // Dependencies to trigger effect
+    }, [onTimeChange, id, formatTime]);
 
     return (
         <div>

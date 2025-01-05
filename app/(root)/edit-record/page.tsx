@@ -14,6 +14,7 @@ export default async function AdminPage({
                                         }) {
     const session = await getUserSession();
 
+
     const resolvedSearchParams = await searchParams; // Ждём Promise
     const page = parseInt(resolvedSearchParams.page ?? '1', 20);
     const pageSize = 20;

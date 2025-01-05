@@ -1,5 +1,5 @@
 'use client';
-import React, {useEffect, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {CarModel, Category, Product, ProductItem, User} from '@prisma/client';
 import toast from 'react-hot-toast';
 import {Container} from './container';
@@ -154,9 +154,9 @@ export const AddRecord: React.FC<Props> = ({user, category, product, productItem
         }
     }
 
-    const handleTimeChange = (newTime : string) => {
+    const handleTimeChange = useCallback((newTime : string) => {
         setTimestatState(newTime);
-    };
+    },[]);
 
 
     return (

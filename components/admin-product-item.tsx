@@ -49,18 +49,13 @@ export const AdminProductItem: React.FC<Props> = ({user, category, product, prod
             setCreateState('')
         }
     }, [productItem]);
-    //@ts-ignore
+
     useEffect(() => {
-            setProductItemFindState([]);
-            setProductItemFindState2([]);
-
-        },
-        //@ts-ignore
-        [categoryIdRef.current]);
-
+        setProductItemFindState([]);
+        setProductItemFindState2([]);
+    }, [categoryIdRef]);
 
     const productFind = (item: any) => {
-        //@ts-ignore
         categoryIdRef.current = item.id;
         let array = []
         for (let i = 0; i < productState.length; i++) {
@@ -156,7 +151,7 @@ export const AdminProductItem: React.FC<Props> = ({user, category, product, prod
             });
         }
     }
-    const eventSubmitDelete = async (data : any) => {
+    const eventSubmitDelete = async (data: any) => {
         try {
 
             await productItemDelete({
