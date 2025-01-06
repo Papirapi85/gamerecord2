@@ -5,6 +5,7 @@ import {notFound, redirect} from 'next/navigation';
 import {AddRecord} from "@/components/add-record";
 
 export default async function AddRecordPage() {
+
   const session = await getUserSession();
 
 

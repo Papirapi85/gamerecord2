@@ -1011,10 +1011,23 @@
   dependencies:
     "@types/node" "*"
 
+"@types/cookie@^0.6.0":
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/@types/cookie/-/cookie-0.6.0.tgz#eac397f28bf1d6ae0ae081363eca2f425bedf0d5"
+  integrity sha512-4Kh9a6B2bQciAhf7FSuMRRkUWecJgJu9nPnx3yzpsfXX/c50REIqpHY4C82bXP90qrLtXtkDxTZosYO3UpOwlA==
+
 "@types/estree@^1.0.6":
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/@types/estree/-/estree-1.0.6.tgz#628effeeae2064a1b4e79f78e81d87b7e5fc7b50"
   integrity sha512-AYnb1nQyY49te+VRAVgmzfcgjYS91mY5P0TKUDCLEM+gNnA+3T6rWITXRLYCpahpqSQbN5cE+gHpnPyXjHWxcw==
+
+"@types/hoist-non-react-statics@^3.3.5":
+  version "3.3.6"
+  resolved "https://registry.yarnpkg.com/@types/hoist-non-react-statics/-/hoist-non-react-statics-3.3.6.tgz#6bba74383cdab98e8db4e20ce5b4a6b98caed010"
+  integrity sha512-lPByRJUer/iN/xa4qpyL0qmL11DqNW81iU/IG1S3uvRUq4oKagz8VCxZjiWkumgt66YT3vOdDgZ0o32sGKtCEw==
+  dependencies:
+    "@types/react" "*"
+    hoist-non-react-statics "^3.3.0"
 
 "@types/js-cookie@^2.2.6":
   version "2.2.7"
@@ -1055,7 +1068,7 @@
   resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-19.0.2.tgz#ad21f9a1ee881817995fd3f7fd33659c87e7b1b7"
   integrity sha512-c1s+7TKFaDRRxr1TxccIX2u7sfCnc3RxkVyBIUA2lCpyqCF+QoAwQ/CBg7bsMdVwP120HEH143VQezKtef5nCg==
 
-"@types/react@^19":
+"@types/react@*", "@types/react@^19":
   version "19.0.2"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-19.0.2.tgz#9363e6b3ef898c471cb182dd269decc4afc1b4f6"
   integrity sha512-USU8ZI/xyKJwFTpjSVIrSeHBVAGagkHQKPNbxeWwql/vDmnTIBgx+TJnhFnj1NXgz8XfprU0egV2dROLGpsBEg==
@@ -1623,7 +1636,7 @@ console-control-strings@^1.0.0, console-control-strings@^1.1.0:
   resolved "https://registry.yarnpkg.com/console-control-strings/-/console-control-strings-1.1.0.tgz#3d7cf4464db6446ea644bf4b39507f9851008e8e"
   integrity sha512-ty/fTekppD2fIwRvnZAVdeOiGd1c7YXEixbgJTNzqcxJWKQnjJ/V1bNEEE6hygpM3WjwHFUVK6HTjWSzV4a8sQ==
 
-cookie@^0.7.0:
+cookie@^0.7.0, cookie@^0.7.2:
   version "0.7.2"
   resolved "https://registry.yarnpkg.com/cookie/-/cookie-0.7.2.tgz#556369c472a2ba910f2979891b526b3436237ed7"
   integrity sha512-yki5XnKuf750l50uGTllt6kKILY4nQ1eNIQatoXEByZ5dWgnKqbnqmTrBE5B4N7lrMJKQ2ytWMiTO2o0v6Ew/w==
@@ -2593,6 +2606,13 @@ highlight-words@^1.2.1:
   version "1.2.2"
   resolved "https://registry.yarnpkg.com/highlight-words/-/highlight-words-1.2.2.tgz#9875b75d11814d7356b24f23feeb7d77761fa867"
   integrity sha512-Mf4xfPXYm8Ay1wTibCrHpNWeR2nUMynMVFkXCi4mbl+TEgmNOe+I4hV7W3OCZcSvzGL6kupaqpfHOemliMTGxQ==
+
+hoist-non-react-statics@^3.3.0, hoist-non-react-statics@^3.3.2:
+  version "3.3.2"
+  resolved "https://registry.yarnpkg.com/hoist-non-react-statics/-/hoist-non-react-statics-3.3.2.tgz#ece0acaf71d62c2969c2ec59feff42a4b1a85b45"
+  integrity sha512-/gGivxi8JPKWNm/W0jSmzcMPpfpPLc3dY/6GxhX2hQ9iGj3aDfklV4ET7NjKpSinLpJ5vafa9iiGIEZg10SfBw==
+  dependencies:
+    react-is "^16.7.0"
 
 html-to-text@9.0.5:
   version "9.0.5"
@@ -3666,6 +3686,15 @@ queue-microtask@^1.2.2:
   resolved "https://registry.yarnpkg.com/queue-microtask/-/queue-microtask-1.2.3.tgz#4929228bbc724dfac43e0efb058caf7b6cfb6243"
   integrity sha512-NuaNSa6flKT5JaSYQzJok04JzTL1CA6aGhv5rfLW3PgqA+M2ChpZQnAC8h8i4ZFkBS8X5RqkDBHA7r4hej3K9A==
 
+react-cookie@^7.2.2:
+  version "7.2.2"
+  resolved "https://registry.yarnpkg.com/react-cookie/-/react-cookie-7.2.2.tgz#a7559e552ea9cca39a4b3686723a5acf504b8f84"
+  integrity sha512-e+hi6axHcw9VODoeVu8WyMWyoosa1pzpyjfvrLdF7CexfU+WSGZdDuRfHa4RJgTpfv3ZjdIpHE14HpYBieHFhg==
+  dependencies:
+    "@types/hoist-non-react-statics" "^3.3.5"
+    hoist-non-react-statics "^3.3.2"
+    universal-cookie "^7.0.0"
+
 react-dadata@^2.23.3:
   version "2.26.1"
   resolved "https://registry.yarnpkg.com/react-dadata/-/react-dadata-2.26.1.tgz#4961fa3b5dd29a81cd8620121da025e3952144a6"
@@ -3706,7 +3735,7 @@ react-insta-stories@^2.7.0:
   resolved "https://registry.yarnpkg.com/react-insta-stories/-/react-insta-stories-2.7.0.tgz#53532f4d552e18ad1417602a3121424b0771ccf1"
   integrity sha512-pCPHzC323b9Ttvr8ByLrX/iH/ft/L3ThWGDJPKdvHnaWdR5dhFkonrQ0/KNiEIH5t539dNyFPevLJUOobkD2WQ==
 
-react-is@^16.13.1:
+react-is@^16.13.1, react-is@^16.7.0:
   version "16.13.1"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.13.1.tgz#789729a4dc36de2999dc156dd6c1d9c18cea56a4"
   integrity sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
@@ -4577,6 +4606,14 @@ undici@^5.28.4:
   integrity sha512-72RFADWFqKmUb2hmmvNODKL3p9hcB6Gt2DOQMis1SEBaV6a4MH8soBvzg+95CYhCKPFedut2JY9bMfrDl9D23g==
   dependencies:
     "@fastify/busboy" "^2.0.0"
+
+universal-cookie@^7.0.0:
+  version "7.2.2"
+  resolved "https://registry.yarnpkg.com/universal-cookie/-/universal-cookie-7.2.2.tgz#93ae9ec55baab89b24300473543170bb8112773c"
+  integrity sha512-fMiOcS3TmzP2x5QV26pIH3mvhexLIT0HmPa3V7Q7knRfT9HG6kTwq02HZGLPw0sAOXrAmotElGRvTLCMbJsvxQ==
+  dependencies:
+    "@types/cookie" "^0.6.0"
+    cookie "^0.7.2"
 
 uri-js@^4.2.2:
   version "4.4.1"
