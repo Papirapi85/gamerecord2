@@ -2,7 +2,7 @@ import { Container } from '@/components/container';
 import { prisma } from '@/prisma/prisma-client';
 import React, { Suspense } from "react";
 import Loading from "@/app/(root)/loading";
-import { GameRecord_MEDAL_TEST } from "@/components/gameRecords_MEDAL_TEST";
+import { GameRecord_MEDAL} from "@/components/gameRecords_MEDAL";
 
 export const dynamic = 'force-dynamic';
 
@@ -130,7 +130,7 @@ export default async function ProductPage({
     return (
         <Container className="flex flex-col my-10">
             <Suspense fallback={<Loading />}>
-                <GameRecord_MEDAL_TEST medals={await getMedals()} countMedals={await countMedals()} categoryPage={categoryPage} productPage={productPage} />
+                <GameRecord_MEDAL medals={await getMedals()} countMedals={await countMedals()} categoryPage={categoryPage} productPage={productPage} />
             </Suspense>
         </Container>
     );
