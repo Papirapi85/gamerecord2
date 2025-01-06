@@ -1,12 +1,17 @@
 'use client';
 
-import React, {useEffect, useState} from 'react';
+import React, {ReactNode, useEffect, useState} from 'react';
 import {Toaster} from 'react-hot-toast';
 import {SessionProvider} from 'next-auth/react';
 import NextTopLoader from 'nextjs-toploader';
 import {ThemeProvider} from "next-themes";
 
-export const Providers: React.FC<React.PropsWithChildren> = ({children}) => {
+
+interface ProvidersProps {
+    children: ReactNode;
+}
+
+export const Providers: React.FC<ProvidersProps> = ({children}) => {
 
 
     const [mounted, setMounted] = useState(false);

@@ -11,9 +11,9 @@ import {Button} from "@/components/ui";
 export const dynamic = 'force-dynamic'
 
 export default async function CategoryPage({
-                                             params,
-                                             searchParams,
-                                         }: {
+                                               params,
+                                               searchParams,
+                                           }: {
     params: Promise<{ categoryPage: string }>;
     searchParams: Promise<{ page?: string | undefined }>;
 }) {
