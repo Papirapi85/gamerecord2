@@ -36,8 +36,8 @@ export default async function ProductPage({
     async function getMedals() {
         const medals = await prisma.gameRecords.findMany({
             where: {
-                productId: category?.id,
-                categoryId: product?.id,
+                productId: product?.id,
+                categoryId: category?.id,
             },
             orderBy: {
                 timestate: 'asc',
@@ -60,7 +60,9 @@ export default async function ProductPage({
                 carModel: true,
             },
         });
-
+        console.log(category);
+        console.log(product);
+        console.log(medals);
         // Группируем медали по productItem.name
         const groupedMedals: Record<string, any[]> = {};
         for (const medal of medals) {
@@ -104,6 +106,7 @@ export default async function ProductPage({
             };
         });
 
+        console.log(result)
         return result;
     }
 

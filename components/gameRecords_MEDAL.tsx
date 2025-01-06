@@ -45,7 +45,7 @@ export const GameRecord_MEDAL: React.FC<Props> = ({medals, countMedals, category
                     <Suspense>
                         {
                             medals.map((medal, index) => (
-                                <TableBody key={index} className="border-b border-b-gray-200 dark:border-b-gray-900">
+                                <TableBody key={index} className="border-b border-b-gray-800">
                                     <TableRow>
                                         <TableHead>
                                             <div
@@ -124,7 +124,7 @@ export const GameRecord_MEDAL: React.FC<Props> = ({medals, countMedals, category
 
                         <Suspense>
                             { countMedals.map((medal, index) => (
-                                <TableBody key={index} className="border-b border-b-gray-200 dark:border-b-gray-900">
+                                <TableBody key={index} className="border-b border-b-gray-800">
                                     <TableRow>
                                         <TableHead>
                                             <div className="text-ellipsis overflow-hidden whitespace-nowrap">{medal.userName}</div>

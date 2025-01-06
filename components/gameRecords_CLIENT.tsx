@@ -51,7 +51,7 @@ export const GameRecord_CLIENT: React.FC<Props> = ({gameRecords}) => {
                     <Suspense>
                         {
                             gameRecords.map((records, index) => (
-                                <TableBody key={index} className="border-b border-b-gray-200 dark:border-b-gray-900">
+                                <TableBody key={index} className="border-b border-b-gray-800">
                                     <TableRow>
                                         <TableCell>
                                             <div
@@ -73,7 +73,7 @@ export const GameRecord_CLIENT: React.FC<Props> = ({gameRecords}) => {
                                                 {records.timestate.substring(3)}
                                             </div>
                                             <div className="text-ellipsis overflow-hidden whitespace-nowrap">
-                                                {records.carModel !== null && records.carModel.name !== null && records.carModel?.name}
+                                                {records.carModel !== null && records.carModel?.name}
                                             </div>
                                         </TableCell>
                                         <TableCell className="text-right">

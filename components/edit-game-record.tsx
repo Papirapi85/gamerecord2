@@ -179,7 +179,7 @@ export const EditGameRecord: React.FC<Props> = ({ user, gameRecords, carModel, c
                     {
                         gameRecords.map((records, index) => (
 
-                            <TableBody key={index} className="border-b border-b-gray-200 dark:border-b-gray-800">
+                            <TableBody key={index} className="border-b border-b-gray-200">
                                 <TableRow>
                                     <TableCell>
                                         <div className="text-ellipsis overflow-hidden whitespace-nowrap">{records.user.fullName}</div>

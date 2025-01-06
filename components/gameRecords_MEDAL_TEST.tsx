@@ -43,7 +43,7 @@ export const GameRecord_MEDAL_TEST: React.FC<Props> = ({medals, countMedals, cat
                     <Suspense>
                         {
                             medals.map((medal, index) => (
-                                <TableBody key={index} className="border-b border-b-gray-200 dark:border-b-gray-900">
+                                <TableBody key={index} className="border-b border-b-gray-200">
                                     <TableRow>
                                         <TableHead>
                                             <div
@@ -116,7 +116,7 @@ export const GameRecord_MEDAL_TEST: React.FC<Props> = ({medals, countMedals, cat
 
                         <Suspense>
                             { countMedals.map((medal, index) => (
-                                <TableBody key={index} className="border-b border-b-gray-200 dark:border-b-gray-900">
+                                <TableBody key={index} className="border-b border-b-gray-200">
                                     <TableRow>
                                         <TableHead>
                                             <div className="text-ellipsis overflow-hidden whitespace-nowrap">{medal.userName}</div>

@@ -1,7 +1,6 @@
 import { Nunito } from 'next/font/google';
 import './globals.css';
 import { Providers } from '@/components/providers';
-import {ThemeProvider} from "@/components/theme-provider";
 
 
 const nunito = Nunito({
@@ -16,21 +15,17 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en" suppressHydrationWarning>
+        <html lang="en">
+        {/*<html lang="en" suppressHydrationWarning>*/}
         <head>
             {/*<link data-rh="true" rel="icon" href="/logo.webp" />*/}
         </head>
         <body className={nunito.className}>
         <Providers>
             <main>
-                <ThemeProvider
-                    attribute="class"
-                    defaultTheme="system"
-                    enableSystem
-                    disableTransitionOnChange
-                >
+
                     {children}
-                </ThemeProvider>
+
             </main>
         </Providers>
         </body>

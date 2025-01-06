@@ -249,7 +249,7 @@ export const AdminProductItem: React.FC<Props> = ({user, category, product, prod
                         <Title text={`Product Item Edit`} size="xs"/>
                         {productIdRef.current !== null && productItemFindState.map((item, index) => (
                             <div key={item.id} className="flex-1 w-full max-w-sm items-center space-x-2 mb-2
-                                                            border border-gray-200 dark:border-gray-400">
+                                                            border border-gray-200">
 
                                 {/*<p>{item.id}</p>*/}
                                 <div>
