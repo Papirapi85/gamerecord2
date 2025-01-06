@@ -24,7 +24,6 @@ export const Providers: React.FC<React.PropsWithChildren> = ({children}) => {
         return null; // Не рендерим ThemeProvider до монтирования
     }
 
-
     return (
         <>
             <React.StrictMode>
