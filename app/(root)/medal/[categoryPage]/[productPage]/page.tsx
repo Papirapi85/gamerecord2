@@ -27,6 +27,7 @@ export default async function ProductPage({
                 productItem: {
                     select: {
                         name: true,
+                        img: true,
                     },
                 },
                 user: {
@@ -75,6 +76,7 @@ export default async function ProductPage({
 
             return {
                 productName,
+                productImg: medals[0].productItem.img,
                 gold: gold ? { ...gold, userName: gold.user.fullName } : null,
                 silver: silver ? { ...silver, userName: silver.user.fullName } : null,
                 bronze: bronze ? { ...bronze, userName: bronze.user.fullName } : null,

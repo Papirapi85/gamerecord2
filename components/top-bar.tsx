@@ -30,10 +30,10 @@ export const TopBar: React.FC<Props> = ({category, product, productItem, classNa
                 {/*<SortPopup />*/}
 
                 <div className={cn('inline-flex gap-1  rounded-2xl h-12', className)}>
-                    <div className={cn('cursor-pointer absolute left-1 mt-2', className)}>
+                    <div className={cn('cursor-pointer mt-2', className)}>
                         <SheetDriverLeft/>
                     </div>
-                    <div className={cn('cursor-pointer absolute left-1/4 ', className)}>
+                    <div className={cn('cursor-pointer ml-3', className)}>
                         <DropmenuTopLeft category={category} product={product} productItem={productItem}/>
                         {/*<Link href={`/medal`}>Medal</Link>*/}
                         <DropmenuTopRight category={category} product={product} productItem={productItem}/>
