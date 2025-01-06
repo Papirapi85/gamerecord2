@@ -13,11 +13,23 @@ export default async function ProductPage({
 }) {
     const { categoryPage, productPage } = await params;
 
+
+
+    const category = await prisma.category.findFirst({
+        where: { name: categoryPage.replaceAll('-', ' ') },
+        select: { id: true },
+    });
+
+    const product = await prisma.product.findFirst({
+        where: { name: productPage.replaceAll('-', ' ') },
+        select: { id: true },
+    });
+
     async function getMedals() {
         const medals = await prisma.gameRecords.findMany({
             where: {
-                productId: 1,
-                categoryId: 1,
+                productId: product?.id,
+                categoryId: category?.id,
             },
             orderBy: {
                 timestate: 'asc',
